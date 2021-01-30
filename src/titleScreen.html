@@ -4,6 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Exploding Kittens Title Screen</title>
+
+        <style>
+            @import url("./index.css");
+        </style>
+
+        <link rel="stylesheet" href="css/titeScreen.css">
     </head>
     <body>
         <h1>Welcome To Exploding Kittens</h1>
@@ -11,8 +17,12 @@
         <div id="usrInfo">
             <p>Enter Your Username</p>
 
-            <input type="text" placeholder="Enter your username (eg, Exploding Kittens Master)">
+            <input type="text" placeholder="Enter your username (eg, Exploding Kittens Master)" id="usrnmaeInput">
         </div>
+
+        <br>
+
+        <hr>
 
         <div id="comPlayerButtons">
             <p>Select How Many Computer Players Do You Want</p>
@@ -26,6 +36,8 @@
             <input type="radio" value="3comPlayer" name="comPlayer" class="comSelection">
             <label for="1comPlayer">3 Computer Players</label>
         </div>
+
+        <br>
 
         <button id="playButton">Play!</button>
     </body>

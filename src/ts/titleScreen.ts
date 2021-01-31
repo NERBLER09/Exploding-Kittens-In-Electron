@@ -1,13 +1,19 @@
 // Script for titleScreen.html
 
-const playButton = document.getElementById("playButton")
-const usernameInput = document.getElementById("usrnameInput")
-
-let username:string
+let username:any
 let comPlayerAmount:number
 
 // onClick function for playButton
-
 function startGame() {
+    username =  $("#usrnameInput").val();
 
+    if(username) {
+        console.log(username)
+        console.log("Let play!")
+    } 
+    else {
+        console.error("Username input is empty")
+    }
 }
+
+$("#playButton").click(startGame)

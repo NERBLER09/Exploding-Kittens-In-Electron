@@ -1,5 +1,6 @@
 // Script for titleScreen.html
 
+const $ = require("jquery")
 import { messages } from "./messages.js";
 
 let username:any

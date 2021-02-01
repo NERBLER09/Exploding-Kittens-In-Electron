@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell, dialog, Menu } = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -18,6 +18,10 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  // Sets the app menu
+  const menuTemplate = Menu.buildFromTemplate(menu);
+  Menu.setApplicationMenu(menuTemplate);
 };
 
 // This method will be called when Electron has finished
@@ -44,3 +48,86 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+// Menu for the window
+const menu = [
+  {
+    label: "Options",
+    submenu: [
+      {
+        label: "Github Page",
+
+        click() {
+          shell.openExternal("https://www.github.com/nerbler09")
+        }
+      },
+      
+      {
+        label: "Github Repo",
+
+        click() {
+          shell.openExternal("https://www.github.com/nerbler09/exploding-kittens-in-electron")
+        }
+      },
+      {type:"separator"},
+      {
+        label: "Quit",
+        role: "quit",
+        accelerator: 'Ctrl+Q'
+      }
+    ]
+  },
+  {
+    label: "Window",
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { type: 'separator' },
+      { role: 'reload' },
+      { type: 'separator' },
+      { role: 'resetZoom' },
+      { role: 'zoomIn' },
+      { role: 'zoomOut' },
+      { type: 'separator' },
+      { role: 'togglefullscreen' }
+    ]
+  },
+  {
+    label:"Help",
+    submenu: [
+      {
+        label: "Exploding Kittens",
+        click() {
+          shell.openExternal("https://www.explodingkittens.com")
+        }
+      },
+      {
+        label: "How To Play",
+
+        click() {
+          shell.openExternal("https://explodingkittens.com/how-to-play")
+        }
+      },
+      {
+        label: "Toggle Dev Tools",
+        role: "toggleDevTools"
+      },
+      { type: 'separator' },
+        {
+            label: "About",
+            click: function () {
+                dialog.showMessageBox({
+                    type: "info",
+                    title: "Exploding Kittens",
+                    message: "About",
+                    detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0`,
+                });
+            }
+        }
+    ]
+  }
+]

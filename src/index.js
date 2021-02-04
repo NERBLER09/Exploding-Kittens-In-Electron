@@ -60,6 +60,14 @@ const menu = [
     label: "Options",
     submenu: [
       {
+        label: "New Game",
+
+        click() {
+          mainWindow.loadFile(path.join(__dirname, 'titleScreen.html'));
+        }
+      },
+      {type:"separator"},
+      {
         label: "Github Page",
 
         click() {

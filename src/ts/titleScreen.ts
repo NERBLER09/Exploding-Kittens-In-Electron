@@ -1,6 +1,8 @@
 // Script for titleScreen.html
 
 const $ = require("jquery")
+const electron = require('electron')
+const {ipcRenderer} = electron;
 import { messages } from "./messages.js";
 
 let username:any
@@ -39,7 +41,13 @@ function startGame() {
         $("#errorMsg").html(messages["no_username_no_com"])
     }
 
-    console.log(comPlayerAmount)
+    // Checks is a username is selected and a com amount is selected
+    if(comPlayerAmount && username) {
+        localStorage.setItem("username", username) // Stores the username
+        localStorage.setItem("comAmount", comPlayerAmount) // Stores the username
+
+        ipcRenderer.send("createGameWindow")
+    }
 }
 
 $("#playButton").click(startGame)

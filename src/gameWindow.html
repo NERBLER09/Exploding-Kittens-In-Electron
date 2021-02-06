@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exploding Kittens Game</title>
+
+    <style>
+        @import url("./index.css");
+
+        @import url("./css/gameWindow.css");
+    </style>
 </head>
 <body onload="onLoadFunc()">
-    <p id="username"></p>
-    <p id="comAmount"></p>
+    <div id="info">
+        <p>Your player options: </p>
 
+        <p id="username"></p>
+        <p id="comAmount"></p>
+    </div>
+    
     <script src="js/gameOnLoad.js"></script>
 </body>
 </html>

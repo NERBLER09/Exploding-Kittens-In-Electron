@@ -1,3 +1,7 @@
+body {
+  text-align: center;
+}
+
 #usrnameInput {
     width: 350px;
 }

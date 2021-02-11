@@ -1,5 +1,9 @@
 body {
   text-align: center;
+
+  margin: auto;
+  max-width: 38rem;
+  padding: 2rem;
 }
 
 #usrnameInput {

@@ -5,11 +5,15 @@
 }
 
 #info {
-    position: absolute;
+    position: fixed;
     
-    bottom: 0%;
+    bottom: 0;
 
     border-color: black;
+
+    overflow-x: auto;
+
+    height: auto;
 }
 
 #game-cards {
@@ -40,6 +44,8 @@
     text-align: center;
 
     width: 100%;
+
+    overflow-y: auto;
 }
 
 .player_cards{

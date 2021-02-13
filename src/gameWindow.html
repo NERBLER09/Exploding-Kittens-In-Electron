@@ -10,23 +10,26 @@
 
         @import url("./css/gameWindow.css");
     </style>
+
+    <script defer src="js/gameOnLoad.js" type="module"></script>
 </head>
-<body onload="onLoadFunc()">
+<body>
     <div id="game-view">
+
+        <p id="remaining_card">Remaining Cards: </p>
+
+        <hr>
+
+        <br>
+
+        <div id="player_cards_container">
+            
+        </div>
+
         <div id="game-cards">
             <p id="discard-pile">Discard Pile</p>
             <button id="draw-pile">Draw Pile </button>
         </div> 
-
-        <div id="player_cards_container">
-            <button class="player_cards">Card 1</button>
-            <button class="player_cards">Card 2</button>
-            <button class="player_cards">Card 3</button>
-            <button class="player_cards">Card 4</button>
-            <button class="player_cards">Card 5</button>
-            <button class="player_cards">Card 6</button>
-            <button class="player_cards">Card 7</button>
-        </div>
     </div>
 
     <div id="info">
@@ -34,12 +37,6 @@
 
         <p id="username"></p>
         <p id="comAmount"></p>
-
-        <hr>
-
-        <p id="remaining_card">Remaining Cards: </p>
     </div>
-    
-    <script src="js/gameOnLoad.js"></script>
 </body>
 </html>

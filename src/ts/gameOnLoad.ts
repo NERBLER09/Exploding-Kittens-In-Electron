@@ -12,6 +12,9 @@ let comPlayerAmount = localStorage.getItem("comAmount")
 
 // Function runs when the page loads
 function onLoadFunc() {
+    // Displays the current player
+    $("#current_player_turn").html("It's currently your turn")
+
     // Displays the username
     $("#username").html(`Username: ${username}`)
 

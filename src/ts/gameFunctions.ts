@@ -4,6 +4,7 @@
 // and the onclick function for the player cards
 
 import { playerCardsInHand, cards, cardAmounts } from "./messages.js"
+import { choseAndPlayCardForCom1 } from "./com1Script.js";
 
 const $ = require("jquery")
 
@@ -62,7 +63,10 @@ const drawCard = () => {
 
             // Changes the current_player_turn text
             if(isPlayerTurn == false && turnsNeedToPlay <= 0) {
-                $("#current_player_turn").html("It's not your turn.")
+                $("#current_player_turn").html("It's com 1's turn")
+
+                // Makes it be com 1's turn
+                choseAndPlayCardForCom1()
             }
             else{
                 $("#current_player_turn").html(`Amount of turns left: ${turnsNeedToPlay}`)
@@ -151,6 +155,10 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             isPlayerTurn = false // Makes it not be the players turn
             turnsNeedToPlay-=1
             $("#current_player_turn").html("You have skipped your turn")
+
+            // Makes it be com 1's turn
+            choseAndPlayCardForCom1()
+
             break
         case "attack":
             console.log("Player played a attack")
@@ -175,8 +183,13 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
         case "favor":
             console.log("Player played a favor")
 
+            const favoredCard = cards[Math.floor(Math.random() * cards.length)]
+
             // Choses a random card to display to the player
-            displayNewCard(cards[Math.floor(Math.random() * cards.length)])
+            displayNewCard(favoredCard)
+
+            // Displays what card was favored
+            $("#current_player_turn").html(`You got a ${favoredCard} card`)
 
             break
         case "nope":
@@ -199,9 +212,17 @@ const catCardPlayed = (catCard:string) => {
             playerCardsInHand.splice(cardIndex, 1)
             $(".player_cards").get(cardIndex).remove()
 
+            // Asks what com player the player wants to target`
+        
+            
+
             // Displays the gotten card by choosing a random card
-            displayNewCard(cards[Math.floor(Math.random() * cards.length)])
-            // displayDrawnCard(cards[Math.floor(Math.random() * cards.length)])
+            const stolenCard = cards[Math.floor(Math.random() * cards.length)]
+
+            displayNewCard(stolenCard)
+
+            // Displays what card was favored
+            $("#current_player_turn").html(`You stole a ${stolenCard} card`)
 
             playerHasCatCard = true
 
@@ -236,10 +257,45 @@ const displayNewCard = (displayCard) => {
     $("#player_cards_container").append(card)
 }
 
+// Updates a specified variable
+const updateVariable = (variableToUpdate: string, status?: boolean, amount?: number) => {
+    // Enters a switch statement
+    switch(variableToUpdate) {
+        case "isPlayerTurn":
+            // Sets isPlayerTurn to true
+            if(status === true) {
+                isPlayerTurn = true
+            }
+            // Sets isPlayerTurn to false
+           else {
+               isPlayerTurn = false
+           }
+           
+           break
+        
+        case "turnsNeedToPlay":
+            // Adds 2 to the turnsNeedToPlay
+            turnsNeedToPlay+=2
+
+            break
+        case "seeTheFutureCards":
+            // Adds the top 3 cards to the list
+            seeTheFutureCards = [cards[Math.floor(Math.random() * cards.length)],
+                cards[Math.floor(Math.random() * cards.length)], 
+                cards[Math.floor(Math.random() * cards.length)]]
+
+                console.log(`The Current Top 3 Cards: 1. ${seeTheFutureCards[0]},
+                2. ${seeTheFutureCards[1]}, 3. ${seeTheFutureCards[2]} `)
+
+            break
+    }
+}
+
 // Exports as module
 export {
     displayDrawnCard,
     drawCard,
     playCard,
-    removeDrawnCardFromDeck
+    removeDrawnCardFromDeck,
+    updateVariable
 }

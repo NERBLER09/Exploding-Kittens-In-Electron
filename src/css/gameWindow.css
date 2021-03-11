@@ -65,3 +65,27 @@
 #info > p {
     padding: 5px;
 }
+
+#message_box {
+    /* height: 50%; */
+    width: 25%;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: -100px;
+
+    border-style: solid;
+    border-color: grey;
+
+    background-color: lightgrey;
+
+    display: none;
+}
+
+#message_box > button {
+    height: 25px;
+    widows: 25px;
+
+    margin: 10px;
+}

@@ -167,5 +167,6 @@ const addNewCardToHand = (cardToAdd: string) => {
 
 export {
     dealCardsToCom3,
-    choseAndPlayCardForCom3
+    choseAndPlayCardForCom3,
+    cardsInCom3Hand
 }

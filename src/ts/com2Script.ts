@@ -185,5 +185,6 @@ const addNewCardToHand = (cardToAdd: string) => {
 // Exports as a modules
 export {
     dealCardsToCom2,
-    choseAndPlayCardForCom2
+    choseAndPlayCardForCom2,
+    cardsInCom2Hand
 }

@@ -4,7 +4,9 @@
 // and the onclick function for the player cards
 
 import { playerCardsInHand, cards, cardAmounts } from "./messages.js"
-import { choseAndPlayCardForCom1 } from "./com1Script.js";
+import { choseAndPlayCardForCom1, cardsInCom1Hand } from "./com1Script.js";
+import { cardsInCom2Hand } from "./com2Script.js";
+import { cardsInCom3Hand } from "./com3Script.js";
 
 const $ = require("jquery")
 
@@ -183,13 +185,8 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
         case "favor":
             console.log("Player played a favor")
 
-            const favoredCard = cards[Math.floor(Math.random() * cards.length)]
-
-            // Choses a random card to display to the player
-            displayNewCard(favoredCard)
-
-            // Displays what card was favored
-            $("#current_player_turn").html(`You got a ${favoredCard} card`)
+            // Asks what com player the player wants a favor from
+            promptFavorTarget()
 
             break
         case "nope":
@@ -213,16 +210,7 @@ const catCardPlayed = (catCard:string) => {
             $(".player_cards").get(cardIndex).remove()
 
             // Asks what com player the player wants to target`
-        
-            
-
-            // Displays the gotten card by choosing a random card
-            const stolenCard = cards[Math.floor(Math.random() * cards.length)]
-
-            displayNewCard(stolenCard)
-
-            // Displays what card was favored
-            $("#current_player_turn").html(`You stole a ${stolenCard} card`)
+            promptCatCardTarget()
 
             playerHasCatCard = true
 
@@ -289,6 +277,208 @@ const updateVariable = (variableToUpdate: string, status?: boolean, amount?: num
 
             break
     }
+}
+
+// Asks what com player the player wants to ask a favor from
+const promptFavorTarget = () => {
+    let messageElement = []
+
+    $("#message_box").show()
+
+    // Enters switch statement to check amount of com players 
+    // to display the right amount of elements
+
+    switch(localStorage.getItem("comAmount")) {
+        case "1comPlayer":
+            messageElement = [$("<button value='com1'>Ask For A Card From Com 1</button>")]
+
+            break
+        case "2comPlayer":
+            messageElement = [$("<button value='com1'>Ask For A Card From Com 1</button>"), 
+            $("<button value='com2'>Ask For A Card From Com 2</button>")]
+
+            break
+        case "3comPlayer":
+            messageElement = [$("<button value='com1'>Ask For A Card From Com 1</button>"), 
+            $("<button value='com2'>Ask For A Card From Com 2</button>"),
+            $("<button value='com3'>Ask For A Card From Com 3</button>")]
+
+            break
+    }
+
+    // Loops through the messageElement to display all the elements properly 
+    for(const e of messageElement) {
+        const messageElementIndex = messageElement.indexOf(e)
+
+        $("#message_box").append(messageElement[messageElementIndex])
+
+        // Adds onclick actionEvent
+        $(messageElement[messageElementIndex]).click({param1: $(messageElement[messageElementIndex]).val()}, askComPLayerForFavorCard)
+
+    }
+}    
+
+// Gives a random card to the player after com player favor target is selected 
+const askComPLayerForFavorCard = (comTarget) => {
+    comTarget = comTarget.data.param1
+
+    let indexOfCard, cardToGive
+
+    // Enters a switch statement to check what com player was selected 
+    switch(comTarget) {
+        case "com1":
+            // Gives a random card from com 1's hand to the player
+            indexOfCard = Math.floor(Math.random() * cardsInCom1Hand.length)
+
+            cardToGive = cardsInCom1Hand[indexOfCard]
+
+            // Removes the given card from com 1's hand
+            cardsInCom1Hand.splice(indexOfCard, 1)
+
+            // Tells what card com 1 gave to the player and adds the card to the players hand
+            $("#current_player_turn").html(`Com 1 has given you there ${cardToGive} card`)
+
+            displayNewCard(cardToGive)
+
+            break
+        case "com2":
+            // Gives a random card from com 2's hand to the player
+            indexOfCard = Math.floor(Math.random() * cardsInCom2Hand.length)
+
+            cardToGive = cardsInCom2Hand[indexOfCard]
+
+            // Removes the given card from com 2's hand
+            cardsInCom2Hand.splice(indexOfCard, 1)
+
+            // Tells what card com 2 gave to the player and adds the card to the players hand
+            $("#current_player_turn").html(`Com 2 has given you there ${cardToGive} card`)
+
+            displayNewCard(cardToGive)
+
+            break
+        case "com3":
+            // Gives a random card from com 3's hand to the player
+            indexOfCard = Math.floor(Math.random() * cardsInCom3Hand.length)
+
+            cardToGive = cardsInCom3Hand[indexOfCard]
+
+            // Removes the given card from com 3's hand
+            cardsInCom3Hand.splice(indexOfCard, 1)
+
+            // Tells what card com 3 gave to the player and adds the card to the players hand
+            $("#current_player_turn").html(`Com 3 has given you there ${cardToGive} card`)
+
+            displayNewCard(cardToGive)
+
+            break
+    }
+
+    // Resets the message_box element
+    $("#message_box").html("")
+    
+    // Hides the message_box element
+    $("#message_box").hide()
+}   
+
+// Asks what com player the player wants to steal a card from
+const promptCatCardTarget = () => {
+    let messageElement = []
+
+    $("#message_box").show()
+
+    // Enters switch statement to check amount of com players 
+    // to display the right amount of elements
+
+    switch(localStorage.getItem("comAmount")) {
+        case "1comPlayer":
+            messageElement = [$("<button value='com1'>Steal A Card From Com 1</button>")]
+
+            break
+        case "2comPlayer":
+            messageElement = [$("<button value='com1'>Steal A Card From Com 1</button>"), 
+            $("<button value='com2'>Steal A Card From Com 2</button>")]
+
+            break
+        case "3comPlayer":
+            messageElement = [$("<button value='com1'>Steal A Card From Com 1</button>"), 
+            $("<button value='com2'>Steal A Card From Com 2</button>"),
+            $("<button value='com3'>Steal A Card From Com 3</button>")]
+
+            break
+    }
+
+    // Loops through the messageElement to display all the elements properly 
+    for(const e of messageElement) {
+        const messageElementIndex = messageElement.indexOf(e)
+
+        $("#message_box").append(messageElement[messageElementIndex])
+
+        // Adds onclick actionEvent
+        $(messageElement[messageElementIndex]).click({param1: $(messageElement[messageElementIndex]).val()}, stealCardFromComPlayer)
+
+    }
+} 
+
+// Steals a random card from a com player for the player
+const stealCardFromComPlayer = (comTarget) => {
+    comTarget = comTarget.data.param1
+
+    let indexOfCard, cardToGive
+
+    // Enters a switch statement to check what com player was selected 
+    switch(comTarget) {
+        case "com1":
+            // Gives a random card from com 1's hand to the player
+            indexOfCard = Math.floor(Math.random() * cardsInCom1Hand.length)
+
+            cardToGive = cardsInCom1Hand[indexOfCard]
+
+            // Removes the given card from com 1's hand
+            cardsInCom1Hand.splice(indexOfCard, 1)
+
+            // Tells what card com 1 gave to the player and adds the card to the players hand
+            $("#current_player_turn").html(`You stole Com 1's ${cardToGive} card`)
+
+            displayNewCard(cardToGive)
+
+            break
+        case "com2":
+            // Gives a random card from com 2's hand to the player
+            indexOfCard = Math.floor(Math.random() * cardsInCom2Hand.length)
+
+            cardToGive = cardsInCom2Hand[indexOfCard]
+
+            // Removes the given card from com 2's hand
+            cardsInCom2Hand.splice(indexOfCard, 1)
+
+            // Tells what card com 2 gave to the player and adds the card to the players hand
+            $("#current_player_turn").html(`You stole Com 2's ${cardToGive} card`)
+
+            displayNewCard(cardToGive)
+
+            break
+        case "com3":
+            // Gives a random card from com 3's hand to the player
+            indexOfCard = Math.floor(Math.random() * cardsInCom3Hand.length)
+
+            cardToGive = cardsInCom3Hand[indexOfCard]
+
+            // Removes the given card from com 3's hand
+            cardsInCom3Hand.splice(indexOfCard, 1)
+
+            // Tells what card com 3 gave to the player and adds the card to the players hand
+            $("#current_player_turn").html(`You stole Com 3's ${cardToGive} card`)
+
+            displayNewCard(cardToGive)
+
+            break
+    }
+
+    // Resets the message_box element
+    $("#message_box").html("")
+    
+    // Hides the message_box element
+    $("#message_box").hide()
 }
 
 // Exports as module

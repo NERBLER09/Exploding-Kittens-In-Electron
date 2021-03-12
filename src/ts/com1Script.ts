@@ -1,8 +1,9 @@
 const $ = require("jquery")
 
-import { cards } from "./messages.js"
+import { cards, playerCardsInHand } from "./messages.js"
 import { removeDrawnCardFromDeck, updateVariable, turnsNeedToPlay } from "./gameFunctions.js";
-import { choseAndPlayCardForCom2 } from "./com2Script.js";
+import { cardsInCom2Hand, choseAndPlayCardForCom2 } from "./com2Script.js";
+import { cardsInCom3Hand } from "./com3Script.js";
 
 // Stores the cards in com 1's hand
 let cardsInCom1Hand: string[] = []
@@ -46,37 +47,8 @@ const choseAndPlayCardForCom1 = () => {
     if (cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' ||
         cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {
 
-        let hasCatCard = false
-
-        // Checks if there is a matching cat card
-        for (const card of cardsInCom1Hand) {
-            // Matching card
-            if (cardToPlay === card) {
-                // Removes the matching card from com 1's hand
-                const cardIndex = cardsInCom1Hand.indexOf(card)
-                cardsInCom1Hand.splice(cardIndex, 1)
-
-                const cardToSteal = cardsInCom1Hand[Math.floor(Math.random() * cardsInCom1Hand.length)]
-
-                // Steals a card and adds it to com 1's hand
-                addNewCardToHand(cardToSteal)
-
-                hasCatCard = true
-
-                $("#current_player_turn").html(`Com 1 has stolen your ${cardToSteal}`)
-
-                break
-            }
-        }
-
-        // Checks if there are no matching 
-        if (hasCatCard == false) {
-            // Readds the played card back into com 1's hand
-            cardsInCom1Hand.push(cardToPlay)
-
-            // Re-chooses a card to play
-            choseAndPlayCardForCom1()
-        }
+        // Checks if there's a matching cat card
+        catCardPlayed(cardToPlay)
 
         // Draws a card
         drawCardForCom1()
@@ -92,10 +64,37 @@ const choseAndPlayCardForCom1 = () => {
 
             break
         case "attack":
-            updateVariable("isPlayerTurn", true)
-            updateVariable("turnsNeedToPlay")
+            // Checks if there are 2 or more com players (So it doesn't target the player)
 
-            $("#current_player_turn").html(`Com 1 has played an attack card. You now ${turnsNeedToPlay} turns`)
+            // There are 2 or more com players
+            const comAmount = localStorage.getItem("comAmount")
+
+            if(comAmount !== "1comPlayer") {
+                // Makes Com 2 has 2 turns 
+                updateVariable("turnsNeedToPlay")
+
+                // Displays the amount of turns Com 2 has 
+                $("#current_player_turn").html(`Com 1 has played an attack card. It's now Com 2's turn, Com 2 has ${turnsNeedToPlay} turns`)
+
+                // Sets a time pause
+                setTimeout(() => {
+                    // Makes it be Com 2's turn
+                    choseAndPlayCardForCom2()
+                }, 2000);
+            }
+
+            // There is only 1 com player
+
+            else {
+                // Makes the player have 2 turns
+                updateVariable("turnsNeedToPlay")
+
+                // Displays that it's now the player's turn and how many turns that they have
+                $("#current_player_turn").html(`Com 1 has played an attack card. It's now you turn, you have ${turnsNeedToPlay} turns`)
+
+                // Makes it be the player's turn
+                updateVariable("isPlayerTurn", true)
+            }
 
             break
         case "shuffle":
@@ -198,6 +197,124 @@ const addNewCardToHand = (cardToAdd: string) => {
 
     // Adds the new card to the hand
     cardsInCom1Hand.push(cardToAdd)
+}
+
+// Runs when com 1 has played 2 matching cat cards
+const catCardPlayed = (catCard: string) => {
+    let hasCatCard = false
+
+    // Checks if there is a matching cat card
+    for (const card of cardsInCom1Hand) {
+        // Matching card
+        if (catCard === card) {
+            // Removes the matching card from com 1's hand
+            const cardIndex = cardsInCom1Hand.indexOf(card)
+            cardsInCom1Hand.splice(cardIndex, 1)
+
+            // Steals a random card from a chosen player
+            const cardToSteal = stealCard()
+
+            // Checks if the stolen card returned undefined
+            if(cardToSteal == undefined) {
+                // Re-choses a card 
+            }
+
+            // Adds the stolen card to Com 2's hand
+            addNewCardToHand(cardToSteal)
+
+            hasCatCard = true
+
+            break
+        }
+    }
+
+    // Checks if there are no matching 
+    if (hasCatCard == false) {
+        // Readds the played card back into com 1's hand
+        cardsInCom1Hand.push(catCard)
+
+        // Re-chooses a card to play
+        choseAndPlayCardForCom1()
+    }
+}
+
+// Steals a random card from a player of choice (The player, com 1, or com 3)
+const stealCard = () => {
+    // Creates a random number to chose what player to target
+    // 1 - The Player
+    // 2 - Com 2
+    // 3 - Com 3
+    const stealCardTarget = Math.floor(Math.random() * 3)
+
+    console.log(stealCardTarget)
+    
+    let cardIndex: number
+    let cardToStealFromPlayer: string
+
+    // Enters switch statement to steal a random card from the right player
+    switch(stealCardTarget) {
+        case 1:
+            // Steals a random card from the player
+
+            // Choses a random card from the players hand to steal
+            cardIndex = Math.floor(Math.random() * playerCardsInHand.length)
+
+            cardToStealFromPlayer = playerCardsInHand[cardIndex]
+
+            // Removes the stolen card from the player's hand
+            playerCardsInHand.splice(cardIndex, 1)
+
+            $(".player_cards").get(cardIndex).remove()
+
+            $("#current_player_turn").html(`Com 1 has stolen your ${cardToStealFromPlayer}`)
+
+            // Returns stolen card to add to Com 1's hand
+            return cardToStealFromPlayer
+
+        case 2:
+            // Steals a random card from Com 2
+
+            // Choses a random card from Com 2's hand to steal
+            cardIndex = Math.floor(Math.random() * cardsInCom2Hand.length)
+
+            cardToStealFromPlayer = cardsInCom2Hand[cardIndex]
+
+            // Removes the stolen card from Com 2's hand
+            cardsInCom2Hand.splice(cardIndex, 1)
+
+            $("#current_player_turn").html("Com 1 has stolen a card from Com 2")
+
+            // Checks if cardToStealFromPlayer is undefined 
+            if(cardToStealFromPlayer === undefined) {
+                // Re-choses target
+                stealCard()
+            }
+
+            // Returns stolen card to add to Com 1's hand
+            return cardToStealFromPlayer
+            
+        case 3:
+            // Steals a random card from Com 3
+
+            // Choses a random card from Com 3's hand to steal
+            cardIndex = Math.floor(Math.random() * cardsInCom3Hand.length)
+
+            cardToStealFromPlayer = cardsInCom3Hand[cardIndex]
+
+            // Removes the stolen card from Com 3's hand
+            cardsInCom3Hand.splice(cardIndex, 1)
+
+            $("#current_player_turn").html("Com 1 has stolen a card from Com 3")
+
+            // Checks if cardToStealFromPlayer is undefined 
+            if(cardToStealFromPlayer === undefined) {
+                // Re-choses target
+                stealCard()
+            }
+
+            // Returns stolen card to add to Com 1's hand
+            return cardToStealFromPlayer
+    }
 }
 
 // Exports as a module 

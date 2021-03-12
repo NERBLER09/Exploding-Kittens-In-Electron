@@ -1,7 +1,7 @@
 const $ = require("jquery")
 
 import { cards } from "./messages.js"
-import { removeDrawnCardFromDeck, updateVariable } from "./gameFunctions.js";
+import { removeDrawnCardFromDeck, turnsNeedToPlay, updateVariable } from "./gameFunctions.js";
 import { choseAndPlayCardForCom3 } from "./com3Script.js";
 
 // Stores the cards in com 2's hand
@@ -33,7 +33,7 @@ const choseAndPlayCardForCom2 = () => {
 
     // console.log(`Com 2 card to play: ${cardToPlay}`)
 
-    // Removes the played card from com 1's hand
+    // Removes the played card from com 2's hand
     const cardIndex = cardsInCom2Hand.indexOf(cardToPlay)
     cardsInCom2Hand.splice(cardIndex, 1)
 
@@ -51,13 +51,13 @@ const choseAndPlayCardForCom2 = () => {
         for(const card of cardsInCom2Hand) {
             // Matching card
             if(cardToPlay === card) {
-                // Removes the matching card from com 1's hand
+                // Removes the matching card from com 2's hand
                 const cardIndex = cardsInCom2Hand.indexOf(card)
                 cardsInCom2Hand.splice(cardIndex, 1)
 
                 const cardToSteal = cardsInCom2Hand[Math.floor(Math.random() * cardsInCom2Hand.length)]
 
-                // Steals a card and adds it to com 1's hand
+                // Steals a card and adds it to com 2's hand
                 addNewCardToHand(cardToSteal)
 
                 hasCatCard = true
@@ -70,7 +70,7 @@ const choseAndPlayCardForCom2 = () => {
 
         // Checks if there are no matching 
         if(hasCatCard == false) {
-            // Readds the played card back into com 1's hand
+            // Readds the played card back into com 2's hand
             cardsInCom2Hand.push(cardToPlay)
 
             // Re-chooses a card to play
@@ -116,9 +116,9 @@ const choseAndPlayCardForCom2 = () => {
 
             break
         case "favor":
-            $("#current_player_turn").html("Com 1 has played a favor card")
+            $("#current_player_turn").html("Com 2 has played a favor card")
             
-            // Adds the new favor card to com 1's hand
+            // Adds the new favor card to com 2's hand
             addNewCardToHand(cardsInCom2Hand[Math.floor(Math.random() * cardsInCom2Hand.length)])
 
             // Draws the card
@@ -129,7 +129,7 @@ const choseAndPlayCardForCom2 = () => {
 
     // Checks if a nope was played to re-choose 
     if(cardToPlay === "nope") {
-        // Readds the played card back into com 1's hand
+        // Readds the played card back into com 2's hand
         cardsInCom2Hand.push(cardToPlay)
 
         // Re-chooses a card to play
@@ -137,9 +137,8 @@ const choseAndPlayCardForCom2 = () => {
     }
 }
 
-// Draws a card to com 1
+// Draws a card to com 2
 const drawCard = () => {
-
     // Choses a card
     const cardIndex = Math.floor(Math.random() * cards.length)
     const card = cards[cardIndex];
@@ -150,31 +149,51 @@ const drawCard = () => {
     // Removes the drawn card from the deck
     removeDrawnCardFromDeck(card)
 
-    // Checks if there are 3 com players 
-    const comAmount = localStorage.getItem("comAmount")
+    // When Com 2 draws, checks if Com 2 has additional turns
+    // (If Com 2 has played an attack card or not)
 
-    // Checks if there are 3 selected computer players
-    if(comAmount === "3comPlayer") {
-        // Sets a time pause
-        setTimeout(() => {
-            $("#current_player_turn").html("It's now Com 3's turn")
-        }, 2000);
+    // Com 2 has no additional turns
 
-        // Makes it be com 3's turn
-        choseAndPlayCardForCom3()
+    if(turnsNeedToPlay == 0) {
+        // Checks if there are 3 com players 
+        const comAmount = localStorage.getItem("comAmount")
+
+        // Checks if there are 3 selected computer players
+        if(comAmount === "3comPlayer") {
+            // Sets a time pause
+            setTimeout(() => {
+                $("#current_player_turn").html("It's now Com 3's turn")
+
+                // Makes it be com 3's turn
+                choseAndPlayCardForCom3()
+            }, 2000);
+        }
+        else if(comAmount !== "3comPlayer"){
+            // Sets a time pause
+            setTimeout(() => {
+                $("#current_player_turn").html("It's now your turn")
+            }, 2000);
+
+            // Makes it be the players turn
+            updateVariable("isPlayerTurn", true)
+        }    
     }
-    else if(comAmount !== "3comPlayer"){
-        // Sets a time pause
-        setTimeout(() => {
-            $("#current_player_turn").html("It's now your turn")
-        }, 2000);
 
-        // Makes it be the players turn
-        updateVariable("isPlayerTurn", true)
-    }    
+    // Com 2 has additional turns
+
+    else {
+        // Removes 2 from turnsNeedToPlay to have Com 2 has 2 less turn
+        updateVariable("removeFromTurnsNeedToPlay")
+
+        // Sets a time pause 
+        setTimeout(() => {
+            // Makes it be Com 2's turn again
+            choseAndPlayCardForCom2()   
+        }, 2000);
+    }
 }
 
-// Adds a card gotten from a favor or by playing 2 cat cards to com 1's hand
+// Adds a card gotten from a favor or by playing 2 cat cards to com 2's hand
 const addNewCardToHand = (cardToAdd: string) => {
     console.log(`Com 2's new card is ${cardToAdd}`)
 

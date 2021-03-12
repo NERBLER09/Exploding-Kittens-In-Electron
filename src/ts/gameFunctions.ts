@@ -17,7 +17,7 @@ let totalCardAmount = 51
 let isPlayerTurn = true
 
 // Stores the amount of cards the player has
-let turnsNeedToPlay = 0
+let turnsNeedToPlay = 1
 
 let seeTheFutureCards = []
 
@@ -26,7 +26,7 @@ const drawCard = () => {
     // Checks if its the players turn
     if(isPlayerTurn === true) {
         // Checks if there are still cards in the deck
-        if(totalCardAmount != 0) {
+        if(totalCardAmount > 1) {
             // Checks a see the future card was drawn, if so add from the top three cards
             if(seeTheFutureCards.length !== 0) {
                 // Gets the top card
@@ -66,6 +66,9 @@ const drawCard = () => {
             // Changes the current_player_turn text
             if(isPlayerTurn == false && turnsNeedToPlay <= 0) {
                 $("#current_player_turn").html("It's com 1's turn")
+
+                // Resets turnsNeedToPlay to 0 to fix some bugs
+                turnsNeedToPlay = 0
 
                 // Makes it be com 1's turn
                 choseAndPlayCardForCom1()
@@ -142,8 +145,6 @@ const removeDrawnCardFromDeck = (cardToRemoveFromDeck: string) => {
 
 // Checks what card the player played so it can do its respective action
 const checkPlayerCardPlayed = (cardPLayed:string) => {
-    // TODO: Update card functionality to not only print the played card
-
     // Checks if the player played a cat card (can't be in the switch statement because of the multiple cards)
     if(cardPLayed == 'potato cat' || cardPLayed == 'taco cat' || cardPLayed == 'rainbow ralphing cat' || 
     cardPLayed == 'beard cat' || cardPLayed == 'cattermellon') {
@@ -164,9 +165,16 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             break
         case "attack":
             console.log("Player played a attack")
-            // attackCardPlayed = true
-            turnsNeedToPlay+=2
-            $("#current_player_turn").html(`You now have ${turnsNeedToPlay} turns`)
+
+            // Displays that it's now com 1's turn and that com 1 has 2 turns
+            $("current_player_turn").html(`It it now Com 1's turn. Com 1 has 2 turns because you played an attack card`)
+            
+            // Makes com 1 have 2 turns 
+            turnsNeedToPlay += 2 
+
+            // Makes it be Com 1's turn
+            choseAndPlayCardForCom1()
+
             break
         case "shuffle":
             // Card is a placebo, this card really dose nothing
@@ -246,7 +254,8 @@ const displayNewCard = (displayCard) => {
 }
 
 // Updates a specified variable
-const updateVariable = (variableToUpdate: string, status?: boolean, amount?: number) => {
+const updateVariable = (variableToUpdate: "isPlayerTurn" | "turnsNeedToPlay" | "seeTheFutureCards" | "removeFromTurnsNeedToPlay", 
+                        status?: boolean) => {
     // Enters a switch statement
     switch(variableToUpdate) {
         case "isPlayerTurn":
@@ -274,6 +283,10 @@ const updateVariable = (variableToUpdate: string, status?: boolean, amount?: num
 
                 console.log(`The Current Top 3 Cards: 1. ${seeTheFutureCards[0]},
                 2. ${seeTheFutureCards[1]}, 3. ${seeTheFutureCards[2]} `)
+
+            break
+        case "removeFromTurnsNeedToPlay":
+            turnsNeedToPlay-=1
 
             break
     }
@@ -487,5 +500,6 @@ export {
     drawCard,
     playCard,
     removeDrawnCardFromDeck,
-    updateVariable
+    updateVariable,
+    turnsNeedToPlay
 }

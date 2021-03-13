@@ -116,10 +116,11 @@ const choseAndPlayCardForCom1 = () => {
 
             break
         case "favor":
-            $("#current_player_turn").html("Com 1 has played a favor card")
+            // Ask for a card from the player of choice
+            const givenCard = askCardForFavor()
 
-            // Adds the new favor card to com 1's hand
-            addNewCardToHand(cardsInCom1Hand[Math.floor(Math.random() * cardsInCom1Hand.length)])
+            // Adds the given card to Com 1's hand
+            cardsInCom1Hand.push(givenCard)
 
             // Draws the card
             drawCardForCom1()
@@ -244,9 +245,23 @@ const stealCard = () => {
     // 1 - The Player
     // 2 - Com 2
     // 3 - Com 3
-    const stealCardTarget = Math.floor(Math.random() * 3)
+    let stealCardTarget: number
 
-    console.log(stealCardTarget)
+    // Check how many com players were selected 
+    switch(localStorage.getItem("comAmount")) {
+        case "1comPlayer":
+            stealCardTarget = 1
+
+            break
+        case "2comPlayer":
+            stealCardTarget = Math.floor(Math.random() * 3)
+
+            break
+        case "3comPlayer":
+            stealCardTarget = Math.floor(Math.random() * 4)
+
+            break
+    }
     
     let cardIndex: number
     let cardToStealFromPlayer: string
@@ -314,6 +329,89 @@ const stealCard = () => {
 
             // Returns stolen card to add to Com 1's hand
             return cardToStealFromPlayer
+    }
+}
+
+// Choses a player to ask for a favor from
+const askCardForFavor = () => {
+    // Choses which player to ask for a favor
+    // 1 - The Player
+    // 2 - Com 2
+    // 3 - Com 3
+
+    let favorCardTarget: number
+
+    // Check how many com players were selected 
+    switch(localStorage.getItem("comAmount")) {
+        case "1comPlayer":
+            favorCardTarget = 1
+
+            break
+        case "2comPlayer":
+            favorCardTarget = Math.floor(Math.random() * 3)
+
+            break
+        case "3comPlayer":
+            favorCardTarget = Math.floor(Math.random() * 4)
+
+            break
+    }
+
+    console.log(favorCardTarget)
+
+    let cardIndex: number
+    let cardToGive: string
+
+    // Asks a favor from the correct player
+    switch(favorCardTarget) {
+        case 1:
+            // Asks for a card from the player
+
+            // TODO: Allow the Player to chose a card to give to Com 1
+
+            console.error("Can't ask for a card from the player")
+
+            askCardForFavor()
+
+            break
+        case 2:
+            // Asks for a card from com 2
+
+            // Picks a random card from com 2's hand
+            cardIndex = Math.floor(Math.random() * cardsInCom2Hand.length)
+            cardToGive = cardsInCom2Hand[cardIndex]
+
+            // Removes the card from com 2's hand
+            cardsInCom2Hand.splice(cardIndex, 1)
+
+            // Displays that Com 1 asked for a card from Com 2
+            console.log(`Com 1 got a ${cardToGive} card from Com 2`)
+            $("#current_player_turn").html("Com 1 ask for a card from Com 2")
+
+            // Returns the given card 
+            return cardToGive
+        case 3:
+            // Asks for a card from com 3
+
+            // Picks a random card from com 3's hand
+            cardIndex = Math.floor(Math.random() * cardsInCom3Hand.length)
+            cardToGive = cardsInCom3Hand[cardIndex]
+
+            // Removes the card from com 3's hand
+            cardsInCom3Hand.splice(cardIndex, 1)
+
+            // Displays that Com 1 asked for a card from Com 3
+            console.log(`Com 1 got a ${cardToGive} card from Com 3`)
+            $("#current_player_turn").html("Com 1 ask for a card from Com 3")
+
+            // Returns the given card 
+            return cardToGive
+
+        default:
+            console.error("Unknown player to ask for favor card")
+
+            askCardForFavor()
+
     }
 }
 

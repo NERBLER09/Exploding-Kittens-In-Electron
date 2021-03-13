@@ -6,7 +6,7 @@
 import { playerCardsInHand, cards, cardAmounts } from "./messages.js"
 import { choseAndPlayCardForCom1, cardsInCom1Hand } from "./com1Script.js";
 import { cardsInCom2Hand } from "./com2Script.js";
-import { cardsInCom3Hand } from "./com3Script.js";
+import { cardsInCom3Hand, choseAndPlayCardForCom3 } from "./com3Script.js";
 
 const $ = require("jquery")
 
@@ -22,7 +22,7 @@ let turnsNeedToPlay = 1
 let seeTheFutureCards = []
 
 // Draws a card for the player
-const drawCard = () => {
+const drawCardForPlayer = () => {
     // Checks if its the players turn
     if(isPlayerTurn === true) {
         // Checks if there are still cards in the deck
@@ -71,7 +71,8 @@ const drawCard = () => {
                 turnsNeedToPlay = 0
 
                 // Makes it be com 1's turn
-                choseAndPlayCardForCom1()
+                // choseAndPlayCardForCom1()
+                choseAndPlayCardForCom3()
             }
             else{
                 $("#current_player_turn").html(`Amount of turns left: ${turnsNeedToPlay}`)
@@ -497,7 +498,7 @@ const stealCardFromComPlayer = (comTarget) => {
 // Exports as module
 export {
     displayDrawnCard,
-    drawCard,
+    drawCardForPlayer as drawCard,
     playCard,
     removeDrawnCardFromDeck,
     updateVariable,

@@ -3,10 +3,10 @@
 // drawing a card for a player, and
 // and the onclick function for the player cards
 
-import { playerCardsInHand, cards, cardAmounts } from "./messages.js"
-import { choseAndPlayCardForCom1, cardsInCom1Hand } from "./com1Script.js";
-import { cardsInCom2Hand } from "./com2Script.js";
-import { cardsInCom3Hand, choseAndPlayCardForCom3 } from "./com3Script.js";
+import { playerCardsInHand, cards, cardAmounts, comPlayerPlayedFavor } from "./messages.js"
+import { choseAndPlayCardForCom1, cardsInCom1Hand, drawCardForCom1 } from "./com1Script.js";
+import { cardsInCom2Hand, drawCardForCom2 } from "./com2Script.js";
+import { cardsInCom3Hand, drawCardForCom3 } from "./com3Script.js";
 
 const $ = require("jquery")
 
@@ -25,59 +25,61 @@ let seeTheFutureCards = []
 const drawCardForPlayer = () => {
     // Checks if its the players turn
     if(isPlayerTurn === true) {
-        // Checks if there are still cards in the deck
-        if(totalCardAmount > 1) {
-            // Checks a see the future card was drawn, if so add from the top three cards
-            if(seeTheFutureCards.length !== 0) {
-                // Gets the top card
-                const card = seeTheFutureCards[0]
+        // Checks if a com player has played a favor card (Prevents the game from breaking)
+        if(comPlayerPlayedFavor["favorCardPlayed"] == false ) {
+            // Checks if there are still cards in the deck
+            if(totalCardAmount > 1) {
+                // Checks a see the future card was drawn, if so add from the top three cards
+                if(seeTheFutureCards.length !== 0) {
+                    // Gets the top card
+                    const card = seeTheFutureCards[0]
 
-                // Removes the top card from the list
-                seeTheFutureCards.splice(0, 1)
+                    // Removes the top card from the list
+                    seeTheFutureCards.splice(0, 1)
 
-                // Removes the drawn card from the deck
-                removeDrawnCardFromDeck(card)
+                    // Removes the drawn card from the deck
+                    removeDrawnCardFromDeck(card)
 
-                // Displays the drawn card
-                displayDrawnCard(card)
-            } else {
-                // Choses a card
-                const cardIndex = Math.floor(Math.random() * cards.length)
-                const card = cards[cardIndex];
+                    // Displays the drawn card
+                    displayDrawnCard(card)
+                } else {
+                    // Choses a card
+                    const cardIndex = Math.floor(Math.random() * cards.length)
+                    const card = cards[cardIndex];
 
-                // Adds the drawn card the the list
-                playerCardsInHand.push(card)
+                    // Adds the drawn card the the list
+                    playerCardsInHand.push(card)
 
-                // console.log(`Card drawn is: ${card}. Index ${cardIndex}`)
+                    // console.log(`Card drawn is: ${card}. Index ${cardIndex}`)
 
-                // Removes the drawn card from the deck
-                removeDrawnCardFromDeck(card)
+                    // Removes the drawn card from the deck
+                    removeDrawnCardFromDeck(card)
 
-                // Displays the drawn card
-                displayDrawnCard(card)
-            }
+                    // Displays the drawn card
+                    displayDrawnCard(card)
+                }
 
-            // Removes 1 from the turnsNeedToPlay
-            turnsNeedToPlay-=1
+                // Removes 1 from the turnsNeedToPlay
+                turnsNeedToPlay-=1
 
-            // Checks if the player has any more cars
-            isPlayerTurn = turnsNeedToPlay <= 0 ? false : true
+                // Checks if the player has any more cars
+                isPlayerTurn = turnsNeedToPlay <= 0 ? false : true
 
-            // Changes the current_player_turn text
-            if(isPlayerTurn == false && turnsNeedToPlay <= 0) {
-                $("#current_player_turn").html("It's com 1's turn")
+                // Changes the current_player_turn text
+                if(isPlayerTurn == false && turnsNeedToPlay <= 0) {
+                    $("#current_player_turn").html("It's com 1's turn")
 
-                // Resets turnsNeedToPlay to 0 to fix some bugs
-                turnsNeedToPlay = 0
+                    // Resets turnsNeedToPlay to 0 to fix some bugs
+                    turnsNeedToPlay = 0
 
-                // Makes it be com 1's turn
-                // choseAndPlayCardForCom1()
-                choseAndPlayCardForCom3()
-            }
-            else{
-                $("#current_player_turn").html(`Amount of turns left: ${turnsNeedToPlay}`)
-            }
-        }        
+                    // Makes it be com 1's turn
+                    choseAndPlayCardForCom1()
+                }
+                else{
+                    $("#current_player_turn").html(`Amount of turns left: ${turnsNeedToPlay}`)
+                }
+            }  
+        }     
     }        
 }
 
@@ -96,29 +98,83 @@ const displayDrawnCard = (cardToDisplay:string) => {
 // Function for when the player plays a card
 const playCard = (playerCard) => {
     // Checks if its the player's turn
-    if(isPlayerTurn === true) {
+    if(isPlayerTurn === true || comPlayerPlayedFavor["favorCardPlayed"] == true) {
         const cardPlayed = playerCard.data.param1
 
         // Loops through the cards in the player hand
         for(const checkForCardInHand of playerCardsInHand) {
             // Checks if the looped card matches the played card
             if(checkForCardInHand === cardPlayed) {
-                let cardIndex = playerCardsInHand.indexOf(cardPlayed)
-
-                // Removes the played card from the playerCardsInHand list
-                playerCardsInHand.splice(cardIndex, 1)
+                const cardIndex = playerCardsInHand.indexOf(cardPlayed)
 
                 // Hides the played card
                 $(".player_cards").get(cardIndex).remove()
 
-                // Checks what card is played
-                checkPlayerCardPlayed(checkForCardInHand)
+                // Checks if a com player has played a favor card and has asked the player
+                if(comPlayerPlayedFavor["favorCardPlayed"] === false) {
+                    // Removes the played card from the playerCardsInHand list
+                    playerCardsInHand.splice(cardIndex, 1)
+
+                    // Checks what card is played
+                    checkPlayerCardPlayed(checkForCardInHand)
+                }
+                else {
+                    // Tells the player which card they game to a com player
+                    $("#current_player_turn").html(`You gave you ${playerCardsInHand[cardIndex]} to ${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]}`)
+                
+                    // Checks what com player played the favor card
+                    switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
+                        case "Com 1":
+                            // Adds the given card to Com 1's hand 
+                            cardsInCom1Hand.push()
+
+                            // Resets the comPlayerPlayedFavor list 
+                            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
+                            comPlayerPlayedFavor["favorCardPlayed"] = null
+
+                            // Makes Com 1 draw a card (Allows the game to not get soft-locked)
+                            drawCardForCom1()
+
+                            break
+                        
+                        case "Com 2":
+                            // Adds the given card to Com 2's hand 
+                            cardsInCom2Hand.push()
+
+                            // Resets the comPlayerPlayedFavor list 
+                            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
+                            comPlayerPlayedFavor["favorCardPlayed"] = null
+
+                            // Makes Com 2 draw a card (Allows the game to not get soft-locked)
+                            drawCardForCom2()
+
+                            break
+
+                        case "Com 3":
+                            // Adds the given card to Com 2's hand 
+                            cardsInCom3Hand.push()
+
+                            // Resets the comPlayerPlayedFavor list 
+                            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
+                            comPlayerPlayedFavor["favorCardPlayed"] = null
+
+                            // Makes Com 3 draw a card (Allows the game to not get soft-locked)
+                            drawCardForCom3()
+                            break                            
+                    }
+
+                    // Removes the card from the players hand
+                    playerCardsInHand.splice(cardIndex, 1)
+
+                    // Makes it not bes the player's turn 
+                    isPlayerTurn = false
+                }
 
                 // Breaks the loop
                 break
             } 
         }   
-    }   
+    }
 }
 
 // Removes the drawn card from the deck

@@ -28,10 +28,18 @@ let cards = ['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
     'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
 
+// Stores if a com player has played a favor and who played the favor
+// Used when a com player asks a card from the player to give it to the right com player
+const comPlayerPlayedFavor = {
+    favorCardPlayed: false,
+    comPlayerWhoPlayedFavor: null
+}
+
 // Exports as module
 export {
     cardAmounts,
     messages,
     cards,
-    playerCardsInHand
+    playerCardsInHand,
+    comPlayerPlayedFavor
 }

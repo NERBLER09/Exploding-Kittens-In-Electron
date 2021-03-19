@@ -1,6 +1,6 @@
 const $ = require("jquery")
 
-import { cards, playerCardsInHand } from "./messages.js"
+import { cards, comPlayerPlayedFavor, playerCardsInHand } from "./messages.js"
 import { removeDrawnCardFromDeck, turnsNeedToPlay, updateVariable } from "./gameFunctions.js";
 import { cardsInCom3Hand, choseAndPlayCardForCom3 } from "./com3Script.js";
 import { cardsInCom1Hand } from "./com1Script.js";
@@ -50,7 +50,7 @@ const choseAndPlayCardForCom2 = () => {
         catCardPlayed(cardToPlay)
 
         // Draws a card
-        drawCard()
+        drawCardForCom2()
     }
 
     // Plays the card (Checks what card was played)
@@ -101,7 +101,7 @@ const choseAndPlayCardForCom2 = () => {
             $("#current_player_turn").html("Com 2 has played a shuffle card")
 
             // Draws the card
-            drawCard()
+            drawCardForCom2()
 
             break
         case "see the future":
@@ -111,18 +111,43 @@ const choseAndPlayCardForCom2 = () => {
             updateVariable("seeTheFutureCards")
 
             // Draws the card
-            drawCard()
+            drawCardForCom2()
 
             break
         case "favor":
-            // Ask for a card from the player of choice
-            const givenCard = askCardForFavor()
+            // Choses which player to ask for a favor
+            // 1 - The Player
+            // 2 - Com 1
+            // 3 - Com 3
 
-            // Adds the given card to Com 1's hand
-            cardsInCom2Hand.push(givenCard)
+            let favorCardTarget: number
 
-            // Draws the card
-            // drawCardForCom2()
+            // Check how many com players were selected 
+            switch(localStorage.getItem("comAmount")) {
+                case "2comPlayer":
+                    favorCardTarget = Math.floor(Math.random() * 3)
+
+                    break
+                case "3comPlayer":
+                    favorCardTarget = Math.floor(Math.random() * 4)
+
+                    break
+            }
+
+            // Checks if selected target has a return in switch statement 
+            if(favorCardTarget == 1) {
+                askCardForFavor(favorCardTarget)
+            }
+            else {
+                // Ask for a card from the player of choice
+                const givenCard = askCardForFavor(favorCardTarget)
+
+                // Adds the given card to Com 1's hand
+                cardsInCom1Hand.push(givenCard)
+
+                // Draws the card
+                drawCardForCom2()
+            }
 
             break
     }
@@ -138,7 +163,7 @@ const choseAndPlayCardForCom2 = () => {
 }
 
 // Draws a card to com 2
-const drawCard = () => {
+const drawCardForCom2 = () => {
     // Choses a card
     const cardIndex = Math.floor(Math.random() * cards.length)
     const card = cards[cardIndex];
@@ -325,30 +350,7 @@ const stealCard = () => {
 }
 
 // Choses a player to ask for a favor from
-const askCardForFavor = () => {
-    // Choses which player to ask for a favor
-    // 1 - The Player
-    // 2 - Com 1
-    // 3 - Com 3
-
-    let favorCardTarget: number
-
-    // Check how many com players were selected 
-    switch(localStorage.getItem("comAmount")) {
-        case "1comPlayer":
-            favorCardTarget = 1
-
-            break
-        case "2comPlayer":
-            favorCardTarget = Math.floor(Math.random() * 3)
-
-            break
-        case "3comPlayer":
-            favorCardTarget = Math.floor(Math.random() * 4)
-
-            break
-    }
-
+const askCardForFavor = (favorCardTarget: number) => {
     console.log(favorCardTarget)
 
     let cardIndex: number
@@ -359,11 +361,12 @@ const askCardForFavor = () => {
         case 1:
             // Asks for a card from the player
 
-            // TODO: Allow the Player to chose a card to give to Com 1
+            // Tells the player to give a card to Com 1
+            $("#current_player_turn").html("Com 2 has asked you for a favor card. Click on a card to give it to Com 2")
 
-            console.error("Can't ask for a card from the player")
-
-            askCardForFavor()
+            // Adds the needed information to comPlayerPlayedFavor list 
+            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = "Com 2"
+            comPlayerPlayedFavor["favorCardPlayed"] = true
 
             break
         case 2:
@@ -404,7 +407,7 @@ const askCardForFavor = () => {
         default:
             console.error("Unknown player to ask for favor card")
 
-            askCardForFavor()
+            askCardForFavor(null)
 
     }
 }
@@ -413,5 +416,6 @@ const askCardForFavor = () => {
 export {
     dealCardsToCom2,
     choseAndPlayCardForCom2,
-    cardsInCom2Hand
+    cardsInCom2Hand,
+    drawCardForCom2
 }

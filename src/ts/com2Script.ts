@@ -22,17 +22,12 @@ const dealCardsToCom2 = () => {
         // Removes the drawn card from the deck
         removeDrawnCardFromDeck(card)
     }
-
-    // console.log("Com 2's hand")
-    // console.table(cardsInCom2Hand)
 }
 
 // Choses a card to play and plays the card
 const choseAndPlayCardForCom2 = () => {
     // Choses a card to play
     const cardToPlay = cardsInCom2Hand[Math.floor(Math.random() * cardsInCom2Hand.length)]
-
-    // console.log(`Com 2 card to play: ${cardToPlay}`)
 
     // Removes the played card from com 2's hand
     const cardIndex = cardsInCom2Hand.indexOf(cardToPlay)
@@ -150,15 +145,15 @@ const choseAndPlayCardForCom2 = () => {
             }
 
             break
-    }
 
-    // Checks if a nope was played to re-choose 
-    if(cardToPlay === "nope") {
-        // Readds the played card back into com 2's hand
-        cardsInCom2Hand.push(cardToPlay)
+        case "nope":
+            // Re-chooses a card to play
 
-        // Re-chooses a card to play
-        choseAndPlayCardForCom2()
+            // Readds the played card back into com 2's hand
+            cardsInCom2Hand.push(cardToPlay)
+
+            // Re-chooses a card to play
+            choseAndPlayCardForCom2()
     }
 }
 

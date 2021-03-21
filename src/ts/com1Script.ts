@@ -22,17 +22,12 @@ const dealCardsToCom1 = () => {
         // Removes the drawn card from the deck
         removeDrawnCardFromDeck(card)
     }
-
-    // console.log("Com 1's hand")
-    // console.table(cardsInCom1Hand)
 }
 
 // Choses a card to play and plays the card
 const choseAndPlayCardForCom1 = () => {
     // Choses a card to play from com 1's hand
     const cardToPlay = cardsInCom1Hand[Math.floor(Math.random() * cardsInCom1Hand.length)]
-
-    // console.log(`Com 1 card to play: ${cardToPlay}`)
 
     // Removes the played card from com 1's hand
     const cardIndex = cardsInCom1Hand.indexOf(cardToPlay)
@@ -68,6 +63,10 @@ const choseAndPlayCardForCom1 = () => {
 
             // There are 2 or more com players
             const comAmount = localStorage.getItem("comAmount")
+
+            // Checks how many com players are there
+
+            // More then 1 com player
 
             if(comAmount !== "1comPlayer") {
                 // Makes Com 2 has 2 turns 
@@ -155,15 +154,15 @@ const choseAndPlayCardForCom1 = () => {
             }
 
             break
-    }
 
-    // Checks if a nope was played to re-choose 
-    if (cardToPlay === "nope") {
-        // Readds the played card back into com 1's hand
-        cardsInCom1Hand.push(cardToPlay)
+        case "nope":
+            // Re-chooses card to play
 
-        // Re-chooses a card to play
-        choseAndPlayCardForCom1()
+            // Readds the played card back into com 1's hand
+            cardsInCom1Hand.push(cardToPlay)
+
+            // Re-chooses a card to play
+            choseAndPlayCardForCom1()
     }
 }
 
@@ -173,7 +172,7 @@ const drawCardForCom1 = () => {
     const cardIndex = Math.floor(Math.random() * cards.length)
     const card = cards[cardIndex];
 
-    // Adds the drawn card the the list
+    // Adds the drawn card to Com 1's hand
     cardsInCom1Hand.push(card)
 
     // Removes the drawn card from the deck
@@ -221,14 +220,6 @@ const drawCardForCom1 = () => {
     }
 }
 
-// Adds a card gotten from a favor or by playing 2 cat cards to com 1's hand
-const addNewCardToHand = (cardToAdd: string) => {
-    console.log(`Com 1's new card is ${cardToAdd}`)
-
-    // Adds the new card to the hand
-    cardsInCom1Hand.push(cardToAdd)
-}
-
 // Runs when com 1 has played 2 matching cat cards
 const catCardPlayed = (catCard: string) => {
     let hasCatCard = false
@@ -249,8 +240,8 @@ const catCardPlayed = (catCard: string) => {
                 // Re-choses a card 
             }
 
-            // Adds the stolen card to Com 2's hand
-            addNewCardToHand(cardToSteal)
+            // Adds the stolen card to Com 1's hand
+            cardsInCom1Hand.push(cardToSteal)
 
             hasCatCard = true
 

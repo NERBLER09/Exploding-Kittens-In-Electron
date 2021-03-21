@@ -21,30 +21,28 @@ function onLoadFunc() {
     // Displays the username
     $("#username").html(`Username: ${username}`)
 
-    // Displays the selected computer player amount
-    if(comPlayerAmount == "1comPlayer") {
-        $("#comAmount").html(`Selected amount of computer players: 1 computer player`)
+    // Checks how many com players where selected
+    switch(comPlayerAmount) {
+        case "1comPlayer":
+            $("#comAmount").html(`Selected amount of computer players: 1 computer player`)
 
-        // Deals the cards to computer player 1
-        dealCardsToCom1()
+            break
+
+        case "2comPlayer":
+            $("#comAmount").html(`Selected amount of computer players: 2 computer players`)
+
+            break
+
+        case "3comPlayer":
+            $("#comAmount").html(`Selected amount of computer players: 3 computer players`)
+
+            break
     }
 
-    else if(comPlayerAmount == "2comPlayer") {
-        $("#comAmount").html(`Selected amount of computer players: 2 computer players`)
-
-        // Deals the cards to computer player 1 and 2
-        dealCardsToCom1()
-        dealCardsToCom2()
-    }
-
-    else if(comPlayerAmount == "3comPlayer") {
-        $("#comAmount").html(`Selected amount of computer players: 3 computer players`)
-
-        // Deals the cards to computer player 1, 2, and 3
-        dealCardsToCom1()
-        dealCardsToCom2()
-        dealCardsToCom3()
-    }
+    // Deals the cards to every computer player
+    dealCardsToCom1()
+    dealCardsToCom2()
+    dealCardsToCom3()
 
     // Deals the 7 cards to the player
     for(let i = 0; i<7; i++) {

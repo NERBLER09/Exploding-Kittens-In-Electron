@@ -22,6 +22,9 @@ let totalCardAmount = 51
 // Stores the cards seen in a see the future
 let seeTheFutureCards = []
 
+// Stores if a exploding kittens card a drawn
+let explodingKittenCardDrawn = false
+
 // Draws a card for the player
 const drawCardForPlayer = () => {
     // Checks if its the players turn
@@ -47,36 +50,66 @@ const drawCardForPlayer = () => {
                 const cardIndex = Math.floor(Math.random() * cards.length)
                 const card = cards[cardIndex];
 
-                // Adds the drawn card the the list
-                playerCardsInHand.push(card)
+                // Checks if an Exploding Kittens card was drawn
 
-                // console.log(`Card drawn is: ${card}. Index ${cardIndex}`)
+                // Exploding Kitten card was not drawn
+                if(card !== "Exploding Kitten") {
+                    // Removes the drawn card from the deck
+                    removeDrawnCardFromDeck(card)
 
-                // Removes the drawn card from the deck
-                removeDrawnCardFromDeck(card)
+                    // Displays the drawn card
+                    displayDrawnCard(card)
 
-                // Displays the drawn card
-                displayDrawnCard(card)
-            }
+                    // Removes 1 from the turnsNeedToPlay
+                    turnsNeedToPlay-=1
 
-            // Removes 1 from the turnsNeedToPlay
-            turnsNeedToPlay-=1
+                    // Checks if the player has any more cars
+                    isPlayerTurn = turnsNeedToPlay <= 0 ? false : true
 
-            // Checks if the player has any more cars
-            isPlayerTurn = turnsNeedToPlay <= 0 ? false : true
+                    // Changes the current_player_turn text
+                    if(isPlayerTurn == false && comPlayerPlayedFavor["favorCardPlayed"] === false && turnsNeedToPlay <= 0) {
+                        $("#current_player_turn").html("It's com 1's turn")
 
-            // Changes the current_player_turn text
-            if(isPlayerTurn == false && comPlayerPlayedFavor["favorCardPlayed"] === false && turnsNeedToPlay <= 0) {
-                $("#current_player_turn").html("It's com 1's turn")
+                        // Resets turnsNeedToPlay to 0 to fix some bugs
+                        turnsNeedToPlay = 0
 
-                // Resets turnsNeedToPlay to 0 to fix some bugs
-                turnsNeedToPlay = 0
+                        // Makes it be com 1's turn
+                        choseAndPlayCardForCom1()
+                    }
+                    else{
+                        $("#current_player_turn").html(`Amount of turns left: ${turnsNeedToPlay}`)
+                    }
+                }
 
-                // Makes it be com 1's turn
-                choseAndPlayCardForCom1()
-            }
-            else{
-                $("#current_player_turn").html(`Amount of turns left: ${turnsNeedToPlay}`)
+                // Exploding Kitten card was drawn
+
+                else {
+                    explodingKittenCardDrawn = true
+
+                    // Checks if the player has a diffuse card in hand
+                    let playerHasDiffuse = false
+
+                    for(const playerCard in playerCardsInHand) {
+                        if(playerCardsInHand[playerCard] === "diffuse"){
+                            $("#current_player_turn").html("You've drawn an Exploding Kitten card, play your diffuse card to diffuse the Exploding Kitten")
+
+                            playerHasDiffuse = true
+
+                            break
+                        }
+                    }
+
+                    // Checks if the player has a diffuse card
+                    if(playerHasDiffuse === false) {
+                        // Tells the player that they have exploded 
+                        $("#current_player_turn").html("You've exploded! Go to: Options -> New Game to start a new game")
+
+                        isPlayerTurn = false
+
+                        // Removes the Exploding Kitten card from the deck
+                        removeDrawnCardFromDeck("Exploding Kitten")
+                    }
+                }
             }
         }  
     }           
@@ -92,6 +125,9 @@ const displayDrawnCard = (cardToDisplay:string) => {
 
     // Displays the card 
     $("#player_cards_container").append(card)
+
+    // Adds the drawn card to the player's hand
+    playerCardsInHand.push(cardToDisplay)
 }
 
 const playCard = (playerCard) => {
@@ -103,7 +139,7 @@ const playCard = (playerCard) => {
         const cardIndex = playerCardsInHand.indexOf(cardPlayed)
 
         // Checks if a com player has played a favor card
-        if(comPlayerPlayedFavor["favorCardPlayed"] === true) {
+        if(comPlayerPlayedFavor["favorCardPlayed"] === false) {
             // Checks what card is played
             checkPlayerCardPlayed(cardPlayed)
         }
@@ -244,6 +280,30 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
 
             // Re-adds the card back to the player's hand
             displayDrawnCard(cardPLayed)
+
+            break
+
+        case "diffuse":
+            // Checks if the player has drawn an Exploding Kitten
+            if(explodingKittenCardDrawn === true) {
+                explodingKittenCardDrawn = false
+
+                // Tells the player that they have diffused the Exploding Kitten
+                $("#current_player_turn").html("You have successfully diffused the Exploding Kitten card. It's now Com 1's turn")
+
+                // Sets a time pause
+                setTimeout(() => {
+                    // Makes it now be Com 1's turn
+                    choseAndPlayCardForCom1()                    
+                }, 1000);
+
+            }
+
+            else {
+                console.error("Player, you can't diffuse nothing.")
+
+                displayDrawnCard(cardPLayed)
+            }
 
             break
     }

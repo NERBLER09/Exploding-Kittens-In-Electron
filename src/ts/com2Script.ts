@@ -22,6 +22,12 @@ const dealCardsToCom2 = () => {
         // Removes the drawn card from the deck
         removeDrawnCardFromDeck(card)
     }
+
+    // Deals the diffuse card to com 2
+    cardsInCom2Hand.push("diffuse")
+
+    // Removes the diffuse card from the 
+    removeDrawnCardFromDeck("diffuse")
 }
 
 // Choses a card to play and plays the card
@@ -160,55 +166,134 @@ const choseAndPlayCardForCom2 = () => {
 // Draws a card to com 2
 const drawCardForCom2 = () => {
     // Choses a card
-    const cardIndex = Math.floor(Math.random() * cards.length)
-    const card = cards[cardIndex];
+    // const cardIndex = Math.floor(Math.random() * cards.length)
+    // const card = cards[cardIndex];
 
-    // Adds the drawn card the the list
-    cardsInCom2Hand.push(card)
+    const card = "Exploding Kitten"
 
-    // Removes the drawn card from the deck
-    removeDrawnCardFromDeck(card)
+    // Checks if Com 2 has drawn an Exploding Kitten
 
-    // When Com 2 draws, checks if Com 2 has additional turns
-    // (If Com 2 has played an attack card or not)
+    // Exploding Kitten was not drawn
 
-    // Com 2 has no additional turns
+    if(card !== "Exploding Kitten") {
+        // Adds the drawn card the the list
+        cardsInCom2Hand.push(card)
 
-    if(turnsNeedToPlay == 0) {
-        // Checks if there are 3 com players 
-        const comAmount = localStorage.getItem("comAmount")
+        // Removes the drawn card from the deck
+        removeDrawnCardFromDeck(card)
 
-        // Checks if there are 3 selected computer players
-        if(comAmount === "3comPlayer") {
-            // Sets a time pause
+        // When Com 2 draws, checks if Com 2 has additional turns
+        // (If Com 2 has played an attack card or not)
+
+        // Com 2 has no additional turns
+
+        if(turnsNeedToPlay == 0) {
+            // Checks if there are 3 com players 
+            const comAmount = localStorage.getItem("comAmount")
+
+            // Checks if there are 3 selected computer players
+            if(comAmount === "3comPlayer") {
+                // Sets a time pause
+                setTimeout(() => {
+                    $("#current_player_turn").html("It's now Com 3's turn")
+
+                    // Makes it be com 3's turn
+                    choseAndPlayCardForCom3()
+                }, 2000);
+            }
+            else if(comAmount !== "3comPlayer"){
+                // Sets a time pause
+                setTimeout(() => {
+                    $("#current_player_turn").html("It's now your turn")
+                }, 2000);
+
+                // Makes it be the players turn
+                updateVariable("isPlayerTurn", true)
+            }    
+        }
+
+        // Com 2 has additional turns
+
+        else {
+            // Removes 2 from turnsNeedToPlay to have Com 2 has 2 less turn
+            updateVariable("removeFromTurnsNeedToPlay")
+
+            // Sets a time pause 
             setTimeout(() => {
-                $("#current_player_turn").html("It's now Com 3's turn")
-
-                // Makes it be com 3's turn
-                choseAndPlayCardForCom3()
+                // Makes it be Com 2's turn again
+                choseAndPlayCardForCom2()   
             }, 2000);
         }
-        else if(comAmount !== "3comPlayer"){
-            // Sets a time pause
-            setTimeout(() => {
-                $("#current_player_turn").html("It's now your turn")
-            }, 2000);
-
-            // Makes it be the players turn
-            updateVariable("isPlayerTurn", true)
-        }    
     }
 
-    // Com 2 has additional turns
+    // Exploding Kitten was drawn
 
     else {
-        // Removes 2 from turnsNeedToPlay to have Com 2 has 2 less turn
-        updateVariable("removeFromTurnsNeedToPlay")
+        // Tells the player that Com 2 has drawn an Exploding Kitten card
+        $("#current_player_turn").html("Com 2 has drawn an Exploding Kitten!")
 
-        // Sets a time pause 
+        let com1HasDiffuseCard = false
+
+        // Sets a time pause
         setTimeout(() => {
-            // Makes it be Com 2's turn again
-            choseAndPlayCardForCom2()   
+            // Checks if Com 2 has a diffuse card   
+            for(const card of cardsInCom1Hand) {
+                if(card === "diffuse") {
+                    com1HasDiffuseCard = true
+
+                    break   
+                }
+            }
+
+            // Checks if Com 2 didn't have a diffuse card
+            if(com1HasDiffuseCard === false) {
+                setTimeout(() => {
+                    // Dose nothing here
+                }, 1000);
+
+                // Tells the player that Com 2 has exploded
+                $("#current_player_turn").html("Com 2 has exploded! You won!")
+            }
+            else {
+                // Diffuses the Exploding Kitten card
+
+                // Removes the diffuse card from Com 2's hand 
+                const cardIndex = cardsInCom1Hand.indexOf(card)
+
+                cardsInCom1Hand.splice(cardIndex, 1)
+
+                setTimeout(() => {
+                    // Dose nothing here 
+                }, 1000);
+
+                // Tells the player the Com 2 has diffused the Exploding Kitten
+                $("#current_player_turn").html("Com 2 has diffused the Exploding Kitten")
+
+                // Makes it be Com 3's turn
+
+                // Checks if there are 2 or 3 selected computer players
+                const comAmount = localStorage.getItem("comAmount")
+
+                // Checks if there are 3 selected computer players
+                if(comAmount === "3comPlayer") {
+                    // Sets a time pause
+                    setTimeout(() => {
+                        $("#current_player_turn").html("It's now Com 3's turn")
+
+                        // Makes it be com 3's turn
+                        choseAndPlayCardForCom3()
+                    }, 2000);
+                }
+                else if(comAmount !== "3comPlayer"){
+                    // Sets a time pause
+                    setTimeout(() => {
+                        $("#current_player_turn").html("It's now your turn")
+                    }, 2000);
+
+                    // Makes it be the players turn
+                    updateVariable("isPlayerTurn", true)
+                }  
+            }
         }, 2000);
     }
 }

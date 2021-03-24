@@ -22,6 +22,12 @@ const dealCardsToCom3 = () => {
         // Removes the drawn card from the deck
         removeDrawnCardFromDeck(card)
     }
+
+    // Deals the diffuse card to com 3
+    cardsInCom3Hand.push("diffuse")
+
+    // Removes the diffuse card from the 
+    removeDrawnCardFromDeck("diffuse")
 }
 
 // Choses a card to play and plays the card
@@ -128,43 +134,107 @@ const choseAndPlayCardForCom3 = () => {
 // Draws a card to com 3
 const drawCardForCom3 = () => {
     // Choses a card
-    const cardIndex = Math.floor(Math.random() * cards.length)
-    const card = cards[cardIndex];
+    // const cardIndex = Math.floor(Math.random() * cards.length)
+    // const card = cards[cardIndex];
 
-    // Adds the drawn card the the list
-    cardsInCom3Hand.push(card)
+    const card = "Exploding Kitten"
 
-    // Removes the drawn card from the deck
-    removeDrawnCardFromDeck(card)
+    // Checks if Com 3 has drawn an Exploding Kitten
 
-    // When Com 3 draws, checks if Com 3 has additional turns
-    // (If Com 3 has played an attack card or not)
+    // Exploding Kitten was not drawn
 
-    // Com 3 has no additional turns
+    if(card !== "Exploding Kitten") {
+        // Adds the drawn card the the list
+        cardsInCom3Hand.push(card)
 
-    if(turnsNeedToPlay == 0) {
-        // Sets a time pause
-        setTimeout(() => {
-            $("#current_player_turn").html("It's now your turn")
-        }, 2000);
+        // Removes the drawn card from the deck
+        removeDrawnCardFromDeck(card)
 
-        // Makes it be the players turn
-        updateVariable("isPlayerTurn", true)
+        // When Com 3 draws, checks if Com 3 has additional turns
+        // (If Com 3 has played an attack card or not)
+
+        // Com 3 has no additional turns
+
+        if(turnsNeedToPlay == 0) {
+            // Sets a time pause
+            setTimeout(() => {
+                $("#current_player_turn").html("It's now your turn")
+            }, 2000);
+
+            // Makes it be the players turn
+            updateVariable("isPlayerTurn", true)
+        }
+
+        // Com 3 has additional turns
+
+        else {
+            // Removes 3 from turnsNeedToPlay to have Com 3 has 3 less turn
+            updateVariable("removeFromTurnsNeedToPlay")
+
+            // Sets a time pause 
+            setTimeout(() => {
+                // Makes it be Com 3's turn again
+                choseAndPlayCardForCom3()   
+            }, 2000);
+        }
     }
 
-    // Com 3 has additional turns
+    // Exploding Kitten was drawn
 
     else {
-        // Removes 3 from turnsNeedToPlay to have Com 3 has 3 less turn
-        updateVariable("removeFromTurnsNeedToPlay")
+        // Tells the player that Com 3 has drawn an Exploding Kitten card
+        $("#current_player_turn").html("Com 3 has drawn an Exploding Kitten!")
 
-        // Sets a time pause 
+        let com1HasDiffuseCard = false
+
+        // Sets a time pause
         setTimeout(() => {
-            // Makes it be Com 3's turn again
-            choseAndPlayCardForCom3()   
+            // Checks if Com 3 has a diffuse card   
+            for(const card of cardsInCom1Hand) {
+                if(card === "diffuse") {
+                    com1HasDiffuseCard = true
+
+                    break   
+                }
+            }
+
+            // Checks if Com 3 didn't have a diffuse card
+            if(com1HasDiffuseCard === false) {
+                setTimeout(() => {
+                    // Dose nothing here
+                }, 1000);
+
+                // Tells the player that Com 3 has exploded
+                $("#current_player_turn").html("Com 3 has exploded! You won!")
+            }
+            else {
+                // Diffuses the Exploding Kitten card
+
+                // Removes the diffuse card from Com 3's hand 
+                const cardIndex = cardsInCom1Hand.indexOf(card)
+
+                cardsInCom1Hand.splice(cardIndex, 1)
+
+                setTimeout(() => {
+                    // Dose nothing here 
+                }, 1000);
+
+                // Tells the player the Com 3 has diffused the Exploding Kitten
+                $("#current_player_turn").html("Com 3 has diffused the Exploding Kitten")
+
+                // Makes it be the player's turn
+
+                // Sets a time pause
+                setTimeout(() => {
+                    $("#current_player_turn").html("It's now your turn")
+                }, 2000);
+
+                // Makes it be the players turn
+                updateVariable("isPlayerTurn", true)
+            }
         }, 2000);
     }
-}
+}   
 
 // Adds a card gotten from a favor or by playing 3 cat cards to com 3's hand
 const addNewCardToHand = (cardToAdd: string) => {
@@ -189,7 +259,7 @@ const catCardPlayed = (catCard: string) => {
                 // Steals a random card from a chosen player
                 const cardToSteal = stealCard()
 
-                // Adds the stolen card to Com 2's hand
+                // Adds the stolen card to Com 3's hand
                 addNewCardToHand(cardToSteal)
 
                 hasCatCard = true

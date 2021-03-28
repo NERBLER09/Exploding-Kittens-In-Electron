@@ -1,0 +1,35 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Exploding Kitten Logo" filter="url(#filter0_d)">
+<rect width="180" height="180" transform="translate(4)" fill="#A50000"/>
+<g id="Body">
+<path id="Vector 1" d="M57.9843 106.5C75.2835 71.8139 124.984 66.5 112.984 71" stroke="black"/>
+<path id="Vector 2" d="M58.4842 106C21.9843 147.5 151.484 125 151.484 125" stroke="black"/>
+<path id="Vector 3" d="M148 88C152.54 103.483 153.164 111.462 151 124.5" stroke="black"/>
+<path id="Vector 4" d="M53.5 114C39.5281 121.28 45.8552 121.752 36 129C52.7387 143.321 86 139.5 86 139.5C86 139.5 36.5 133 45 126.5C53.5 120 50.416 123.666 53.5 121" stroke="black"/>
+</g>
+<g id="Head">
+<path id="Ear1" d="M121.246 52.1548L119.697 42.9203L125.159 51.2471L121.246 52.1548Z" fill="#FF7A00" stroke="black"/>
+<path id="Ear2" d="M133.809 52.3682L131.613 43.2201L137.648 51.3027L133.809 52.3682Z" fill="#FF7A00" stroke="black"/>
+<g id="Eye1">
+<ellipse cx="125.145" cy="61.2057" rx="2.5" ry="4" fill="#A50000"/>
+<path d="M127.145 61.2057C127.145 62.2316 126.885 63.1366 126.489 63.7691C126.089 64.4088 125.601 64.7057 125.145 64.7057C124.69 64.7057 124.201 64.4088 123.802 63.7691C123.406 63.1366 123.145 62.2316 123.145 61.2057C123.145 60.1799 123.406 59.2749 123.802 58.6423C124.201 58.0027 124.69 57.7057 125.145 57.7057C125.601 57.7057 126.089 58.0027 126.489 58.6423C126.885 59.2749 127.145 60.1799 127.145 61.2057Z" stroke="black" stroke-opacity="0.5"/>
+</g>
+<g id="Eye2">
+<ellipse cx="136.145" cy="61.2057" rx="2.5" ry="4" fill="#A50000"/>
+<path d="M138.145 61.2057C138.145 62.2316 137.885 63.1366 137.489 63.7691C137.089 64.4088 136.601 64.7057 136.145 64.7057C135.69 64.7057 135.201 64.4088 134.802 63.7691C134.406 63.1366 134.145 62.2316 134.145 61.2057C134.145 60.1799 134.406 59.2749 134.802 58.6423C135.201 58.0027 135.69 57.7057 136.145 57.7057C136.601 57.7057 137.089 58.0027 137.489 58.6423C137.885 59.2749 138.145 60.1799 138.145 61.2057Z" stroke="black" stroke-opacity="0.5"/>
+</g>
+<path id="Vector 5" d="M114 70.5C116.505 61.5382 118.06 57.7916 121 52.5C127.834 51.7718 131.666 51.8783 138.5 52.5C144.899 70.7094 146.526 78.3622 147.5 89.5" stroke="black"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d" x="0" y="0" width="188" height="188" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+</defs>
+</svg>

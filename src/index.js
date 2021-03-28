@@ -13,6 +13,7 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
+    icon: path.join(__dirname, "../assets/Exploding Kitten Logo.png"),
     webPreferences: {
       nodeIntegration: true
     }

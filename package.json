@@ -6,10 +6,11 @@
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "package-win": "electron-packager . Exploding-Kittens-In-Electron --overwrite --asar=true --platform=win32  --arch=x64 --icon=\"assets/Exploding-Kitten-Logo.ico\" --prune=true --out=out --version-string.CompanyName=\"Noah Beaudin\" --version-string.FileDescription=\"Exploding Kittens recreated in Electron (sigh)\" --version-string.ProductName=\"Exploding Kittens In Electron\"",
+    "package-linux": "electron-packager . Exploding-Kittens-In-Electron --overwrite --asar=true --platform=linux --arch=x64 --icon=\"assets/Exploding-Kitten-Logo.ico\" --prune=true --out=out"
   },
   "keywords": [],
   "author": {
@@ -56,6 +57,7 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "@types/jquery": "^3.5.5",
-    "electron": "11.2.1"
+    "electron": "11.2.1",
+    "electron-packager": "^15.2.0"
   }
 }

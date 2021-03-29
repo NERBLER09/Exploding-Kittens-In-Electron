@@ -5,8 +5,6 @@ Welcome to Exploding Kittens In Python. This is a clone of [Exploding Kittens]("
 ## Running 
 To run this Electron app you'll need [Node]("https://nodejs.org) and [Electron]("https://electronjs.org")
 
-If you want to package the app simple run: `npm run package`
-
 Once you have cloned the repo simply run these commands: 
 
 ```
@@ -16,8 +14,24 @@ $ electron .
 
 # Or
 
-# npm start
+$ npm start
 ```
+
+## Packaging
+
+Now when you're ready to package the app, so all your friends can see, run:
+
+```
+$ npm run package-win # This will package the app for Windows x64
+
+# and/or
+
+$ npm run package-linux # This will package the app for Linux x64
+```
+
+This is create the packaged app in a folder under `out/`, click on the executable to run the packaged app
+
+The app is packaged using [Electron Packager]("https://www.npmjs.com/package/electron-packager")
 
 ## License
 

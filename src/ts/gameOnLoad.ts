@@ -8,7 +8,7 @@ import { dealCardsToCom1 } from "./com1Script.js";
 import { dealCardsToCom2 } from "./com2Script.js";
 import { dealCardsToCom3 } from "./com3Script.js";
 
-const $ = require("jquery")
+// const $ = require("jquery")
 
 let username = localStorage.getItem("username")
 let comPlayerAmount = localStorage.getItem("comAmount")

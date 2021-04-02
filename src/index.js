@@ -138,7 +138,7 @@ const menu = [
                     type: "info",
                     title: "Exploding Kittens",
                     message: "About",
-                    detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0`,
+                    detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0\nPlease note that "Exploding Kittens In Electron" is still user development\nTo give feedback go to Options -> Github Repo ->\nErrors -> New Error To Submit A New Error`,
                 });
             }
         }

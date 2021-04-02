@@ -1,7 +1,7 @@
-const $ = require("jquery")
+// const $ = require("jquery")
 
 import { cards, comPlayerPlayedFavor, playerCardsInHand } from "./messages.js"
-import { removeDrawnCardFromDeck, turnsNeedToPlay, updateVariable } from "./gameFunctions.js";
+import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "./gameFunctions.js";
 import { cardsInCom1Hand } from "./com1Script.js";
 import { cardsInCom2Hand } from "./com2Script.js";
 
@@ -49,9 +49,6 @@ const choseAndPlayCardForCom3 = () => {
     cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {
         // Checks if there's a matching cat card
         catCardPlayed(cardToPlay)
-
-        // Draws a card
-        drawCardForCom3()
     }
 
     // Plays the card (Checks what card was played)
@@ -68,7 +65,7 @@ const choseAndPlayCardForCom3 = () => {
             updateVariable("turnsNeedToPlay")
 
             // Displays that it's now the player's turn and how many turns that they have
-            $("#current_player_turn").html(`Com 1 has played an attack card. It's now you turn, you have ${turnsNeedToPlay} turns`)
+            $("#current_player_turn").html(`Com 3 has played an attack card. It's now you turn, you have ${turnsNeedToPlay} turns`)
 
             // Makes it be the player's turn
             updateVariable("isPlayerTurn", true)
@@ -76,14 +73,14 @@ const choseAndPlayCardForCom3 = () => {
             break
         case "shuffle":
             // Card is a placebo, this card really dose nothing
-            $("#current_player_turn").html("Com 3 has played a shuffle card")
+            $("#current_player_turn").html("Com 3 has shuffled the deck")
 
             // Draws the card
             drawCardForCom3()
 
             break
         case "see the future":
-            $("#current_player_turn").html("Com 3 has played a see the future card")
+            $("#current_player_turn").html("Com 3 has seen the top 3 cards on the deck")
 
             // Choses the top three cards
             updateVariable("seeTheFutureCards")
@@ -134,21 +131,31 @@ const choseAndPlayCardForCom3 = () => {
 // Draws a card to com 3
 const drawCardForCom3 = () => {
     // Choses a card
-    // const cardIndex = Math.floor(Math.random() * cards.length)
-    // const card = cards[cardIndex];
+    let cardDrawn: string
 
-    const card = "Exploding Kitten"
+    // Checks a see the future card was drawn, if so gets the top card
+    if(seeTheFutureCards.length !== 0) {
+        // Gets the top card
+        cardDrawn = seeTheFutureCards[0]
+
+        // Removes the top card from the list
+        seeTheFutureCards.splice(0, 1)
+    } else {
+        // Choses a card
+        const cardIndex = Math.floor(Math.random() * cards.length)
+        cardDrawn = cards[cardIndex];
+    }
 
     // Checks if Com 3 has drawn an Exploding Kitten
 
     // Exploding Kitten was not drawn
 
-    if(card !== "Exploding Kitten") {
+    if(cardDrawn !== "Exploding Kitten") {
         // Adds the drawn card the the list
-        cardsInCom3Hand.push(card)
+        cardsInCom3Hand.push(cardDrawn)
 
         // Removes the drawn card from the deck
-        removeDrawnCardFromDeck(card)
+        removeDrawnCardFromDeck(cardDrawn)
 
         // When Com 3 draws, checks if Com 3 has additional turns
         // (If Com 3 has played an attack card or not)
@@ -158,7 +165,7 @@ const drawCardForCom3 = () => {
         if(turnsNeedToPlay == 0) {
             // Sets a time pause
             setTimeout(() => {
-                $("#current_player_turn").html("It's now your turn")
+                $("#current_player_turn").html("Com 3 has drawn a card. It's now your turn")
             }, 2000);
 
             // Makes it be the players turn
@@ -185,21 +192,21 @@ const drawCardForCom3 = () => {
         // Tells the player that Com 3 has drawn an Exploding Kitten card
         $("#current_player_turn").html("Com 3 has drawn an Exploding Kitten!")
 
-        let com1HasDiffuseCard = false
+        let com3HasDiffuseCard = false
 
         // Sets a time pause
         setTimeout(() => {
             // Checks if Com 3 has a diffuse card   
-            for(const card of cardsInCom1Hand) {
+            for(const card of cardsInCom3Hand) {
                 if(card === "diffuse") {
-                    com1HasDiffuseCard = true
+                    com3HasDiffuseCard = true
 
                     break   
                 }
             }
 
             // Checks if Com 3 didn't have a diffuse card
-            if(com1HasDiffuseCard === false) {
+            if(com3HasDiffuseCard === false) {
                 setTimeout(() => {
                     // Dose nothing here
                 }, 1000);
@@ -211,9 +218,9 @@ const drawCardForCom3 = () => {
                 // Diffuses the Exploding Kitten card
 
                 // Removes the diffuse card from Com 3's hand 
-                const cardIndex = cardsInCom1Hand.indexOf(card)
+                const cardIndex = cardsInCom3Hand.indexOf(cardDrawn)
 
-                cardsInCom1Hand.splice(cardIndex, 1)
+                cardsInCom3Hand.splice(cardIndex, 1)
 
                 setTimeout(() => {
                     // Dose nothing here 
@@ -248,34 +255,39 @@ const addNewCardToHand = (cardToAdd: string) => {
 const catCardPlayed = (catCard: string) => {
     let hasCatCard = false
 
-        // Checks if there is a matching cat card
-        for(const card of cardsInCom3Hand) {
-            // Matching card
-            if(catCard === card) {
-                // Removes the matching card from com 3's hand
-                const cardIndex = cardsInCom3Hand.indexOf(card)
-                cardsInCom3Hand.splice(cardIndex, 1)
+    // Checks if there is a matching cat card
+    for(const card of cardsInCom3Hand) {
+        // Matching card
+        if(catCard === card) {
+            $("#current_player_turn").html(`Com 3 has played 2 matching ${catCard}`)
 
-                // Steals a random card from a chosen player
-                const cardToSteal = stealCard()
+            // Removes the matching card from com 3's hand
+            const cardIndex = cardsInCom3Hand.indexOf(card)
+            cardsInCom3Hand.splice(cardIndex, 1)
 
-                // Adds the stolen card to Com 3's hand
-                addNewCardToHand(cardToSteal)
+            // Steals a random card from a chosen player
+            const cardToSteal = stealCard()
 
-                hasCatCard = true
+            // Adds the stolen card to Com 3's hand
+            addNewCardToHand(cardToSteal)
 
-                break
-            }
+            hasCatCard = true
+
+            break
         }
+    }
 
-        // Checks if there are no matching 
-        if(hasCatCard == false) {
-            // Readds the played card back into com 3's hand
-            cardsInCom3Hand.push(catCard)
+    // Checks if there are no matching 
+    if(hasCatCard == false) {
+        // Readds the played card back into com 3's hand
+        cardsInCom3Hand.push(catCard)
 
-            // Re-chooses a card to play
-            choseAndPlayCardForCom3()
-        }
+        // Re-chooses a card to play
+        choseAndPlayCardForCom3()
+    }
+
+    // Draws a card
+    drawCardForCom3()
 }
 
 // Steals a random card from a player of choice (The player, com 1, or com 3)

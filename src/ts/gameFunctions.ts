@@ -8,7 +8,7 @@ import { choseAndPlayCardForCom1, cardsInCom1Hand, drawCardForCom1 } from "./com
 import { cardsInCom2Hand, drawCardForCom2 } from "./com2Script.js";
 import { cardsInCom3Hand, drawCardForCom3 } from "./com3Script.js";
 
-const $ = require("jquery")
+// const $ = require("jquery")
 
 // Stores if it is the player's turn
 let isPlayerTurn = true
@@ -32,83 +32,84 @@ const drawCardForPlayer = () => {
     if(isPlayerTurn === true && comPlayerPlayedFavor["favorCardPlayed"] === false) {
         // Checks if there are still cards in the deck
         if(totalCardAmount > 1) {
-            // Checks a see the future card was drawn, if so add from the top three cards
+            let cardDrawn: string
+
+            // Checks a see the future card was drawn, if so gets the top card
             if(seeTheFutureCards.length !== 0) {
                 // Gets the top card
-                const card = seeTheFutureCards[0]
+                cardDrawn = seeTheFutureCards[0]
 
                 // Removes the top card from the list
                 seeTheFutureCards.splice(0, 1)
-
-                // Removes the drawn card from the deck
-                removeDrawnCardFromDeck(card)
-
-                // Displays the drawn card
-                displayDrawnCard(card)
             } else {
                 // Choses a card
                 const cardIndex = Math.floor(Math.random() * cards.length)
-                const card = cards[cardIndex];
+                cardDrawn = cards[cardIndex];
+            }
 
-                // Checks if an Exploding Kittens card was drawn
+            // Checks if an Exploding Kittens card was drawn
 
-                // Exploding Kitten card was not drawn
-                if(card !== "Exploding Kitten") {
-                    // Removes the drawn card from the deck
-                    removeDrawnCardFromDeck(card)
+            // Exploding Kitten card was not drawn
+            if(cardDrawn !== "Exploding Kitten") {
+                // Removes the drawn cardDrawn from the deck
+                removeDrawnCardFromDeck(cardDrawn)
 
-                    // Displays the drawn card
-                    displayDrawnCard(card)
+                // Displays the drawn cardDrawn
+                displayDrawnCard(cardDrawn)
 
-                    // Removes 1 from the turnsNeedToPlay
-                    turnsNeedToPlay-=1
+                // Removes 1 from the turnsNeedToPlay
+                turnsNeedToPlay-=1
 
-                    // Checks if the player has any more cars
-                    isPlayerTurn = turnsNeedToPlay <= 0 ? false : true
+                // Checks if the player has any more cars
+                isPlayerTurn = turnsNeedToPlay <= 0 ? false : true
 
-                    // Changes the current_player_turn text
-                    if(isPlayerTurn == false && comPlayerPlayedFavor["favorCardPlayed"] === false && turnsNeedToPlay <= 0) {
-                        $("#current_player_turn").html("It's com 1's turn")
+                // Changes the current_player_turn text
+                if(isPlayerTurn == false && comPlayerPlayedFavor["favorCardPlayed"] === false && turnsNeedToPlay <= 0) {
+                    $("#current_player_turn").html(`You've drawn an ${cardDrawn} card. It's now com 1's turn`)
 
-                        // Resets turnsNeedToPlay to 0 to fix some bugs
-                        turnsNeedToPlay = 0
+                    // Resets turnsNeedToPlay to 0 to fix some bugs
+                    turnsNeedToPlay = 0
 
+                    // Sets a time pause 
+                    setTimeout(() => {
                         // Makes it be com 1's turn
                         choseAndPlayCardForCom1()
-                    }
-                    else{
-                        $("#current_player_turn").html(`Amount of turns left: ${turnsNeedToPlay}`)
+                    }, 2000);
+
+
+                }
+                else{
+                    $("#current_player_turn").html(`You've drawn an ${cardDrawn} card. Amount of turns left: ${turnsNeedToPlay}`)
+                }
+            }
+
+            // Exploding Kitten card was drawn
+
+            else if(cardDrawn === "Exploding Kitten") {
+                explodingKittenCardDrawn = true
+
+                // Checks if the player has a diffuse card in hand
+                let playerHasDiffuse = false
+
+                for(const playerCard in playerCardsInHand) {
+                    if(playerCardsInHand[playerCard] === "diffuse"){
+                        $("#current_player_turn").html("You've drawn an Exploding Kitten card, play your diffuse card to diffuse the Exploding Kitten")
+
+                        playerHasDiffuse = true
+
+                        break
                     }
                 }
 
-                // Exploding Kitten card was drawn
+                // Checks if the player has a diffuse card
+                if(playerHasDiffuse === false) {
+                    // Tells the player that they have exploded 
+                    $("#current_player_turn").html("You've exploded! Go to: Options -> New Game to start a new game")
 
-                else {
-                    explodingKittenCardDrawn = true
+                    isPlayerTurn = false
 
-                    // Checks if the player has a diffuse card in hand
-                    let playerHasDiffuse = false
-
-                    for(const playerCard in playerCardsInHand) {
-                        if(playerCardsInHand[playerCard] === "diffuse"){
-                            $("#current_player_turn").html("You've drawn an Exploding Kitten card, play your diffuse card to diffuse the Exploding Kitten")
-
-                            playerHasDiffuse = true
-
-                            break
-                        }
-                    }
-
-                    // Checks if the player has a diffuse card
-                    if(playerHasDiffuse === false) {
-                        // Tells the player that they have exploded 
-                        $("#current_player_turn").html("You've exploded! Go to: Options -> New Game to start a new game")
-
-                        isPlayerTurn = false
-
-                        // Removes the Exploding Kitten card from the deck
-                        removeDrawnCardFromDeck("Exploding Kitten")
-                    }
+                    // Removes the Exploding Kitten card from the deck
+                    removeDrawnCardFromDeck("Exploding Kitten")
                 }
             }
         }  
@@ -140,6 +141,12 @@ const playCard = (playerCard) => {
 
         // Checks if a com player has played a favor card
         if(comPlayerPlayedFavor["favorCardPlayed"] === false) {
+            // Removes the played card from the players hand 
+            playerCardsInHand.splice(cardIndex, 1)
+
+            // Removes the played card from the player's view
+            $(".player_cards").get(cardIndex).remove()
+
             // Checks what card is played
             checkPlayerCardPlayed(cardPlayed)
         }
@@ -157,6 +164,12 @@ const playCard = (playerCard) => {
                     comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
                     comPlayerPlayedFavor["favorCardPlayed"] = null
 
+                    // Removes the given card from the players hand
+                    playerCardsInHand.splice(cardIndex, 1)
+
+                    // Removes the given played card from the player's view
+                    $(".player_cards").get(cardIndex).remove()
+
                     // Makes Com 1 draw a card (Allows the game to not get soft-locked)
                     drawCardForCom1()
 
@@ -169,6 +182,12 @@ const playCard = (playerCard) => {
                     // Resets the comPlayerPlayedFavor list 
                     comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
                     comPlayerPlayedFavor["favorCardPlayed"] = null
+
+                    // Removes the given card from the players hand
+                    playerCardsInHand.splice(cardIndex, 1)
+
+                    // Removes the given played card from the player's view
+                    $(".player_cards").get(cardIndex).remove()
 
                     // Makes Com 2 draw a card (Allows the game to not get soft-locked)
                     drawCardForCom2()
@@ -183,18 +202,18 @@ const playCard = (playerCard) => {
                     comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
                     comPlayerPlayedFavor["favorCardPlayed"] = null
 
+                    // Removes the given card from the players hand
+                    playerCardsInHand.splice(cardIndex, 1)
+
+                    // Removes the given played card from the player's view
+                    $(".player_cards").get(cardIndex).remove()
+
                     // Makes Com 3 draw a card (Allows the game to not get soft-locked)
                     drawCardForCom3()
 
                     break                            
             }
         }
-
-        // Removes the played card from the players hand 
-        playerCardsInHand.splice(cardIndex, 1)
-
-        // Removes the played card from the player's view
-        $(".player_cards").get(cardIndex).remove()
     }
 }
 
@@ -246,6 +265,11 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
 
             // Displays that it's now com 1's turn and that com 1 has 2 turns
             $("current_player_turn").html(`It it now Com 1's turn. Com 1 has 2 turns because you played an attack card`)
+
+            // Sets a time pause 
+            setTimeout(() => {
+                // Dose nothing here 
+            }, 1000);
             
             // Makes com 1 have 2 turns 
             turnsNeedToPlay += 2 
@@ -291,12 +315,17 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
                 // Tells the player that they have diffused the Exploding Kitten
                 $("#current_player_turn").html("You have successfully diffused the Exploding Kitten card. It's now Com 1's turn")
 
+                turnsNeedToPlay = 0
+
+                isPlayerTurn = false
+
                 // Sets a time pause
-                setTimeout(() => {
+                setTimeout(() => {                        
                     // Makes it now be Com 1's turn
-                    choseAndPlayCardForCom1()                    
+                    choseAndPlayCardForCom1()            
                 }, 1000);
 
+                break
             }
 
             else {
@@ -318,7 +347,7 @@ const catCardPlayed = (catCard:string) => {
         if(cardsInPlayerHand === catCard) {
             const cardIndex = playerCardsInHand.indexOf(catCard)
                         
-            // Removes the card from the players hand
+            // Removes the matching card from the players hand
             playerCardsInHand.splice(cardIndex, 1)
             $(".player_cards").get(cardIndex).remove()
 
@@ -337,7 +366,7 @@ const catCardPlayed = (catCard:string) => {
         console.error("There are no matching cat cards")
 
         // Readds the clicked card to the players hand
-        displayNewCard(catCard)
+        displayDrawnCard(catCard)
     }
 }
 
@@ -359,8 +388,7 @@ const displayNewCard = (displayCard) => {
 }
 
 // Updates a specified variable
-const updateVariable = (variableToUpdate: "isPlayerTurn" | "turnsNeedToPlay" | "seeTheFutureCards" | "removeFromTurnsNeedToPlay", 
-                        status?: boolean) => {
+const updateVariable = (variableToUpdate: string, status?: boolean) => {
     // Enters a switch statement
     switch(variableToUpdate) {
         case "isPlayerTurn":
@@ -606,5 +634,6 @@ export {
     playCard,
     removeDrawnCardFromDeck,
     updateVariable,
-    turnsNeedToPlay
+    turnsNeedToPlay,
+    seeTheFutureCards
 }

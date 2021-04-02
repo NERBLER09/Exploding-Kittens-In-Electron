@@ -44,7 +44,7 @@ function startGame() {
     // Checks is a username is selected and a com amount is selected
     if(comPlayerAmount && username) {
         localStorage.setItem("username", username) // Stores the username
-        localStorage.setItem("comAmount", comPlayerAmount) // Stores the username
+        localStorage.setItem("comAmount", comPlayerAmount) // Stores the amount of com players
 
         ipcRenderer.send("createGameWindow")
     }

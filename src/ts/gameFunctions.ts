@@ -66,21 +66,24 @@ const drawCardForPlayer = () => {
 
                 // Changes the current_player_turn text
                 if(isPlayerTurn == false && comPlayerPlayedFavor["favorCardPlayed"] === false && turnsNeedToPlay <= 0) {
-                    $("#current_player_turn").html(`You've drawn an ${cardDrawn} card. It's now com 1's turn`)
+                    displayMessageBox("Drawn Card: ", `The card you've drawn is a ${cardDrawn} card. It's now com 1's turn.`)
 
                     // Resets turnsNeedToPlay to 0 to fix some bugs
                     turnsNeedToPlay = 0
 
                     // Sets a time pause 
-                    setTimeout(() => {
-                        // Makes it be com 1's turn
-                        choseAndPlayCardForCom1()
-                    }, 2000);
+                    const setCom1Turn = setInterval(() => {
+                        // Checks if the player has closed the #message_box
+                        if($("#message_box").is(":hidden") ) {
+                            clearInterval(setCom1Turn)
 
-
+                            // Makes it be com 1's turn
+                            choseAndPlayCardForCom1()    
+                        }
+                    }, 100);
                 }
                 else{
-                    $("#current_player_turn").html(`You've drawn an ${cardDrawn} card. Amount of turns left: ${turnsNeedToPlay}`)
+                    displayMessageBox("Drawn Card: ", `The card you've drawn is a ${cardDrawn} card. You have ${turnsNeedToPlay} more turn(s) remaining.`)
                 }
             }
 
@@ -94,7 +97,7 @@ const drawCardForPlayer = () => {
 
                 for(const playerCard in playerCardsInHand) {
                     if(playerCardsInHand[playerCard] === "diffuse"){
-                        $("#current_player_turn").html("You've drawn an Exploding Kitten card, play your diffuse card to diffuse the Exploding Kitten")
+                        displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your diffuse card to diffuse the Exploding Kitten")
 
                         playerHasDiffuse = true
 
@@ -105,7 +108,7 @@ const drawCardForPlayer = () => {
                 // Checks if the player has a diffuse card
                 if(playerHasDiffuse === false) {
                     // Tells the player that they have exploded 
-                    $("#current_player_turn").html("You've exploded! Go to: Options -> New Game to start a new game")
+                    displayMessageBox("You've exploded!", "Go to: Options -> New Game to start a new game")
 
                     isPlayerTurn = false
 
@@ -153,7 +156,7 @@ const playCard = (playerCard) => {
         }
         else {
             // Tells the player which card they game to a com player
-            $("#current_player_turn").html(`You gave you ${playerCardsInHand[cardIndex]} to ${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]}`)
+            displayMessageBox("Favor Card", `You gave you ${playerCardsInHand[cardIndex]} to ${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]}`)
         
             // Checks what com player played the favor card
             switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
@@ -255,7 +258,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
         case "skip":
             isPlayerTurn = false // Makes it not be the players turn
             turnsNeedToPlay-=1
-            $("#current_player_turn").html("You have skipped your turn")
+            displayMessageBox("Skipped Turn","You have skipped your turn. It's now com 1's turn")
 
             // Makes it be com 1's turn
             choseAndPlayCardForCom1()
@@ -265,7 +268,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             console.log("Player played a attack")
 
             // Displays that it's now com 1's turn and that com 1 has 2 turns
-            $("current_player_turn").html(`It it now Com 1's turn. Com 1 has 2 turns because you played an attack card`)
+            displayMessageBox("Attacked Com 1", `It it now Com 1's turn, Com 1 has 2 turns.`)
 
             // Sets a time pause 
             setTimeout(() => {
@@ -282,6 +285,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
         case "shuffle":
             // Card is a placebo, this card really dose nothing
             console.log("Player played a shuffle") 
+            displayMessageBox("Shuffled the deck", "The deck has been shuffled.")
             break
         case "see the future":
             console.log("Player played a see the future")
@@ -289,7 +293,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
                 cards[Math.floor(Math.random() * cards.length)], 
                 cards[Math.floor(Math.random() * cards.length)]]
 
-                $("#current_player_turn").html(`The Current Top 3 Cards: 1. ${seeTheFutureCards[0]},
+                displayMessageBox("See the future",`The Current Top 3 Cards: 1. ${seeTheFutureCards[0]},
                 2. ${seeTheFutureCards[1]}, 3. ${seeTheFutureCards[2]} `)
             
             break
@@ -301,7 +305,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
 
             break
         case "nope":
-            console.error("There are no actions to nope")
+            displayMessageBox("Nope card","There are no actions to nope")
 
             // Re-adds the card back to the player's hand
             displayDrawnCard(cardPLayed)
@@ -314,7 +318,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
                 explodingKittenCardDrawn = false
 
                 // Tells the player that they have diffused the Exploding Kitten
-                $("#current_player_turn").html("You have successfully diffused the Exploding Kitten card. It's now Com 1's turn")
+                displayMessageBox("Exploding Kitten Diffused","You have successfully diffused the Exploding Kitten card. It's now Com 1's turn")
 
                 turnsNeedToPlay = 0
 
@@ -330,7 +334,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             }
 
             else {
-                console.error("Player, you can't diffuse nothing.")
+                displayMessageBox("Nothing to diffuse", "There is no Exploding Kitten that needs to be diffused.")
 
                 displayDrawnCard(cardPLayed)
             }

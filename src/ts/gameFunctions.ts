@@ -7,6 +7,7 @@ import { playerCardsInHand, cards, cardAmounts, comPlayerPlayedFavor } from "./m
 import { choseAndPlayCardForCom1, cardsInCom1Hand, drawCardForCom1 } from "./com1Script.js";
 import { cardsInCom2Hand, drawCardForCom2 } from "./com2Script.js";
 import { cardsInCom3Hand, drawCardForCom3 } from "./com3Script.js";
+import { displayMessageBox } from "./messageBox.js";
 
 // const $ = require("jquery")
 
@@ -367,6 +368,8 @@ const catCardPlayed = (catCard:string) => {
 
         // Readds the clicked card to the players hand
         displayDrawnCard(catCard)
+
+        displayMessageBox("No matching cat cards.", "They are no other matching cat cards.")
     }
 }
 

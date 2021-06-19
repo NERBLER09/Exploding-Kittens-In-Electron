@@ -1,6 +1,6 @@
 // Script for titleScreen.html
 
-const $ = require("jquery")
+// const $ = require("jquery")
 const electron = require('electron')
 const {ipcRenderer} = electron;
 import { messages } from "./messages.js";

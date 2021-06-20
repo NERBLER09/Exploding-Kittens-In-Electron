@@ -4,6 +4,7 @@ import { cards, comPlayerPlayedFavor, playerCardsInHand } from "./messages.js"
 import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "./gameFunctions.js";
 import { cardsInCom1Hand } from "./com1Script.js";
 import { cardsInCom2Hand } from "./com2Script.js";
+import { displayMessageBox } from "./messageBox.js";
 
 // Stores the cards in com 3's hand
 let cardsInCom3Hand:string[] = []
@@ -35,6 +36,8 @@ const choseAndPlayCardForCom3 = () => {
     // Choses a card to play
     const cardToPlay = cardsInCom3Hand[Math.floor(Math.random() * cardsInCom3Hand.length)]
 
+    let waitUntilMessageBoxIsClosed: NodeJS.Timeout
+
     // Removes the played card from com 3's hand
     const cardIndex = cardsInCom3Hand.indexOf(cardToPlay)
     cardsInCom3Hand.splice(cardIndex, 1)
@@ -54,7 +57,7 @@ const choseAndPlayCardForCom3 = () => {
     // Plays the card (Checks what card was played)
     switch(cardToPlay) {
         case "skip":
-            $("#current_player_turn").html("Com 3 has skipped there turn. It's now your turn.")
+            displayMessageBox("Com 3 has skipped there turn","It's now your turn.")
 
             // Makes it be the players turn
             updateVariable("isPlayerTurn", true)
@@ -65,7 +68,7 @@ const choseAndPlayCardForCom3 = () => {
             updateVariable("turnsNeedToPlay")
 
             // Displays that it's now the player's turn and how many turns that they have
-            $("#current_player_turn").html(`Com 3 has played an attack card. It's now you turn, you have ${turnsNeedToPlay} turns`)
+            displayMessageBox("Com 3 has played an attack", `It's now you turn, you have ${turnsNeedToPlay} turns`)
 
             // Makes it be the player's turn
             updateVariable("isPlayerTurn", true)
@@ -73,20 +76,32 @@ const choseAndPlayCardForCom3 = () => {
             break
         case "shuffle":
             // Card is a placebo, this card really dose nothing
-            $("#current_player_turn").html("Com 3 has shuffled the deck")
+            displayMessageBox("The deck has been shuffled","Com 3 has shuffled the deck")
 
-            // Draws the card
-            drawCardForCom3()
+            waitUntilMessageBoxIsClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+                    // Draws the card
+                    drawCardForCom3()
+                }
+            }, 100);
 
             break
         case "see the future":
-            $("#current_player_turn").html("Com 3 has seen the top 3 cards on the deck")
+            displayMessageBox("Com 1 has played a see the future card","Com 1 has seen the top 3 cards of the deck")
 
             // Choses the top three cards
             updateVariable("seeTheFutureCards")
 
-            // Draws the card
-            drawCardForCom3()
+            waitUntilMessageBoxIsClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+                    // Draws the card
+                    drawCardForCom3()
+                }
+            }, 100);
 
             break
         case "favor":
@@ -164,9 +179,7 @@ const drawCardForCom3 = () => {
 
         if(turnsNeedToPlay == 0) {
             // Sets a time pause
-            setTimeout(() => {
-                $("#current_player_turn").html("Com 3 has drawn a card. It's now your turn")
-            }, 2000);
+            displayMessageBox("Com 3 has drawn card", "It's now your turn")
 
             // Makes it be the players turn
             updateVariable("isPlayerTurn", true)
@@ -190,7 +203,7 @@ const drawCardForCom3 = () => {
 
     else {
         // Tells the player that Com 3 has drawn an Exploding Kitten card
-        $("#current_player_turn").html("Com 3 has drawn an Exploding Kitten!")
+        displayMessageBox("An Exploding Kitten card has been drawn","Com 3 has drawn an Exploding Kitten!")
 
         let com3HasDiffuseCard = false
 
@@ -212,7 +225,7 @@ const drawCardForCom3 = () => {
                 }, 1000);
 
                 // Tells the player that Com 3 has exploded
-                $("#current_player_turn").html("Com 3 has exploded! You won!")
+                displayMessageBox("Com 3 has exploded!","You won!")
             }
             else {
                 // Diffuses the Exploding Kitten card
@@ -259,20 +272,26 @@ const catCardPlayed = (catCard: string) => {
     for(const card of cardsInCom3Hand) {
         // Matching card
         if(catCard === card) {
-            $("#current_player_turn").html(`Com 3 has played 2 matching ${catCard}`)
+            displayMessageBox("Cat cards",`Com 1 has played 2 matching ${catCard}`)
 
-            // Removes the matching card from com 3's hand
-            const cardIndex = cardsInCom3Hand.indexOf(card)
-            cardsInCom3Hand.splice(cardIndex, 1)
+            const waitUntilMessageBoxIsClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+                     
+                    // Removes the matching card from com 3's hand
+                    const cardIndex = cardsInCom3Hand.indexOf(card)
+                    cardsInCom3Hand.splice(cardIndex, 1)
 
-            // Steals a random card from a chosen player
-            const cardToSteal = stealCard()
+                    // Steals a random card from a chosen player
+                    const cardToSteal = stealCard()
 
-            // Adds the stolen card to Com 3's hand
-            addNewCardToHand(cardToSteal)
+                    // Adds the stolen card to Com 3's hand
+                    addNewCardToHand(cardToSteal)
 
-            hasCatCard = true
-
+                    hasCatCard = true
+                }
+            }, 100);
             break
         }
     }
@@ -286,8 +305,14 @@ const catCardPlayed = (catCard: string) => {
         choseAndPlayCardForCom3()
     }
 
-    // Draws a card
-    drawCardForCom3()
+    const waitUntilMessageBoxIsClosed = setInterval(() => {
+        // Checks if the player has closed the #message_box
+        if($("#message_box").is(":hidden") ) {
+            clearInterval(waitUntilMessageBoxIsClosed)
+            // Draws the card
+            drawCardForCom3()
+        }
+    }, 100);
 }
 
 // Steals a random card from a player of choice (The player, com 1, or com 3)
@@ -298,6 +323,7 @@ const stealCard = () => {
     // 3 - Com 3
     
     let stealCardTarget: number
+    let returnStolenCard: NodeJS.Timeout
 
     // Check how many com players were selected 
     switch(localStorage.getItem("comAmount")) {
@@ -336,7 +362,17 @@ const stealCard = () => {
 
             $(".player_cards").get(cardIndex).remove()
 
-            $("#current_player_turn").html(`Com 3 has stolen your ${cardToStealFromPlayer}`)
+            displayMessageBox("Card stolen",`Com 1 has stolen your ${cardToStealFromPlayer}`)
+
+            returnStolenCard = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    clearInterval(returnStolenCard)
+
+                    // Returns stolen card to add to Com 1's hand
+                    return cardToStealFromPlayer   
+                }
+            }, 100);
 
             // Returns stolen card to add to Com 3's hand
             return cardToStealFromPlayer
@@ -352,7 +388,24 @@ const stealCard = () => {
             // Removes the stolen card from Com 1's hand
             cardsInCom1Hand.splice(cardIndex, 1)
 
-            $("#current_player_turn").html("Com 3 has stolen a card from Com 2")
+            displayMessageBox("Card stolen","Com 3 has stolen a card from Com 1")
+
+            returnStolenCard = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    // Checks if cardToStealFromPlayer is undefined 
+                    if(cardToStealFromPlayer === undefined) {
+                        // Re-choses target
+                        stealCard()
+                    }
+                    else {
+                        clearInterval(returnStolenCard)
+
+                        // Returns stolen card to add to Com 1's hand
+                        return cardToStealFromPlayer                     
+                    }
+                }
+            }, 100);
 
             // Returns stolen card to add to Com 3's hand
             return cardToStealFromPlayer
@@ -368,7 +421,24 @@ const stealCard = () => {
             // Removes the stolen card from Com 2's hand
             cardsInCom2Hand.splice(cardIndex, 1)
 
-            $("#current_player_turn").html("Com 3 has stolen a card from Com 2")
+            displayMessageBox("Card stolen","Com 1 has stolen a card from Com 2")
+
+            returnStolenCard = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    // Checks if cardToStealFromPlayer is undefined 
+                    if(cardToStealFromPlayer === undefined) {
+                        // Re-choses target
+                        stealCard()
+                    }
+                    else {
+                        clearInterval(returnStolenCard)
+
+                        // Returns stolen card to add to Com 1's hand
+                        return cardToStealFromPlayer                     
+                    }
+                }
+            }, 100);
 
             // Returns stolen card to add to Com 3's hand
             return cardToStealFromPlayer
@@ -381,6 +451,7 @@ const askCardForFavor = (favorCardTarget) => {
 
     let cardIndex: number
     let cardToGive: string
+    let returnFavoredCard: NodeJS.Timeout
 
     // Asks a favor from the correct player
     switch(favorCardTarget) {
@@ -388,7 +459,7 @@ const askCardForFavor = (favorCardTarget) => {
             // Asks for a card from the player
 
             // Tells the player to give a card to Com 1
-            $("#current_player_turn").html("Com 3 has asked you for a favor card. Click on a card to give it to Com 3")
+            displayMessageBox("Can I have a card?", "Com 1 has asked you for a favor card. Click on a card to give it to Com 1")
 
             // Adds the needed information to comPlayerPlayedFavor list 
             comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = "Com 3"
@@ -409,7 +480,24 @@ const askCardForFavor = (favorCardTarget) => {
 
             // Displays that Com 3 asked for a card from Com 1
             console.log(`Com 3 got a ${cardToGive} card from Com 1`)
-            $("#current_player_turn").html("Com 3 ask for a card from Com 1")
+            displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 1")
+
+            returnFavoredCard = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    // Checks if cardToGive is undefined 
+                    if(cardToGive === undefined) {
+                        // Re-choses target
+                        stealCard()
+                    }
+                    else {
+                        clearInterval(returnFavoredCard)
+
+                        // Returns stolen card to add to Com 1's hand
+                        return cardToGive                     
+                    }
+                }
+            }, 100);
 
             // Returns the given card 
             return cardToGive
@@ -425,7 +513,24 @@ const askCardForFavor = (favorCardTarget) => {
 
             // Displays that Com 3 asked for a card from Com 2
             console.log(`Com 3 got a ${cardToGive} card from Com 2`)
-            $("#current_player_turn").html("Com 3 ask for a card from Com 2")
+            displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 2")
+
+            returnFavoredCard = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    // Checks if cardToGive is undefined 
+                    if(cardToGive === undefined) {
+                        // Re-choses target
+                        stealCard()
+                    }
+                    else {
+                        clearInterval(returnFavoredCard)
+
+                        // Returns stolen card to add to Com 1's hand
+                        return cardToGive                     
+                    }
+                }
+            }, 100);
 
             // Returns the given card 
             return cardToGive

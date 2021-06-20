@@ -325,10 +325,15 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
                 isPlayerTurn = false
 
                 // Sets a time pause
-                setTimeout(() => {                        
-                    // Makes it now be Com 1's turn
-                    choseAndPlayCardForCom1()            
-                }, 1000);
+                const setCom1Turn = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if($("#message_box").is(":hidden") ) {
+                        clearInterval(setCom1Turn)
+
+                        // Makes it be com 1's turn
+                        choseAndPlayCardForCom1()    
+                    }
+                }, 100);
 
                 break
             }
@@ -443,21 +448,23 @@ const promptFavorTarget = () => {
 
     switch(localStorage.getItem("comAmount")) {
         case "1comPlayer":
-            messageElement = [$("<button value='com1'>Ask For A Card From Com 1</button>")]
+            messageElement = [$("<button value='com1'>Com 1</button>")]
 
             break
         case "2comPlayer":
-            messageElement = [$("<button value='com1'>Ask For A Card From Com 1</button>"), 
-            $("<button value='com2'>Ask For A Card From Com 2</button>")]
+            messageElement = [$("<button value='com1'>Com 1</button>"), 
+            $("<button value='com2'>Com 2</button>")]
 
             break
         case "3comPlayer":
-            messageElement = [$("<button value='com1'>Ask For A Card From Com 1</button>"), 
-            $("<button value='com2'>Ask For A Card From Com 2</button>"),
-            $("<button value='com3'>Ask For A Card From Com 3</button>")]
+            messageElement = [$("<button value='com1'>Com 1</button>"), 
+            $("<button value='com2'>Com 2</button>"),
+            $("<button value='com3'>Com 3</button>")]
 
             break
     }
+
+    $("#message_box").append($("<h2>Who do you want to ask for a favor?</h2>"))
 
     // Loops through the messageElement to display all the elements properly 
     for(const e of messageElement) {
@@ -544,21 +551,23 @@ const promptCatCardTarget = () => {
 
     switch(localStorage.getItem("comAmount")) {
         case "1comPlayer":
-            messageElement = [$("<button value='com1'>Steal A Card From Com 1</button>")]
+            messageElement = [$("<button value='com1'>Com 1</button>")]
 
             break
         case "2comPlayer":
-            messageElement = [$("<button value='com1'>Steal A Card From Com 1</button>"), 
-            $("<button value='com2'>Steal A Card From Com 2</button>")]
+            messageElement = [$("<button value='com1'>Com 1</button>"), 
+            $("<button value='com2'>Com 2</button>")]
 
             break
         case "3comPlayer":
-            messageElement = [$("<button value='com1'>Steal A Card From Com 1</button>"), 
-            $("<button value='com2'>Steal A Card From Com 2</button>"),
-            $("<button value='com3'>Steal A Card From Com 3</button>")]
+            messageElement = [$("<button value='com1'>Com 1</button>"), 
+            $("<button value='com2'>Com 2</button>"),
+            $("<button value='com3'>Com 3</button>")]
 
             break
     }
+
+    $("#message_box").append("<h2>Who do you want to steal a card from?</h2>")
 
     // Loops through the messageElement to display all the elements properly 
     for(const e of messageElement) {

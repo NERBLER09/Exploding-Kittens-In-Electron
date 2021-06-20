@@ -1,5 +1,24 @@
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400&family=Noto+Sans&display=swap');
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Heebo', sans-serif;
 }
 
+p, label {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+button {
+  background-color: white;
+  border: black solid;
+  border-radius: 20px;
+  cursor: pointer;
+
+  padding: 10px;
+
+  text-align: center;
+
+  width: 100%;
+}
+
+button:focus { outline: none; }

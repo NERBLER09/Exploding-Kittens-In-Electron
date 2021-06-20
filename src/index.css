@@ -21,4 +21,16 @@ button {
   width: 100%;
 }
 
+button{
+  width: 100%;
+
+  height: 100%;
+
+  transition: all 250ms ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.2);
+}
+
 button:focus { outline: none; }

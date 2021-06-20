@@ -22,7 +22,7 @@ function onLoadFunc() {
     $("#current_player_turn").html("It's currently your turn")
 
     // Displays the username
-    $("#username").html(`Username: ${username}`)
+    $("#username").html(`${username}'s Cards:`)
 
     // Deals the 7 cards to the player
     for(let i = 0; i<7; i++) {

@@ -14,3 +14,17 @@ body {
   height: 50px;
   width: 100px;
 }
+
+#title-screen-header {
+  display: flex;
+  align-items: center;
+}
+
+#title-screen-header > * {
+  margin: 5px
+}
+
+#logo {
+  width: 10rem;
+  height: 10rem;
+}

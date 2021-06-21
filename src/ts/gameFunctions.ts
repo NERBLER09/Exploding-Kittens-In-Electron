@@ -480,6 +480,9 @@ const promptFavorTarget = () => {
 
 // Gives a random card to the player after com player favor target is selected 
 const askComPLayerForFavorCard = (comTarget) => {
+    $("#message_box").html("")
+    $("#message_box").hide()
+    
     comTarget = comTarget.data.param1
 
     let indexOfCard, cardToGive
@@ -495,10 +498,9 @@ const askComPLayerForFavorCard = (comTarget) => {
             // Removes the given card from com 1's hand
             cardsInCom1Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 1 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`Com 1 has given you there ${cardToGive} card`)
-
             displayNewCard(cardToGive)
+
+            comTarget = "Com 1"
 
             break
         case "com2":
@@ -510,8 +512,7 @@ const askComPLayerForFavorCard = (comTarget) => {
             // Removes the given card from com 2's hand
             cardsInCom2Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 2 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`Com 2 has given you there ${cardToGive} card`)
+            comTarget = "Com 2"
 
             displayNewCard(cardToGive)
 
@@ -525,19 +526,16 @@ const askComPLayerForFavorCard = (comTarget) => {
             // Removes the given card from com 3's hand
             cardsInCom3Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 3 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`Com 3 has given you there ${cardToGive} card`)
+            comTarget = "Com 3"
 
             displayNewCard(cardToGive)
 
             break
     }
 
-    // Resets the message_box element
-    $("#message_box").html("")
-    
-    // Hides the message_box element
-    $("#message_box").hide()
+    setTimeout(() => {
+        displayMessageBox("Thanks for the card" , `${comTarget} has given you there ${cardToGive} card`)
+    }, 100)
 }   
 
 // Asks what com player the player wants to steal a card from
@@ -583,6 +581,12 @@ const promptCatCardTarget = () => {
 
 // Steals a random card from a com player for the player
 const stealCardFromComPlayer = (comTarget) => {
+    // Resets the message_box element
+    $("#message_box").html("")
+    
+    // Hides the message_box element
+    $("#message_box").hide()
+
     comTarget = comTarget.data.param1
 
     let indexOfCard, cardToGive
@@ -598,8 +602,7 @@ const stealCardFromComPlayer = (comTarget) => {
             // Removes the given card from com 1's hand
             cardsInCom1Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 1 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`You stole Com 1's ${cardToGive} card`)
+            comTarget = "Com 1"
 
             displayNewCard(cardToGive)
 
@@ -613,8 +616,7 @@ const stealCardFromComPlayer = (comTarget) => {
             // Removes the given card from com 2's hand
             cardsInCom2Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 2 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`You stole Com 2's ${cardToGive} card`)
+            comTarget = "Com 2"
 
             displayNewCard(cardToGive)
 
@@ -628,19 +630,17 @@ const stealCardFromComPlayer = (comTarget) => {
             // Removes the given card from com 3's hand
             cardsInCom3Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 3 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`You stole Com 3's ${cardToGive} card`)
+            comTarget = "Com 3"
 
             displayNewCard(cardToGive)
 
             break
     }
 
-    // Resets the message_box element
-    $("#message_box").html("")
     
-    // Hides the message_box element
-    $("#message_box").hide()
+    setTimeout(() => {
+        displayMessageBox("Card has been stolen" , `You have stolen ${comTarget}'s ${cardToGive} card`)
+    }, 100)
 }
 
 // Exports as module

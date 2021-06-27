@@ -8,6 +8,7 @@ import { choseAndPlayCardForCom1, cardsInCom1Hand, drawCardForCom1 } from "./com
 import { cardsInCom2Hand, drawCardForCom2 } from "./com2Script.js";
 import { cardsInCom3Hand, drawCardForCom3 } from "./com3Script.js";
 import { displayMessageBox } from "./messageBox.js";
+const path = require('path');
 
 // const $ = require("jquery")
 
@@ -123,7 +124,13 @@ const drawCardForPlayer = () => {
 // Display the drawn card to the player
 const displayDrawnCard = (cardToDisplay:string) => {
     // Displays the card and added an click command
-    let card = $(`<button class="player_cards" value="${cardToDisplay}">${cardToDisplay}</button>`)
+    // let card = $(`<button class="player_cards" value="${cardToDisplay}">${cardToDisplay}</button>`)
+
+    let cardHyphened = cardToDisplay.split(" ").join("-")
+
+    let card = $(`<button class="player_cards" value="${cardToDisplay}"/b>
+        <img src="${path.join(__dirname, `../assets/cards/${cardHyphened}.png`)}" class="player-card-img" >
+        </button>`)
 
     // Adds onclick function
     $(card).click({param1: $(card).val()}, playCard)
@@ -386,8 +393,11 @@ const catCardPlayed = (catCard:string) => {
 const displayNewCard = (displayCard) => {
     console.log(`New card is: ${displayCard}`)
 
-    // Displays the card and added an click command
-    const card = $(`<button class="player_cards" value="${displayCard}">${displayCard}</button>`)
+    let cardHyphened = displayCard.split(" ").join("-")
+
+    let card = $(`<button class="player_cards" value="${displayCard}"/b>
+        <img src="${path.join(__dirname, `../assets/cards/${cardHyphened}.png`)}" class="player-card-img" >
+        </button>`)
 
     // Adds the drawn card the the list
     playerCardsInHand.push(displayCard)

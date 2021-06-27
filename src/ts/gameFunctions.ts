@@ -8,6 +8,7 @@ import { choseAndPlayCardForCom1, cardsInCom1Hand, drawCardForCom1 } from "./com
 import { cardsInCom2Hand, drawCardForCom2 } from "./com2Script.js";
 import { cardsInCom3Hand, drawCardForCom3 } from "./com3Script.js";
 import { displayMessageBox } from "./messageBox.js";
+const path = require('path');
 
 // const $ = require("jquery")
 
@@ -123,7 +124,13 @@ const drawCardForPlayer = () => {
 // Display the drawn card to the player
 const displayDrawnCard = (cardToDisplay:string) => {
     // Displays the card and added an click command
-    let card = $(`<button class="player_cards" value="${cardToDisplay}">${cardToDisplay}</button>`)
+    // let card = $(`<button class="player_cards" value="${cardToDisplay}">${cardToDisplay}</button>`)
+
+    let cardHyphened = cardToDisplay.split(" ").join("-")
+
+    let card = $(`<button class="player_cards" value="${cardToDisplay}"/b>
+        <img src="${path.join(__dirname, `../assets/cards/${cardHyphened}.png`)}" class="player-card-img" >
+        </button>`)
 
     // Adds onclick function
     $(card).click({param1: $(card).val()}, playCard)
@@ -386,8 +393,11 @@ const catCardPlayed = (catCard:string) => {
 const displayNewCard = (displayCard) => {
     console.log(`New card is: ${displayCard}`)
 
-    // Displays the card and added an click command
-    const card = $(`<button class="player_cards" value="${displayCard}">${displayCard}</button>`)
+    let cardHyphened = displayCard.split(" ").join("-")
+
+    let card = $(`<button class="player_cards" value="${displayCard}"/b>
+        <img src="${path.join(__dirname, `../assets/cards/${cardHyphened}.png`)}" class="player-card-img" >
+        </button>`)
 
     // Adds the drawn card the the list
     playerCardsInHand.push(displayCard)
@@ -480,6 +490,9 @@ const promptFavorTarget = () => {
 
 // Gives a random card to the player after com player favor target is selected 
 const askComPLayerForFavorCard = (comTarget) => {
+    $("#message_box").html("")
+    $("#message_box").hide()
+    
     comTarget = comTarget.data.param1
 
     let indexOfCard, cardToGive
@@ -495,10 +508,9 @@ const askComPLayerForFavorCard = (comTarget) => {
             // Removes the given card from com 1's hand
             cardsInCom1Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 1 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`Com 1 has given you there ${cardToGive} card`)
-
             displayNewCard(cardToGive)
+
+            comTarget = "Com 1"
 
             break
         case "com2":
@@ -510,8 +522,7 @@ const askComPLayerForFavorCard = (comTarget) => {
             // Removes the given card from com 2's hand
             cardsInCom2Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 2 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`Com 2 has given you there ${cardToGive} card`)
+            comTarget = "Com 2"
 
             displayNewCard(cardToGive)
 
@@ -525,19 +536,16 @@ const askComPLayerForFavorCard = (comTarget) => {
             // Removes the given card from com 3's hand
             cardsInCom3Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 3 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`Com 3 has given you there ${cardToGive} card`)
+            comTarget = "Com 3"
 
             displayNewCard(cardToGive)
 
             break
     }
 
-    // Resets the message_box element
-    $("#message_box").html("")
-    
-    // Hides the message_box element
-    $("#message_box").hide()
+    setTimeout(() => {
+        displayMessageBox("Thanks for the card" , `${comTarget} has given you there ${cardToGive} card`)
+    }, 100)
 }   
 
 // Asks what com player the player wants to steal a card from
@@ -583,6 +591,12 @@ const promptCatCardTarget = () => {
 
 // Steals a random card from a com player for the player
 const stealCardFromComPlayer = (comTarget) => {
+    // Resets the message_box element
+    $("#message_box").html("")
+    
+    // Hides the message_box element
+    $("#message_box").hide()
+
     comTarget = comTarget.data.param1
 
     let indexOfCard, cardToGive
@@ -598,8 +612,7 @@ const stealCardFromComPlayer = (comTarget) => {
             // Removes the given card from com 1's hand
             cardsInCom1Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 1 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`You stole Com 1's ${cardToGive} card`)
+            comTarget = "Com 1"
 
             displayNewCard(cardToGive)
 
@@ -613,8 +626,7 @@ const stealCardFromComPlayer = (comTarget) => {
             // Removes the given card from com 2's hand
             cardsInCom2Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 2 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`You stole Com 2's ${cardToGive} card`)
+            comTarget = "Com 2"
 
             displayNewCard(cardToGive)
 
@@ -628,19 +640,17 @@ const stealCardFromComPlayer = (comTarget) => {
             // Removes the given card from com 3's hand
             cardsInCom3Hand.splice(indexOfCard, 1)
 
-            // Tells what card com 3 gave to the player and adds the card to the players hand
-            $("#current_player_turn").html(`You stole Com 3's ${cardToGive} card`)
+            comTarget = "Com 3"
 
             displayNewCard(cardToGive)
 
             break
     }
 
-    // Resets the message_box element
-    $("#message_box").html("")
     
-    // Hides the message_box element
-    $("#message_box").hide()
+    setTimeout(() => {
+        displayMessageBox("Card has been stolen" , `You have stolen ${comTarget}'s ${cardToGive} card`)
+    }, 100)
 }
 
 // Exports as module

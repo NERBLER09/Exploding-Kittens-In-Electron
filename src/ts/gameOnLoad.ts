@@ -3,10 +3,10 @@
 // when that game page loads
 
 import { cards, cardAmounts } from "./messages.js"
-import { drawCard, displayDrawnCard, removeDrawnCardFromDeck } from "./gameFunctions.js";
-import { dealCardsToCom1 } from "./com1Script.js";
-import { dealCardsToCom2 } from "./com2Script.js";
-import { dealCardsToCom3 } from "./com3Script.js";
+import { removeDrawnCardFromDeck, updateVariable } from "./gameFunctions.js";
+import { dealCardsToCom1, dealCardsToCom2, dealCardsToCom3 } from "./comPlayerScripts/dealCardToComPlayers.js";
+import { displayCardToPlayer } from "./playerScripts/displayCardToPlayer.js";
+import { drawCardForPlayer } from "./playerScripts/drawCardForPlayer.js";
 
 // const $ = require("jquery")
 
@@ -18,6 +18,8 @@ let amountOfExplodingKittens = 0
 
 // Function runs when the page loads
 function onLoadFunc() {
+    updateVariable("isPlayerTurn", true)
+
     // Displays the current player
     $("#current_player_turn").html("It's currently your turn")
 
@@ -34,11 +36,11 @@ function onLoadFunc() {
         removeDrawnCardFromDeck(card)
 
         // Displays the drawn card
-        displayDrawnCard(card)
+        displayCardToPlayer(card)
     }
 
     // Deals the diffuse card to the player
-    displayDrawnCard("diffuse")
+    displayCardToPlayer("diffuse")
 
     // Removes the diffuse card from the 
     removeDrawnCardFromDeck("diffuse")
@@ -89,4 +91,4 @@ function onLoadFunc() {
 $("body").ready(onLoadFunc)
 
 // Sets the onclick function for the draw pile
-$("#draw-pile").click(drawCard)
+$("#draw-pile").click(drawCardForPlayer)

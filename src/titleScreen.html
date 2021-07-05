@@ -11,7 +11,9 @@
 
         <link rel="stylesheet" href="css/titeScreen.css">
 
-        <script defer src="js/titleScreen.js" type="module"></script>
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+        <script defer src="./js/titleScreen.js" type="module"></script>
         
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
         </head>

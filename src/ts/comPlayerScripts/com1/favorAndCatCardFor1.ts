@@ -13,6 +13,10 @@ const catCardPlayed = (catCard: string) => {
     for (const card of cardsInCom1Hand) {
         // Matching card
         if (catCard === card) {
+            console.log("Matching cat cards")
+            console.log(catCard)
+            console.log(card)
+
             displayMessageBox("Cat cards",`Com 1 has played 2 matching ${catCard}`)
 
             const waitUntilMessageBoxIsClosed = setInterval(() => {
@@ -40,6 +44,8 @@ const catCardPlayed = (catCard: string) => {
 
     // Checks if there are no matching 
     if (hasCatCard == false) {
+        console.log("Not matching cat cards")
+
         // Readds the played card back into com 1's hand
         cardsInCom1Hand.push(catCard)
 
@@ -48,14 +54,14 @@ const catCardPlayed = (catCard: string) => {
     }
 
     
-    const waitUntilMessageBoxIsClosed = setInterval(() => {
-        // Checks if the player has closed the #message_box
-        if($("#message_box").is(":hidden") ) {
-            clearInterval(waitUntilMessageBoxIsClosed)
-            // Draws the card
-            drawCardForCom1()
-        }
-    }, 100);
+    // const waitUntilMessageBoxIsClosed = setInterval(() => {
+    //     // Checks if the player has closed the #message_box
+    //     if($("#message_box").is(":hidden") ) {
+    //         clearInterval(waitUntilMessageBoxIsClosed)
+    //         // Draws the card
+    //         drawCardForCom1()
+    //     }
+    // }, 100);
 }
 
 // Steals a random card from a player of choice (The player, com 1, or com 3)

@@ -19,7 +19,8 @@ const createWindow = () => {
     height: 800,
     // icon: path.join(__dirname, "../assets/Exploding-Kitten-Logo.ico"), // xLaunch freaks out when running in WSl and crashes with a window icon set (??)
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 

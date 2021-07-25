@@ -29,7 +29,7 @@ const drawCardForPlayer = () => {
             // Checks if an Exploding Kittens card was drawn
 
             // Exploding Kitten card was not drawn
-            if(cardDrawn !== "Exploding Kitten") {
+            if(cardDrawn !== "exploding kitten") {
                 // Removes the drawn cardDrawn from the deck
                 removeDrawnCardFromDeck(cardDrawn)
 
@@ -53,10 +53,11 @@ const drawCardForPlayer = () => {
                     const setCom1Turn = setInterval(() => {
                         // Checks if the player has closed the #message_box
                         if($("#message_box").is(":hidden") ) {
+                            console.log("Passing turn")
                             clearInterval(setCom1Turn)
 
                             // Makes it be com 1's turn
-                            choseCard()    
+                            choseCard()
                         }
                     }, 100);
                 }
@@ -67,7 +68,7 @@ const drawCardForPlayer = () => {
 
             // Exploding Kitten card was drawn
 
-            else if(cardDrawn === "Exploding Kitten") {
+            else if(cardDrawn === "exploding kitten") {
                 updateVariable("explodingKittenCardDrawn", true)
 
                 // Checks if the player has a diffuse card in hand
@@ -78,6 +79,7 @@ const drawCardForPlayer = () => {
                         displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your diffuse card to diffuse the Exploding Kitten")
 
                         playerHasDiffuse = true
+                        updateVariable("isPlayerTurn", false)
 
                         break
                     }

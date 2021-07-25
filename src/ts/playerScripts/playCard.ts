@@ -28,9 +28,13 @@ const playCard = (playerCard) => {
             checkPlayerCardPlayed(cardPlayed)
         }
         else {
+            let waitUntilMessageBoxIsClosed: NodeJS.Timeout
+
             // Tells the player which card they game to a com player
             displayMessageBox("Favor Card", `You gave you ${playerCardsInHand[cardIndex]} to ${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]}`)
         
+            updateVariable("isPlayerTurn", false)
+
             // Checks what com player played the favor card
             switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
                 case "Com 1":
@@ -47,8 +51,14 @@ const playCard = (playerCard) => {
                     // Removes the given played card from the player's view
                     $(".player_cards").get(cardIndex).remove()
 
-                    // Makes Com 1 draw a card (Allows the game to not get soft-locked)
-                    drawCardForCom1()
+                    waitUntilMessageBoxIsClosed = setInterval(() => {
+                        // Checks if the player has closed the #message_box
+                        if($("#message_box").is(":hidden") ) {
+                            clearInterval(waitUntilMessageBoxIsClosed)
+                            // Draws the card
+                            drawCardForCom1()
+                        }
+                    }, 100);
 
                     break
                 
@@ -66,9 +76,15 @@ const playCard = (playerCard) => {
                     // Removes the given played card from the player's view
                     $(".player_cards").get(cardIndex).remove()
 
-                    // Makes Com 2 draw a card (Allows the game to not get soft-locked)
-                    drawCardForCom2()
-
+                    waitUntilMessageBoxIsClosed = setInterval(() => {
+                        // Checks if the player has closed the #message_box
+                        if($("#message_box").is(":hidden") ) {
+                            clearInterval(waitUntilMessageBoxIsClosed)
+                            // Draws the card
+                            drawCardForCom2()
+                        }
+                    }, 100);
+                    
                     break
 
                 case "Com 3":
@@ -85,12 +101,24 @@ const playCard = (playerCard) => {
                     // Removes the given played card from the player's view
                     $(".player_cards").get(cardIndex).remove()
 
-                    // Makes Com 3 draw a card (Allows the game to not get soft-locked)
-                    drawCardForCom3()
-
+                    waitUntilMessageBoxIsClosed = setInterval(() => {
+                        // Checks if the player has closed the #message_box
+                        if($("#message_box").is(":hidden") ) {
+                            clearInterval(waitUntilMessageBoxIsClosed)
+                            // Draws the card
+                            drawCardForCom3()
+                        }
+                    }, 100);
                     break                            
             }
         }
+    }
+
+    if(isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed === "diffuse") {
+        checkPlayerCardPlayed(cardPlayed)
+    }
+    else if (isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed !== "diffuse") {
+        displayMessageBox("Not a diffuse card", `Sorry, but a ${cardPlayed} card is not a diffuse card.`)
     }
 }
 

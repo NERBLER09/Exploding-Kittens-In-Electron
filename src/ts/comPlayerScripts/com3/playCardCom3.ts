@@ -1,6 +1,7 @@
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { askCardForFavor } from "../com1/favorAndCatCardFor1.js"
+import { catCardPlayedForCom2 } from "../com2/favorAndCatCard.js"
 import { cardsInCom3Hand, drawCardForCom3 } from "./drawCardForCom3.js"
 import { catCardPlayed } from "./favorAndCatCard.js"
 
@@ -28,7 +29,7 @@ const playCardForCom3 = (cardToPlay) => {
     if(cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' || 
     cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {
         // Checks if there's a matching cat card
-        catCardPlayed(cardToPlay)
+        catCardPlayedForCom2(cardToPlay)
     }
 
     // Plays the card (Checks what card was played)
@@ -117,6 +118,18 @@ const playCardForCom3 = (cardToPlay) => {
 
             // Re-chooses a card to play
             choseCardForCom3()
+        case "diffuse":
+            console.error("No cards to diffuse (Com 1)")
+
+            // Re-chooses card to play
+
+            // Readds the played card back into com 1's hand
+            cardsInCom3Hand.push(cardToPlay)
+
+            // Re-chooses a card to play
+            choseCardForCom3()
+            
+            break
     }
 }
 export { choseCardForCom3 }

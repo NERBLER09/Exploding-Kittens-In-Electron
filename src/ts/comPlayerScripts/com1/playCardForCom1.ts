@@ -16,11 +16,15 @@ const choseCardForCom1 = () => {
         // Dose nothing here
     }, 1000);
 
+    console.log("Choosing card to play (com 1)")
+
     playCard(cardToPlay)
 }
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
+    console.log("Com 1 play card: " + cardToPlay )
+
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played
@@ -173,6 +177,19 @@ const playCard = (cardToPlay) => {
 
         case "nope":
             console.error("No cards to nope (Com 1)")
+
+            // Re-chooses card to play
+
+            // Readds the played card back into com 1's hand
+            cardsInCom1Hand.push(cardToPlay)
+
+            // Re-chooses a card to play
+            choseCardForCom1()
+
+            break
+
+        case "diffuse":
+            console.error("No cards to diffuse (Com 1)")
 
             // Re-chooses card to play
 

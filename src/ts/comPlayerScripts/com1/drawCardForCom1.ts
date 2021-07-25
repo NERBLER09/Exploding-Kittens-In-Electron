@@ -2,6 +2,7 @@ import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVari
 import { displayMessageBox } from "../../messageBox.js"
 import { cards } from "../../messages.js"
 import { choseCardForCom2 } from "../com2/playCardCom2.js"
+import { choseCard } from "./playCardForCom1.js"
 
 // Stores the cards in com 1's hand
 let cardsInCom1Hand: string[] = []
@@ -42,6 +43,8 @@ const drawCardForCom1 = () => {
             const comAmount = localStorage.getItem("comAmount")
 
             if (comAmount === "2comPlayer" || comAmount === "3comPlayer") {
+                console.log("Passing turn")
+
                 displayMessageBox("Com 1 has drawn a card.", "It's now com 2's turn")
 
                 const setCom2Turn = setInterval(() => {
@@ -49,12 +52,14 @@ const drawCardForCom1 = () => {
                     if($("#message_box").is(":hidden") ) {
                         clearInterval(setCom2Turn)
 
-                        // Makes it be com 2's turn
+                        // Makes it be com 1's turn
                         choseCardForCom2()    
                     }
                 }, 100);
             }
             else {
+                console.log("Passing turn")
+
                 displayMessageBox("Com 1 has drawn card", "It's now your turn")
 
                 // Makes it be the players turn
@@ -75,7 +80,7 @@ const drawCardForCom1 = () => {
                 if($("#message_box").is(":hidden") ) {
                     clearInterval(setCom2Turn)
 
-                    choseCardForCom2()    
+                    choseCard()    
                 }
             }, 100);
         }

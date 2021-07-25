@@ -3,6 +3,7 @@ import { displayMessageBox } from "../../messageBox.js"
 import { askCardForFavor, catCardPlayed } from "../com1/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3/playCardCom3.js"
 import { cardsInCom2Hand, drawCardForCom2 } from "./drawCardForCom2.js"
+import { askCardForFavorForCom2 } from "./favorAndCatCard.js"
 
 const choseCardForCom2 = () => {
     // Choses a card to play
@@ -144,11 +145,11 @@ const playCardForCom2 = (cardToPlay) => {
 
             // Checks if selected target has a return in switch statement 
             if(favorCardTarget == 1) {
-                askCardForFavor(favorCardTarget)
+                askCardForFavorForCom2(favorCardTarget)
             }
             else {
                 // Ask for a card from the player of choice
-                const givenCard = askCardForFavor(favorCardTarget)
+                const givenCard = askCardForFavorForCom2(favorCardTarget)
 
                 // Adds the given card to Com 1's hand
                 cardsInCom2Hand.push(givenCard)
@@ -160,13 +161,26 @@ const playCardForCom2 = (cardToPlay) => {
             break
 
         case "nope":
-            // Re-chooses a card to play
+            console.error("No cards to nope (Com 2)")
 
             // Readds the played card back into com 2's hand
             cardsInCom2Hand.push(cardToPlay)
 
             // Re-chooses a card to play
             choseCardForCom2()
+        
+        case "diffuse":
+            console.error("No cards to diffuse (Com 2)")
+
+            // Re-chooses card to play
+
+            // Readds the played card back into com 1's hand
+            cardsInCom2Hand.push(cardToPlay)
+
+            // Re-chooses a card to play
+            choseCardForCom2()
+            
+            break
     }
 }
 export { choseCardForCom2 }

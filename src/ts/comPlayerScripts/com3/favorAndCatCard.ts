@@ -45,15 +45,6 @@ const catCardPlayed = (catCard: string) => {
         // Re-chooses a card to play
         choseCardForCom3()
     }
-
-    const waitUntilMessageBoxIsClosed = setInterval(() => {
-        // Checks if the player has closed the #message_box
-        if($("#message_box").is(":hidden") ) {
-            clearInterval(waitUntilMessageBoxIsClosed)
-            // Draws the card
-            drawCardForCom3()
-        }
-    }, 100);
 }
 
 // Steals a random card from a player of choice (The player, com 1, or com 3)

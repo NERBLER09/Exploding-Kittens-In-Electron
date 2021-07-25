@@ -10,7 +10,7 @@ const path = require('path');
 const displayCardToPlayer = (displayCard) => {
     let cardHyphened = displayCard.split(" ").join("-")
 
-    let card = $(`<button class="player_cards" value="${displayCard}"/b>
+    let card = $(`<button class="player_cards" value="${displayCard}">
         <img src="${path.join(__dirname, `../assets/cards/${cardHyphened}.png`)}" class="player-card-img" >
         </button>`)
 

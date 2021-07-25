@@ -103,3 +103,10 @@
 
     box-shadow: 10px 10px 10px lightgrey;
 }
+.see-the-future-cards-container {
+    display: flex;
+}
+.see-the-future-card {
+    width: 90px;
+    height: 50%;
+}

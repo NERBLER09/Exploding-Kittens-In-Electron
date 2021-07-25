@@ -3,7 +3,7 @@ import { choseCard } from "../comPlayerScripts/com1/playCardForCom1.js"
 import { cardsInCom2Hand, drawCardForCom2 } from "../comPlayerScripts/com2/drawCardForCom2.js"
 import { cardsInCom3Hand, drawCardForCom3 } from "../comPlayerScripts/com3/drawCardForCom3.js"
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, updateVariable } from "../gameFunctions.js"
-import { displayMessageBox } from "../messageBox.js"
+import { displayMessageBox, displaySeeTheFutureCards } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
 import { catCardPlayed, promptFavorTarget } from "./favorAndCatCard.js"
@@ -145,8 +145,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
 
             updateVariable("seeTheFutureCards")
 
-            displayMessageBox("See the future",`The Current Top 3 Cards: 1. ${seeTheFutureCards[0]},
-                2. ${seeTheFutureCards[1]}, 3. ${seeTheFutureCards[2]} `)
+            displaySeeTheFutureCards(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2])
             
             break
         case "favor":

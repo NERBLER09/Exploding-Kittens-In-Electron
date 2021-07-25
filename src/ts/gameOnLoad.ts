@@ -82,9 +82,9 @@ function onLoadFunc() {
     // Adds the Exploding Kittens card into the deck
     amountOfExplodingKittens = amountOfPlayers - 1
 
-    cards.push("Exploding Kitten")
+    cards.push("exploding kitten")
 
-    cardAmounts["Exploding Kittens"] = amountOfExplodingKittens
+    cardAmounts["exploding kittens"] = amountOfExplodingKittens
 }
 
 // Sets the onload func

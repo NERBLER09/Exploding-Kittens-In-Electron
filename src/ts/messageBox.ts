@@ -6,10 +6,10 @@ const closeMessageBox = ()  => {
 }
 
 const displayMessageBox = (header: string, mainText: string) => {
-    const messageBoxElement = $(`<h2>${header}</h2> <p>${mainText}</p> <button>Close</button>`)
+    const messageBoxElement = $(`<h2>${header}</h2> <p>${mainText}</p> <button id="close-button">Close</button>`)
 
     $("#message_box").append(messageBoxElement)
-    $("#message_box").last().click(closeMessageBox)
+    $("#close-button").click(closeMessageBox)
     $("#message_box").show()
 }
 
@@ -34,11 +34,11 @@ const displaySeeTheFutureCards = (card1: string, card2: string, card3: string) =
         </div>
 
 
-        <button>Close</button>
+        <button id="close-button">Close</button>
     `
 
     $("#message_box").append(messageBoxElement)
-    $("#message_box").last().click(closeMessageBox)
+    $("#close-button").click(closeMessageBox)
     $("#message_box").show()
 }
 

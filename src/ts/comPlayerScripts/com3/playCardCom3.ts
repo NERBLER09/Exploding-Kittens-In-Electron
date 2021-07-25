@@ -1,3 +1,4 @@
+import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { askCardForFavor } from "../com1/favorAndCatCardFor1.js"
@@ -19,6 +20,13 @@ const choseCardForCom3 = () => {
     }, 2000);
 
     playCardForCom3(cardToPlay)
+
+    if(checkForPlayableCard(cardsInCom3Hand)) {
+        playCardForCom3(cardToPlay)
+    }
+    else {
+        drawCardForCom3()
+    }
 }
 
 // Choses a card to play and plays the card

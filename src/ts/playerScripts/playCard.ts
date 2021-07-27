@@ -5,6 +5,7 @@ import { cardsInCom3Hand, drawCardForCom3 } from "../comPlayerScripts/com3/drawC
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, updateVariable } from "../gameFunctions.js"
 import { displayMessageBox, displaySeeTheFutureCards } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
+import { updateDiscardPile } from "../updateDiscardPile.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
 import { catCardPlayed, promptFavorTarget } from "./favorAndCatCard.js"
 
@@ -26,6 +27,8 @@ const playCard = (playerCard) => {
 
             // Checks what card is played
             checkPlayerCardPlayed(cardPlayed)
+
+            updateDiscardPile(cardPlayed)
         }
         else {
             let waitUntilMessageBoxIsClosed: NodeJS.Timeout
@@ -115,6 +118,8 @@ const playCard = (playerCard) => {
     }
 
     if(isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed === "diffuse") {
+        updateDiscardPile(cardPlayed)
+        
         checkPlayerCardPlayed(cardPlayed)
     }
     else if (isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed !== "diffuse") {

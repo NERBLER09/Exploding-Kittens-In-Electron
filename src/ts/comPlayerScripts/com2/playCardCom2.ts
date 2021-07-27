@@ -1,6 +1,7 @@
 import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
+import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { askCardForFavor, catCardPlayed } from "../com1/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3/playCardCom3.js"
 import { cardsInCom2Hand, drawCardForCom2 } from "./drawCardForCom2.js"
@@ -22,6 +23,7 @@ const choseCardForCom2 = () => {
     playCardForCom2(cardToPlay)
 
     if(checkForPlayableCard(cardsInCom2Hand)) {
+        updateDiscardPile(cardToPlay)
         playCardForCom2(cardToPlay)
     }
     else {

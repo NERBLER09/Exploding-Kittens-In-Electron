@@ -26,12 +26,27 @@
     display: flex;
 
     align-items: center;
+    flex-direction: column;
+}
+
+#game-cards-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 173px;
+    height: 200px;
+}
+#discard-pile-img {
+    width: 90px;
+    height: 120px;
 }
 
 #discard-pile {
     padding: 10px;
 
     font-size: 18px;
+
+    margin: 10px;
 }
 
 #draw-pile {
@@ -39,6 +54,10 @@
 
     width: 100%;
     height: 104px;
+    margin: 10px;
+
+    width:90px;
+    height: 120px;
 }
 
 #player_cards_container {
@@ -109,4 +128,8 @@
 .see-the-future-card {
     width: 90px;
     height: 50%;
+}
+#discard-pile-img {
+    width: 90px;
+    height: 100%;
 }

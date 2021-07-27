@@ -1,10 +1,10 @@
 import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
+import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { askCardForFavor } from "../com1/favorAndCatCardFor1.js"
 import { catCardPlayedForCom2 } from "../com2/favorAndCatCard.js"
 import { cardsInCom3Hand, drawCardForCom3 } from "./drawCardForCom3.js"
-import { catCardPlayed } from "./favorAndCatCard.js"
 
 const choseCardForCom3 = () => {
     // Choses a card to play
@@ -22,6 +22,8 @@ const choseCardForCom3 = () => {
     playCardForCom3(cardToPlay)
 
     if(checkForPlayableCard(cardsInCom3Hand)) {
+        updateDiscardPile(cardToPlay)
+
         playCardForCom3(cardToPlay)
     }
     else {

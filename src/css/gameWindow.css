@@ -27,37 +27,37 @@
 
     align-items: center;
     flex-direction: column;
+
+    margin-top: 50px;
+
+    width: 500px;
 }
 
 #game-cards-div {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 173px;
-    height: 200px;
+    justify-content: center;
+    width: 500px;
+    height: fit-content;
 }
-#discard-pile-img {
-    width: 90px;
-    height: 120px;
-}
-
 #discard-pile {
     padding: 10px;
 
     font-size: 18px;
 
     margin: 10px;
+
+    width: 120px;
+    height: 150px;
 }
 
 #draw-pile {
     padding: 10px;
 
-    width: 100%;
-    height: 104px;
+    width: 120px;
+    height: 150px;
     margin: 10px;
-
-    width:90px;
-    height: 120px;
 }
 
 #player_cards_container {
@@ -67,7 +67,8 @@
 
     width: 100%;
 
-    overflow-y: auto;
+    /* overflow-y: auto; */
+    overflow-y: hidden;
 }
 
 .player_cards{
@@ -131,5 +132,23 @@
 }
 #discard-pile-img {
     width: 90px;
-    height: 100%;
+    height: 120px;
+}
+
+#card-back-img {
+    width: 90px;
+    height: 120px;
+}
+
+.discard-pile-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.game-card-text {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

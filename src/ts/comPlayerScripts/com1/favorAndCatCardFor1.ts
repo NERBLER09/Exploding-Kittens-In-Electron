@@ -1,14 +1,20 @@
+import { createShorthandPropertyAssignment } from "../../../../node_modules/typescript/lib/typescript.js";
 import { displayMessageBox } from "../../messageBox.js";
 import { playerCardsInHand, comPlayerPlayedFavor } from "../../messages.js";
+import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
 import { cardsInCom2Hand } from "../com2/drawCardForCom2.js";
 import { cardsInCom3Hand } from "../com3/drawCardForCom3.js";
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js";
-import { choseCard } from "./playCardForCom1.js";
+import { choseCard as chooseCardForCom1 } from "./playCardForCom1.js";
+
+type catCard = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" | "cattermellon"
 
 // Runs when com 1 has played 2 matching cat cards
-const catCardPlayed = (catCard: string) => {
-    let hasCatCard = false
-
+const catCardPlayed = (catCard: catCard) => {
+    if(checkForMatchingCatCards(cardsInCom1Hand, catCard) === false) {
+        chooseCardForCom1()
+    }
+    
     // Checks if there is a matching cat card
     for (const card of cardsInCom1Hand) {
         // Matching card
@@ -34,34 +40,13 @@ const catCardPlayed = (catCard: string) => {
                     // Adds the stolen card to Com 1's hand
                     cardsInCom1Hand.push(cardToSteal)
 
-                    hasCatCard = true
+                    drawCardForCom1()
                 }
             }, 100);
 
             break
         }
     }
-
-    // Checks if there are no matching 
-    if (hasCatCard == false) {
-        console.log("Not matching cat cards")
-
-        // Readds the played card back into com 1's hand
-        cardsInCom1Hand.push(catCard)
-
-        // Re-chooses a card to play
-        choseCard()
-    }
-
-    
-    // const waitUntilMessageBoxIsClosed = setInterval(() => {
-    //     // Checks if the player has closed the #message_box
-    //     if($("#message_box").is(":hidden") ) {
-    //         clearInterval(waitUntilMessageBoxIsClosed)
-    //         // Draws the card
-    //         drawCardForCom1()
-    //     }
-    // }, 100);
 }
 
 // Steals a random card from a player of choice (The player, com 1, or com 3)

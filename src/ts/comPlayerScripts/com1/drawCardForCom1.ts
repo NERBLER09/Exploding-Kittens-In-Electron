@@ -26,7 +26,7 @@ const drawCardForCom1 = () => {
     // Checks if Com 1 has drawn an Exploding Kitten card
 
     // Exploding Kitten was not drawn
-    if(cardDrawn !== "Exploding Kitten") {
+    if(cardDrawn !== "exploding kitten") {
         // Adds the drawn card to Com 1's hand
         cardsInCom1Hand.push(cardDrawn)
 

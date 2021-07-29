@@ -4,7 +4,7 @@ const closeMessageBox = ()  => {
     $("#message_box").html("")
     $("#message_box").hide()
 }
-
+/** Displays a basic message box to the player */
 const displayMessageBox = (header: string, mainText: string) => {
     const messageBoxElement = $(`<h2>${header}</h2> <p>${mainText}</p> <button id="close-button">Close</button>`)
 
@@ -12,7 +12,7 @@ const displayMessageBox = (header: string, mainText: string) => {
     $("#close-button").click(closeMessageBox)
     $("#message_box").show()
 }
-
+/** Displays a message box to the player with the top 3 cards */
 const displaySeeTheFutureCards = (card1: string, card2: string, card3: string) => {
     const card1PathFormatted = card1.split(" ").join("-") 
     const card2PathFormatted = card2.split(" ").join("-") 

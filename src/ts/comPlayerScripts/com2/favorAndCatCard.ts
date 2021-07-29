@@ -1,13 +1,18 @@
 import { displayMessageBox } from "../../messageBox.js";
 import { comPlayerPlayedFavor, playerCardsInHand } from "../../messages.js";
-import { cardsInCom1Hand } from "../com1/drawCardForCom1.js";
+import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
+import { cardsInCom1Hand, drawCardForCom1 } from "../com1/drawCardForCom1.js";
 import { cardsInCom3Hand } from "../com3/drawCardForCom3.js";
 import { cardsInCom2Hand, drawCardForCom2 } from "./drawCardForCom2.js";
 import { choseCardForCom2 } from "./playCardCom2.js";
 
+type catCard = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" | "cattermellon"
+
 // Runs when com 2 has played 2 matching cat cards
-const catCardPlayedForCom2 = (catCard: string) => {
-    let hasCatCard = false
+const catCardPlayedForCom2 = (catCard: catCard) => {
+    if(checkForMatchingCatCards(cardsInCom2Hand, catCard) === false) {
+        choseCardForCom2()
+    }
 
     // Checks if there is a matching cat card
     for(const card of cardsInCom2Hand) {
@@ -30,21 +35,12 @@ const catCardPlayedForCom2 = (catCard: string) => {
                     // Adds the stolen card to Com 2's hand
                     cardsInCom2Hand.push(cardToSteal)
 
-                    hasCatCard = true
+                    drawCardForCom1()
                 }
             }, 100);
 
             break
         }
-    }
-
-    // Checks if there are no matching 
-    if(hasCatCard == false) {
-        // Readds the played card back into com 2's hand
-        cardsInCom2Hand.push(catCard)
-
-        // Re-chooses a card to play
-        choseCardForCom2()
     }
 }
 

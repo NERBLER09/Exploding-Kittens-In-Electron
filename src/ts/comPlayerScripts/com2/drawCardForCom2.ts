@@ -29,7 +29,7 @@ const drawCardForCom2 = () => {
 
     // Exploding Kitten was not drawn
 
-    if(cardDrawn !== "Exploding Kitten") {
+    if(cardDrawn !== "exploding kitten") {
         // Adds the drawn card the the list
         cardsInCom2Hand.push(cardDrawn)
 

@@ -1,3 +1,5 @@
+import { card, cardAmounts } from "./models/cards.interface"
+
 // Messages that might get displayed to the player
 const messages = {
     "no_username": "You have to enter your username",
@@ -6,7 +8,7 @@ const messages = {
 }
 
 // Keeps track of how many of each cards are in the deck
-const cardAmounts = {
+const cardAmounts: cardAmounts = {
     'nope': 5,
     'attack': 4,
     'skip': 4,
@@ -25,7 +27,7 @@ const cardAmounts = {
 let playerCardsInHand = []
 
 // Stores the cards in the deck
-let cards = ['nope', 'attack',
+let cards: card[] = ['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
     'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
 

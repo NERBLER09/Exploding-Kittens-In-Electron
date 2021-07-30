@@ -1,18 +1,16 @@
-import { createShorthandPropertyAssignment } from "../../../../node_modules/typescript/lib/typescript.js";
 import { displayMessageBox } from "../../messageBox.js";
 import { playerCardsInHand, comPlayerPlayedFavor } from "../../messages.js";
 import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
 import { cardsInCom2Hand } from "../com2/drawCardForCom2.js";
 import { cardsInCom3Hand } from "../com3/drawCardForCom3.js";
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js";
-import { choseCard as chooseCardForCom1 } from "./playCardForCom1.js";
-
-type catCard = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" | "cattermellon"
+import { choseCard } from "./playCardForCom1.js";
+import {catCard} from "../../models/cards.interface"
 
 // Runs when com 1 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {
     if(checkForMatchingCatCards(cardsInCom1Hand, catCard) === false) {
-        chooseCardForCom1()
+        choseCard()
     }
     
     // Checks if there is a matching cat card

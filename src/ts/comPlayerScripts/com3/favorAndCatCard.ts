@@ -1,12 +1,11 @@
 import { displayMessageBox } from "../../messageBox.js";
 import { comPlayerPlayedFavor, playerCardsInHand } from "../../messages.js";
+import { catCard } from "../../models/cards.interface.js";
 import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
 import { cardsInCom1Hand } from "../com1/drawCardForCom1.js";
 import { cardsInCom2Hand } from "../com2/drawCardForCom2.js";
 import { cardsInCom3Hand } from "./drawCardForCom3.js";
 import { choseCardForCom3 } from "./playCardCom3.js";
-
-type catCard = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" | "cattermellon"
 
 // Runs when com 3 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {

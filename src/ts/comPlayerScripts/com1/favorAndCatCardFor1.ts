@@ -5,7 +5,7 @@ import { cardsInCom2Hand } from "../com2/drawCardForCom2.js";
 import { cardsInCom3Hand } from "../com3/drawCardForCom3.js";
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js";
 import { choseCard } from "./playCardForCom1.js";
-import {catCard} from "../../models/cards.interface"
+import {card, catCard} from "../../models/cards.interface"
 
 // Runs when com 1 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {
@@ -33,7 +33,7 @@ const catCardPlayed = (catCard: catCard) => {
                     cardsInCom1Hand.splice(cardIndex, 1)
 
                     // Steals a random card from a chosen player
-                    const cardToSteal = stealCard()
+                    const cardToSteal: card = stealCard()
 
                     // Adds the stolen card to Com 1's hand
                     cardsInCom1Hand.push(cardToSteal)
@@ -48,7 +48,7 @@ const catCardPlayed = (catCard: catCard) => {
 }
 
 // Steals a random card from a player of choice (The player, com 1, or com 3)
-const stealCard = () => {
+const stealCard = (): card => {
     // Creates a random number to chose what player to target
     // 1 - The Player
     // 2 - Com 2
@@ -73,7 +73,7 @@ const stealCard = () => {
     }
     
     let cardIndex: number
-    let cardToStealFromPlayer: string
+    let cardToStealFromPlayer: card
 
     // Enters switch statement to steal a random card from the right player
     switch(stealCardTarget) {
@@ -171,9 +171,9 @@ const stealCard = () => {
 }
 
 // Choses a player to ask for a favor from
-const askCardForFavor = (favorCardTarget) => {
+const askCardForFavor = (favorCardTarget): card => {
     let cardIndex: number
-    let cardToGive: string
+    let cardToGive: card
     let returnFavoredCard: NodeJS.Timeout
 
     // Asks a favor from the correct player

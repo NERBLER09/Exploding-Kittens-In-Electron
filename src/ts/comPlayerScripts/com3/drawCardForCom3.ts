@@ -1,15 +1,16 @@
 import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { cards } from "../../messages.js"
+import { card } from "../../models/cards.interface.js"
 import { choseCardForCom3 } from "./playCardCom3.js"
 
 // Stores the cards in com 3's hand
-let cardsInCom3Hand:string[] = []
+let cardsInCom3Hand:card[] = []
 
 // Draws a card to com 3
 const drawCardForCom3 = () => {
     // Choses a card
-    let cardDrawn: string
+    let cardDrawn: card
 
     // Checks a see the future card was drawn, if so gets the top card
     if(seeTheFutureCards.length !== 0) {

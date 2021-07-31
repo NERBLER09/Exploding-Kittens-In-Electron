@@ -1,6 +1,7 @@
 import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
+import { card } from "../../models/cards.interface.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { choseCardForCom2 } from "../com2/playCardCom2.js"
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js"
@@ -8,7 +9,7 @@ import { askCardForFavor, catCardPlayed } from "./favorAndCatCardFor1.js"
 
 const choseCardForCom1 = () => {
     // Choses a card to play from com 1's hand
-    const cardToPlay = cardsInCom1Hand[Math.floor(Math.random() * cardsInCom1Hand.length)]
+    const cardToPlay: card = cardsInCom1Hand[Math.floor(Math.random() * cardsInCom1Hand.length)]
     // Removes the played card from com 1's hand
     const cardIndex = cardsInCom1Hand.indexOf(cardToPlay)
     cardsInCom1Hand.splice(cardIndex, 1)
@@ -172,7 +173,7 @@ const playCard = (cardToPlay) => {
             }
             else {
                 // Ask for a card from the player of choice
-                const givenCard = askCardForFavor(favorCardTarget)
+                const givenCard: card = askCardForFavor(favorCardTarget)
 
                 // Adds the given card to Com 1's hand
                 cardsInCom1Hand.push(givenCard)

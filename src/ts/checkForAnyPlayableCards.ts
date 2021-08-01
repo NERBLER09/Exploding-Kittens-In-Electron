@@ -1,22 +1,28 @@
+import { card } from "./models/cards.interface"
+
 /** Checks if the passed hand has any cards that it can play
  * Used to prevent an infinite loop
  */
 
-const checkForPlayableCard = (hand: string[]): boolean => {
-    let noPlayableCard = true
-    
+const playableCards = ['nope', 'attack',
+'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
+'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
+
+
+const checkForPlayableCard = (hand: card[], cardToPlay: card): boolean => {
+    console.log("Card to play: " + cardToPlay)
+
     for(const e of hand) {
-        if(e !== "exploding kittens" && e !== "diffuse" && e !== "nope") {
-            console.log("Playable card")
-            noPlayableCard = false
+        console.log(e)
+        if(playableCards.includes(e) && e === cardToPlay) {
+            console.log("Playable card: " + e)
+
             return true
         }
     }
-    if(noPlayableCard === true) {
-        console.log("no playable card")
-        
-        return false
-    }
+
+    console.log("No playable cards")
+    return false
 }
 
 export { checkForPlayableCard }

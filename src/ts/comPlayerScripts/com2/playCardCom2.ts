@@ -22,7 +22,7 @@ const choseCardForCom2 = () => {
         // Dose nothing here
     }, 2000);
 
-    if(checkForPlayableCard(cardsInCom2Hand)) {
+    if(checkForPlayableCard(cardsInCom2Hand, cardToPlay)) {
         updateDiscardPile(cardToPlay)
 
         nopePlayedCard(cardToPlay, "Com 2")

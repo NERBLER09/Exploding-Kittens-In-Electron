@@ -7,7 +7,10 @@ let isNopeCardPlayed = false
 
 /** Checks if there is a nope card was played */
 const checkIfNopeCardPlayed = (): boolean => {
-    if(isNopeCardPlayed) return true
+    if(isNopeCardPlayed) { 
+        isNopeCardPlayed = false
+        return true
+    }
 
     else return false
 }

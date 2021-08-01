@@ -22,8 +22,6 @@ const choseCardForCom2 = () => {
         // Dose nothing here
     }, 2000);
 
-    playCardForCom2(cardToPlay)
-
     if(checkForPlayableCard(cardsInCom2Hand)) {
         updateDiscardPile(cardToPlay)
 

@@ -2,6 +2,7 @@ import { choseCard } from "../comPlayerScripts/com1/playCardForCom1.js"
 import { isPlayerTurn, removeDrawnCardFromDeck, seeTheFutureCards, totalCardAmount, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
 import { displayMessageBox } from "../messageBox.js"
 import { cards, comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
+import { card } from "../models/cards.interface.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
 
 // Draws a card for the player
@@ -11,7 +12,7 @@ const drawCardForPlayer = () => {
     if(isPlayerTurn === true && comPlayerPlayedFavor["favorCardPlayed"] === false) {
         // Checks if there are still cards in the deck
         if(totalCardAmount > 1) {
-            let cardDrawn: string
+            let cardDrawn: card
 
             // Checks a see the future card was drawn, if so gets the top card
             if(seeTheFutureCards.length !== 0) {
@@ -93,7 +94,7 @@ const drawCardForPlayer = () => {
                     updateVariable("isPlayerTurn", false)
 
                     // Removes the Exploding Kitten card from the deck
-                    removeDrawnCardFromDeck("Exploding Kitten")
+                    removeDrawnCardFromDeck("exploding kitten")
                 }
             }
         }  

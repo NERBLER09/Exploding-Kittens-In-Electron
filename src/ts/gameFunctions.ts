@@ -4,6 +4,7 @@
 // and the onclick function for the player cards
 
 import { cards, cardAmounts } from "./messages.js"
+import { card } from "./models/cards.interface.js"
 
 // const $ = require("jquery")
 
@@ -23,7 +24,7 @@ let seeTheFutureCards = []
 let explodingKittenCardDrawn = false
 
 // Removes the drawn card from the deck
-const removeDrawnCardFromDeck = (cardToRemoveFromDeck: string) => {
+const removeDrawnCardFromDeck = (cardToRemoveFromDeck: card) => {
     cardAmounts[cardToRemoveFromDeck] -= 1
     // console.log(totalCardAmount)
     totalCardAmount -= 1

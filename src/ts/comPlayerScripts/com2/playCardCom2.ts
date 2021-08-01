@@ -1,6 +1,8 @@
 import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
+import { card } from "../../models/cards.interface.js"
+import { checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { askCardForFavor, catCardPlayed } from "../com1/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3/playCardCom3.js"
@@ -20,11 +22,24 @@ const choseCardForCom2 = () => {
         // Dose nothing here
     }, 2000);
 
-    playCardForCom2(cardToPlay)
-
     if(checkForPlayableCard(cardsInCom2Hand)) {
         updateDiscardPile(cardToPlay)
-        playCardForCom2(cardToPlay)
+
+        nopePlayedCard(cardToPlay, "Com 2")
+
+        const waitUntilMessageBoxClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxClosed)
+
+                if (!checkIfNopeCardPlayed()) {
+                    playCardForCom2(cardToPlay)
+                }
+                else {
+                    drawCardForCom2()
+                }
+            }
+        }, 100);
     }
     else {
         drawCardForCom2()
@@ -159,7 +174,7 @@ const playCardForCom2 = (cardToPlay) => {
             }
             else {
                 // Ask for a card from the player of choice
-                const givenCard = askCardForFavorForCom2(favorCardTarget)
+                const givenCard: card = askCardForFavorForCom2(favorCardTarget)
 
                 // Adds the given card to Com 1's hand
                 cardsInCom2Hand.push(givenCard)

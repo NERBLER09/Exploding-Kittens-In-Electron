@@ -2,6 +2,7 @@ import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { card } from "../../models/cards.interface.js"
+import { checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { choseCardForCom2 } from "../com2/playCardCom2.js"
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js"
@@ -21,9 +22,24 @@ const choseCardForCom1 = () => {
 
     console.log("Choosing card to play (com 1)")
 
-    if(checkForPlayableCard(cardsInCom1Hand)) {
+    if (checkForPlayableCard(cardsInCom1Hand)) {
         updateDiscardPile(cardToPlay)
-        playCard(cardToPlay)
+
+        nopePlayedCard(cardToPlay, "Com 1")
+
+        const waitUntilMessageBoxClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxClosed)
+
+                if (!checkIfNopeCardPlayed()) {
+                    playCard(cardToPlay)
+                }
+                else {
+                    drawCardForCom1()
+                }
+            }
+        }, 100);
     }
     else {
         drawCardForCom1()
@@ -32,7 +48,7 @@ const choseCardForCom1 = () => {
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
-    console.log("Com 1 play card: " + cardToPlay )
+    console.log("Com 1 play card: " + cardToPlay)
 
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
@@ -48,13 +64,13 @@ const playCard = (cardToPlay) => {
     switch (cardToPlay) {
         case "skip":
             // Checks if there are more then 1 com player to pass turn to the right player
-            if(localStorage.getItem("comAmount") !== "1comPlayer") {
+            if (localStorage.getItem("comAmount") !== "1comPlayer") {
                 // Tells the player that Com 1 has played a skip and that it's now Com 2's turn
-                displayMessageBox("Com 1 has skipped there turn"," It's now Com 2's turn.")
+                displayMessageBox("Com 1 has skipped there turn", " It's now Com 2's turn.")
 
                 const setCom2Turn = setInterval(() => {
                     // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
+                    if ($("#message_box").is(":hidden")) {
                         clearInterval(setCom2Turn)
 
                         // Makes it be com 2's turn
@@ -64,7 +80,7 @@ const playCard = (cardToPlay) => {
 
             }
             else {
-                displayMessageBox("Com 1 has skipped there turn","It's now your turn.")
+                displayMessageBox("Com 1 has skipped there turn", "It's now your turn.")
 
                 // Makes it be the players turn
                 updateVariable("isPlayerTurn", true)
@@ -81,20 +97,20 @@ const playCard = (cardToPlay) => {
 
             // More then 1 com player
 
-            if(comAmount !== "1comPlayer") {
+            if (comAmount !== "1comPlayer") {
                 // Makes Com 2 has 2 turns 
                 updateVariable("turnsNeedToPlay")
 
                 // Displays the amount of turns Com 2 has 
-                displayMessageBox("Com 1 has played an attack",`It's now Com 2's turn, Com 2 has ${turnsNeedToPlay} turns`)
+                displayMessageBox("Com 1 has played an attack", `It's now Com 2's turn, Com 2 has ${turnsNeedToPlay} turns`)
 
                 const setCom2Turn = setInterval(() => {
                     // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
+                    if ($("#message_box").is(":hidden")) {
                         clearInterval(setCom2Turn)
 
                         // Makes it be com 2's turn
-                        choseCardForCom2()    
+                        choseCardForCom2()
                     }
                 }, 100);
             }
@@ -115,11 +131,11 @@ const playCard = (cardToPlay) => {
             break
         case "shuffle":
             // Card is a placebo, this card really dose nothing
-            displayMessageBox("The deck has been shuffled","Com 1 has shuffled the deck")
+            displayMessageBox("The deck has been shuffled", "Com 1 has shuffled the deck")
 
             waitUntilMessageBoxIsClosed = setInterval(() => {
                 // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
+                if ($("#message_box").is(":hidden")) {
                     clearInterval(waitUntilMessageBoxIsClosed)
                     // Draws the card
                     drawCardForCom1()
@@ -128,14 +144,14 @@ const playCard = (cardToPlay) => {
 
             break
         case "see the future":
-            displayMessageBox("Com 1 has played a see the future card","Com 1 has seen the top 3 cards of the deck")
+            displayMessageBox("Com 1 has played a see the future card", "Com 1 has seen the top 3 cards of the deck")
 
             // Choses the top three cards
             updateVariable("seeTheFutureCards")
 
             waitUntilMessageBoxIsClosed = setInterval(() => {
                 // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
+                if ($("#message_box").is(":hidden")) {
                     clearInterval(waitUntilMessageBoxIsClosed)
                     // Draws the card
                     drawCardForCom1()
@@ -152,7 +168,7 @@ const playCard = (cardToPlay) => {
             let favorCardTarget: number
 
             // Check how many com players were selected 
-            switch(localStorage.getItem("comAmount")) {
+            switch (localStorage.getItem("comAmount")) {
                 case "1comPlayer":
                     favorCardTarget = 1
 
@@ -168,7 +184,7 @@ const playCard = (cardToPlay) => {
             }
 
             // Checks if selected target has a return in switch statement 
-            if(favorCardTarget == 1) {
+            if (favorCardTarget == 1) {
                 askCardForFavor(favorCardTarget)
             }
             else {

@@ -1,6 +1,6 @@
 import { displayMessageBox } from "../../messageBox.js";
 import { comPlayerPlayedFavor, playerCardsInHand } from "../../messages.js";
-import { catCard } from "../../models/cards.interface.js";
+import { card, catCard } from "../../models/cards.interface.js";
 import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
 import { cardsInCom1Hand } from "../com1/drawCardForCom1.js";
 import { cardsInCom2Hand } from "../com2/drawCardForCom2.js";
@@ -29,7 +29,7 @@ const catCardPlayed = (catCard: catCard) => {
                     cardsInCom3Hand.splice(cardIndex, 1)
 
                     // Steals a random card from a chosen player
-                    const cardToSteal = stealCard()
+                    const cardToSteal: card = stealCard()
 
                     // Adds the stolen card to Com 3's hand
                     cardsInCom3Hand.push(cardToSteal)
@@ -42,7 +42,7 @@ const catCardPlayed = (catCard: catCard) => {
 }
 
 // Steals a random card from a player of choice (The player, com 1, or com 3)
-const stealCard = () => {
+const stealCard = (): card => {
     // Creates a random number to chose what player to target
     // 1 - The Player
     // 2 - Com 2
@@ -68,7 +68,7 @@ const stealCard = () => {
     }
     
     let cardIndex: number
-    let cardToStealFromPlayer: string
+    let cardToStealFromPlayer: card
 
     // Checks if there are enough com players for the player target
 

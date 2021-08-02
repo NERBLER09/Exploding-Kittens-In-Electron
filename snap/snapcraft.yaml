@@ -1,0 +1,38 @@
+name: exploding-kittens-in-electron
+version: '0.1'
+summary: Fan port of card game, Exploding Kittens to the desktop
+description: |
+  Fan port of card game, Exploding Kittens to the desktop. Created in Electron with jQuery and Typescript. 
+  Created by @NERBLER09 on GitHub
+base: core20
+confinement: strict
+grade: stable
+
+apps:
+  exploding-kittens-in-electron:
+    command: exploding-kittens-in-electron/exploding-kittens-in-electron --no-sandbox
+    extensions: [gnome-3-38]
+    plugs:
+    - browser-support
+    - network
+    - network-bind
+    environment:
+      # Correct the TMPDIR path for Chromium Framework/Electron to ensure
+      # libappindicator has readable resources.
+      TMPDIR: $XDG_RUNTIME_DIR
+
+parts:
+  exploding-kittens-in-electron:
+    plugin: nil
+    source: .
+    override-build: |
+        sudo npm install electron electron-packager -d
+        npx electron-packager . --overwrite --platform=linux --output=release-build --prune=true
+        cp -rv ./exploding-kittens-in-electron-linux-* $SNAPCRAFT_PART_INSTALL/exploding-kittens-in-electron
+    build-snaps:
+    - node/14/stable
+    build-packages:
+    - unzip
+    stage-packages:
+    - libnss3
+    - libnspr4

@@ -8,6 +8,11 @@ Welcome to Exploding Kittens In Python. This is a clone of [Exploding Kittens]("
 
 ![game-window](https://user-images.githubusercontent.com/67165926/123548772-71eb3800-d723-11eb-80d0-6dfb225cd218.PNG)
 
+## Releases 
+
+Snapcraft package for Linux distros (requires snap to be installed up): `snap install exploding-kittens-in-electron`
+Windows store app for Windows 10 + 11: Coming soon 
+
 ## Running 
 To run this Electron app you'll need [Node]("https://nodejs.org) and [Electron]("https://electronjs.org")
 

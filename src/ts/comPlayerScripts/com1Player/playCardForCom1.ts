@@ -4,7 +4,7 @@ import { displayMessageBox } from "../../messageBox.js"
 import { card } from "../../models/cards.interface.js"
 import { checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
-import { choseCardForCom2 } from "../com2/playCardCom2.js"
+import { choseCardForCom2 } from "../com2Player/playCardCom2.js"
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js"
 import { askCardForFavor, catCardPlayed } from "./favorAndCatCardFor1.js"
 

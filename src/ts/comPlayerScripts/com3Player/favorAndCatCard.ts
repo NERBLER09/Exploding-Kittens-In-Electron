@@ -1,26 +1,22 @@
 import { displayMessageBox } from "../../messageBox.js";
-import { playerCardsInHand, comPlayerPlayedFavor } from "../../messages.js";
+import { comPlayerPlayedFavor, playerCardsInHand } from "../../messages.js";
+import { card, catCard } from "../../models/cards.interface.js";
 import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
-import { cardsInCom2Hand } from "../com2/drawCardForCom2.js";
-import { cardsInCom3Hand } from "../com3/drawCardForCom3.js";
-import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js";
-import { choseCard } from "./playCardForCom1.js";
-import {card, catCard} from "../../models/cards.interface"
+import { cardsInCom1Hand } from "../com1Player/drawCardForCom1.js";
+import { cardsInCom2Hand } from "../com2Player/drawCardForCom2.js";
+import { cardsInCom3Hand } from "./drawCardForCom3.js";
+import { choseCardForCom3 } from "./playCardCom3.js";
 
-// Runs when com 1 has played 2 matching cat cards
+// Runs when com 3 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {
-    if(checkForMatchingCatCards(cardsInCom1Hand, catCard) === false) {
-        choseCard()
+    if(checkForMatchingCatCards(cardsInCom2Hand, catCard) === false) {
+        choseCardForCom3()
     }
     
     // Checks if there is a matching cat card
-    for (const card of cardsInCom1Hand) {
+    for(const card of cardsInCom3Hand) {
         // Matching card
-        if (catCard === card) {
-            console.log("Matching cat cards")
-            console.log(catCard)
-            console.log(card)
-
+        if(catCard === card) {
             displayMessageBox("Cat cards",`Com 1 has played 2 matching ${catCard}`)
 
             const waitUntilMessageBoxIsClosed = setInterval(() => {
@@ -28,20 +24,18 @@ const catCardPlayed = (catCard: catCard) => {
                 if($("#message_box").is(":hidden") ) {
                     clearInterval(waitUntilMessageBoxIsClosed)
                      
-                    // Removes the matching card from com 1's hand
-                    const cardIndex = cardsInCom1Hand.indexOf(card)
-                    cardsInCom1Hand.splice(cardIndex, 1)
+                    // Removes the matching card from com 3's hand
+                    const cardIndex = cardsInCom3Hand.indexOf(card)
+                    cardsInCom3Hand.splice(cardIndex, 1)
 
                     // Steals a random card from a chosen player
                     const cardToSteal: card = stealCard()
 
-                    // Adds the stolen card to Com 1's hand
-                    cardsInCom1Hand.push(cardToSteal)
+                    // Adds the stolen card to Com 3's hand
+                    cardsInCom3Hand.push(cardToSteal)
 
-                    drawCardForCom1()
                 }
             }, 100);
-
             break
         }
     }
@@ -53,6 +47,7 @@ const stealCard = (): card => {
     // 1 - The Player
     // 2 - Com 2
     // 3 - Com 3
+    
     let stealCardTarget: number
     let returnStolenCard: NodeJS.Timeout
 
@@ -75,8 +70,11 @@ const stealCard = (): card => {
     let cardIndex: number
     let cardToStealFromPlayer: card
 
+    // Checks if there are enough com players for the player target
+
     // Enters switch statement to steal a random card from the right player
     switch(stealCardTarget) {
+        
         case 1:
             // Steals a random card from the player
 
@@ -102,9 +100,43 @@ const stealCard = (): card => {
                 }
             }, 100);
 
+            // Returns stolen card to add to Com 3's hand
             return cardToStealFromPlayer
 
         case 2:
+            // Steals a random card from Com 1
+
+            // Choses a random card from Com 1's hand to steal
+            cardIndex = Math.floor(Math.random() * cardsInCom1Hand.length)
+
+            cardToStealFromPlayer = cardsInCom1Hand[cardIndex]
+
+            // Removes the stolen card from Com 1's hand
+            cardsInCom1Hand.splice(cardIndex, 1)
+
+            displayMessageBox("Card stolen","Com 3 has stolen a card from Com 1")
+
+            returnStolenCard = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    // Checks if cardToStealFromPlayer is undefined 
+                    if(cardToStealFromPlayer === undefined) {
+                        // Re-choses target
+                        stealCard()
+                    }
+                    else {
+                        clearInterval(returnStolenCard)
+
+                        // Returns stolen card to add to Com 1's hand
+                        return cardToStealFromPlayer                     
+                    }
+                }
+            }, 100);
+
+            // Returns stolen card to add to Com 3's hand
+            return cardToStealFromPlayer
+            
+        case 3:
             // Steals a random card from Com 2
 
             // Choses a random card from Com 2's hand to steal
@@ -134,46 +166,17 @@ const stealCard = (): card => {
                 }
             }, 100);
 
-            return cardToStealFromPlayer
-            
-        case 3:
-            // Steals a random card from Com 3
-
-            // Choses a random card from Com 3's hand to steal
-            cardIndex = Math.floor(Math.random() * cardsInCom3Hand.length)
-
-            cardToStealFromPlayer = cardsInCom3Hand[cardIndex]
-
-            // Removes the stolen card from Com 3's hand
-            cardsInCom3Hand.splice(cardIndex, 1)
-
-            displayMessageBox("Card stolen","Com 1 has stolen a card from Com 3")
-
-            returnStolenCard = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
-                    // Checks if cardToStealFromPlayer is undefined 
-                    if(cardToStealFromPlayer === undefined) {
-                        // Re-choses target
-                        stealCard()
-                    }
-                    else {
-                        clearInterval(returnStolenCard)
-
-                        // Returns stolen card to add to Com 1's hand
-                        return cardToStealFromPlayer                     
-                    }
-                }
-            }, 100);
-
+            // Returns stolen card to add to Com 3's hand
             return cardToStealFromPlayer
     }
 }
 
 // Choses a player to ask for a favor from
-const askCardForFavor = (favorCardTarget): card => {
+const askCardForFavor = (favorCardTarget) => {
+    console.log(favorCardTarget)
+
     let cardIndex: number
-    let cardToGive: card
+    let cardToGive: string
     let returnFavoredCard: NodeJS.Timeout
 
     // Asks a favor from the correct player
@@ -185,23 +188,25 @@ const askCardForFavor = (favorCardTarget): card => {
             displayMessageBox("Can I have a card?", "Com 1 has asked you for a favor card. Click on a card to give it to Com 1")
 
             // Adds the needed information to comPlayerPlayedFavor list 
-            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = "Com 1"
+            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = "Com 3"
             comPlayerPlayedFavor["favorCardPlayed"] = true
 
             break
         case 2:
-            // Asks for a card from com 2
+            // Asks for a card from com 1
 
-            // Picks a random card from com 2's hand
-            cardIndex = Math.floor(Math.random() * cardsInCom2Hand.length)
-            cardToGive = cardsInCom2Hand[cardIndex]
+            // Picks a random card from com 1's hand
+            cardIndex = Math.floor(Math.random() * cardsInCom1Hand.length)
 
-            // Removes the card from com 2's hand
-            cardsInCom2Hand.splice(cardIndex, 1)
+            console.log(cardsInCom1Hand[cardIndex])
+            cardToGive = cardsInCom1Hand[cardIndex]
 
-            // Displays that Com 1 asked for a card from Com 2
-            console.log(`Com 1 got a ${cardToGive} card from Com 2`)
-            displayMessageBox("Can I have a card?","Com 1 ask for a card from Com 2")
+            // Removes the card from com 1's hand
+            cardsInCom1Hand.splice(cardIndex, 1)
+
+            // Displays that Com 3 asked for a card from Com 1
+            console.log(`Com 3 got a ${cardToGive} card from Com 1`)
+            displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 1")
 
             returnFavoredCard = setInterval(() => {
                 // Checks if the player has closed the #message_box
@@ -223,18 +228,18 @@ const askCardForFavor = (favorCardTarget): card => {
             // Returns the given card 
             return cardToGive
         case 3:
-            // Asks for a card from com 3
+            // Asks for a card from com 2
 
-            // Picks a random card from com 3's hand
-            cardIndex = Math.floor(Math.random() * cardsInCom3Hand.length)
-            cardToGive = cardsInCom3Hand[cardIndex]
+            // Picks a random card from com 2's hand
+            cardIndex = Math.floor(Math.random() * cardsInCom2Hand.length)
+            cardToGive = cardsInCom2Hand[cardIndex]
 
-            // Removes the card from com 3's hand
-            cardsInCom3Hand.splice(cardIndex, 1)
+            // Removes the card from com 2's hand
+            cardsInCom2Hand.splice(cardIndex, 1)
 
-            // Displays that Com 1 asked for a card from Com 3
-            console.log(`Com 1 got a ${cardToGive} card from Com 3`)
-            displayMessageBox("Can I have a card?","Com 1 ask for a card from Com 3")
+            // Displays that Com 3 asked for a card from Com 2
+            console.log(`Com 3 got a ${cardToGive} card from Com 2`)
+            displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 2")
 
             returnFavoredCard = setInterval(() => {
                 // Checks if the player has closed the #message_box
@@ -253,6 +258,7 @@ const askCardForFavor = (favorCardTarget): card => {
                 }
             }, 100);
 
+            // Returns the given card 
             return cardToGive
 
         default:
@@ -262,7 +268,5 @@ const askCardForFavor = (favorCardTarget): card => {
 
     }
 }
-export {
-    catCardPlayed,
-    askCardForFavor
-}
+
+export { catCardPlayed }

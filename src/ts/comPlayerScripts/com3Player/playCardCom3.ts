@@ -3,8 +3,8 @@ import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
-import { askCardForFavor } from "../com1/favorAndCatCardFor1.js"
-import { catCardPlayedForCom2 } from "../com2/favorAndCatCard.js"
+import { askCardForFavor } from "../com1Player/favorAndCatCardFor1.js"
+import { catCardPlayedForCom2 } from "../com2Player/favorAndCatCard.js"
 import { cardsInCom3Hand, drawCardForCom3 } from "./drawCardForCom3.js"
 
 const choseCardForCom3 = () => {

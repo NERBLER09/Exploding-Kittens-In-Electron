@@ -1,4 +1,4 @@
-import { choseCard } from "../comPlayerScripts/com1/playCardForCom1.js"
+import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { isPlayerTurn, removeDrawnCardFromDeck, seeTheFutureCards, totalCardAmount, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
 import { displayMessageBox } from "../messageBox.js"
 import { cards, comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"

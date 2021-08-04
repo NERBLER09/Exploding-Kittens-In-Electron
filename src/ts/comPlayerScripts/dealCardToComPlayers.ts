@@ -1,8 +1,8 @@
 import { removeDrawnCardFromDeck } from "../gameFunctions.js";
 import { cards } from "../messages.js";
-import { cardsInCom1Hand } from "./com1/drawCardForCom1.js";
-import { cardsInCom2Hand } from "./com2/drawCardForCom2.js";
-import { cardsInCom3Hand } from "./com3/drawCardForCom3.js";
+import { cardsInCom1Hand } from "./com1Player/drawCardForCom1.js";
+import { cardsInCom2Hand } from "./com2Player/drawCardForCom2.js";
+import { cardsInCom3Hand } from "./com3Player/drawCardForCom3.js";
 
 // Deals the 7 cards to computer player 1
 const dealCardsToCom1 = () => {

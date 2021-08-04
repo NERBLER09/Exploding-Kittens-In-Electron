@@ -2,7 +2,7 @@ import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVari
 import { displayMessageBox } from "../../messageBox.js"
 import { cards } from "../../messages.js"
 import { card } from "../../models/cards.interface.js"
-import { choseCardForCom2 } from "../com2/playCardCom2.js"
+import { choseCardForCom2 } from "../com2Player/playCardCom2.js"
 import { choseCard } from "./playCardForCom1.js"
 
 // Stores the cards in com 1's hand

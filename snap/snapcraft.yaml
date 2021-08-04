@@ -4,6 +4,7 @@ summary: Fan port of card game, Exploding Kittens to the desktop
 description: |
   Fan port of card game, Exploding Kittens to the desktop. Created in Electron with jQuery and Typescript. 
   Created by @NERBLER09 on GitHub
+version: "1.0"
 base: core18
 confinement: strict
 grade: stable

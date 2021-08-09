@@ -29,6 +29,8 @@ const drawCardForPlayer = () => {
 
             // Checks if an Exploding Kittens card was drawn
 
+            cardDrawn = 'exploding kitten'
+
             // Exploding Kitten card was not drawn
             if(cardDrawn !== "exploding kitten") {
                 // Removes the drawn cardDrawn from the deck

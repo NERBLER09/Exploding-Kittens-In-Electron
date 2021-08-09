@@ -103,6 +103,8 @@
 }
 
 #message_box {
+    text-align: start;
+
     width: 45%; 
 
     position: fixed;
@@ -117,7 +119,7 @@
     /* background-color: lightgrey; */
     background-color: white;
 
-    display: none;
+   display: none;
 
     padding: 20px;
 

@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Exploding Kittens Title Screen</title>
 
-        <style>
-            @import url("./index.css");
-        </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploding Kittens Title Screen</title>
 
-        <link rel="stylesheet" href="css/titeScreen.css">
+    <style>
+        @import url("./index.css");
+    </style>
 
-        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <link rel="stylesheet" href="css/titeScreen.css" />
 
-        <script defer src="./js/titleScreen.js" type="module"></script>
-        
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-        </head>
-    <body>
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <script defer src="./js/titleScreen.js" type="module"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="main-content">
         <header id="title-screen-header">
             <h1>Welcome To Exploding Kittens</h1>
-
-            <img src="../assets/Exploding-Kitten-Logo.svg" alt="Exploding Kitten Logo" id="logo">    
+            <img src="../assets/Exploding-Kitten-Logo.svg" alt="Exploding Kitten Logo" id="logo">
         </header>
-    
         <div id="usrInfo">
             <p>Enter Your Username</p>
-
             <input type="text" placeholder="Enter your username (eg, Exploding Kittens Master)" id="usrnameInput">
         </div>
-
         <br>
-
         <hr>
-
         <div id="comPlayerButtons">
             <p>Select How Many Computer Players Do You Want</p>
-
             <input type="radio" value="1comPlayer" name="comPlayer" class="comSelection">
             <label for="1comPlayer">1 Computer Player</label>
-
             <input type="radio" value="2comPlayer" name="comPlayer" class="comSelection">
             <label for="1comPlayer">2 Computer Players</label>
-
             <input type="radio" value="3comPlayer" name="comPlayer" class="comSelection">
             <label for="1comPlayer">3 Computer Players</label>
         </div>
-
-        <p id="errorMsg"></p>
-
         <br>
-
         <button id="playButton">Play!</button>
-    </body>
+    </div>
+    <div id="message_box"></div>
+</body>
+
 </html>

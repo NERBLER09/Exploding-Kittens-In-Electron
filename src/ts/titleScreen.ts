@@ -3,10 +3,32 @@
 // const $ = require("jquery")
 const electron = require('electron')
 const {ipcRenderer} = electron;
+import { idText } from "../../node_modules/typescript/lib/typescript.js";
+import { askToSaveGameConfigs, checkIfGameDataIsSaved } from "./manageGameConfigurations.js";
+import { displayMessageBox } from "./messageBox.js";
 import { messages } from "./messages.js";
 
-let username:any
-let comPlayerAmount:any
+let username:any = null
+let comPlayerAmount:any = null
+
+/** Checks if a username is entered or a com player amount is selected */
+const checkForGameConfigs = (): boolean => {
+    if(username !== "" && comPlayerAmount !== undefined ) {
+        console.log("Meets requirements")
+        return true
+    }
+    else {
+        if(username === "" && comPlayerAmount !== undefined) {
+            displayMessageBox("Error when starting game",messages["no_username"])
+        }
+        else if(username !== "" && comPlayerAmount === undefined) {
+            displayMessageBox("Error when starting game",messages["no_com_selected"])
+        }
+        else {
+            displayMessageBox("Error when starting game",messages["no_username_no_com"]) 
+        }
+    }
+}
 
 // onClick function for playButton
 function startGame() {
@@ -15,39 +37,21 @@ function startGame() {
     username =  $("#usrnameInput").val();
     comPlayerAmount = $(".comSelection[type='radio']:checked").val();
 
-    // Checks if the player inputted a username
-    if(username) {
-        console.log(username)
-    } 
-    else if(!username) {
-        console.error("Username input is empty")
-
-        $("#errorMsg").html(messages["no_username"])
-    }
-
-    // Checks if the player selected the amount of com players
-    if(comPlayerAmount) {
-        console.log(comPlayerAmount)
-    }
-
-    else if(!comPlayerAmount) {
-        console.error("Com player amount not selected")
-        $("#errorMsg").html(messages["no_com_selected"])
-    }
-
-    // Checks if the player hasn't entered a username or selected the amount of com players
-    if(!comPlayerAmount && !username) {
-        console.error(messages["no_username_no_com"])
-        $("#errorMsg").html(messages["no_username_no_com"])
-    }
-
     // Checks is a username is selected and a com amount is selected
-    if(comPlayerAmount && username) {
-        localStorage.setItem("username", username) // Stores the username
-        localStorage.setItem("comAmount", comPlayerAmount) // Stores the amount of com players
-
-        ipcRenderer.send("createGameWindow")
+    if(checkForGameConfigs()) {
+        localStorage.setItem("username", username)
+        localStorage.setItem("comAmount", comPlayerAmount)
+        
+        checkIfGameDataIsSaved() ? ipcRenderer.send("createGameWindow") : askToSaveGameConfigs()
     }
-}
+} 
 
 $("#playButton").click(startGame)
+$("body").ready(() => {
+    if(checkIfGameDataIsSaved()) { ipcRenderer.send("createGameWindow") }
+})
+
+export {
+    username,
+    comPlayerAmount
+}

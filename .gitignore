@@ -6,4 +6,8 @@ src/js/*
 
 out/
 
+dist/
+
+windows-store/
+
 *.snap

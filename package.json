@@ -4,6 +4,19 @@
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
+  "build": {
+    "win": { 
+      "icon": "assets/Exploding-Kitten-Logo.ico",
+      "target": ["appx"] 
+    },
+    "appx": {
+      "applicationId": "ExplodimgKittensFanGame",
+      "identityName": "11103Nerbler09.ExplodimgKittensFanGame",
+      "publisher": "CN=8FCAC29E-A771-4806-AD92-B16FDCD3656F",
+      "publisherDisplayName": "Nerbler09",
+      "backgroundColor":"#a0beeb"
+    }
+  },
   "scripts": {
     "start": "electron-forge start",
     "make": "electron-forge make",

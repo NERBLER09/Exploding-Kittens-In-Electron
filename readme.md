@@ -11,7 +11,7 @@ Welcome to Exploding Kittens In Python. This is a clone of [Exploding Kittens]("
 ## Releases 
 
 Snapcraft package for Linux distros (requires snap to be installed up): `snap install exploding-kittens-in-electron`
-Windows store app for Windows 10 + 11: Coming soon 
+Windows store app for Windows 10 + 11: [Windows Store Link]("ms-windows-store://pdp/?productid=9NMBVTL9L5LX) and [Web Link]("https://www.microsoft.com/store/apps/9NMBVTL9L5LX) 
 
 ## Running 
 To run this Electron app you'll need [Node]("https://nodejs.org) and [Electron]("https://electronjs.org")

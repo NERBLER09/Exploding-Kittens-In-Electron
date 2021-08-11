@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell, dialog, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, shell, dialog, Menu, ipcMain, ipcRenderer } = require('electron');
 const path = require('path');
 
 try {
@@ -63,29 +63,34 @@ app.on('activate', () => {
 // Menu for the window
 const menu = [
   {
-    label: "Options",
+    label: "Game",
     submenu: [
       {
-        label: "New Game",
-
-        click() {
-          mainWindow.loadFile(path.join(__dirname, 'titleScreen.html'));
+        label: "New Game (From Title Screen)",
+        click: () => {
+          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("isGameDataSaved")`)
+          mainWindow.loadFile(path.join(__dirname, 'titleScreen.html'))
+        }
+      },
+      {
+        label: "New Game (From Game Window)",
+        click: () => {
+          mainWindow.webContents.executeJavaScript(`location.reload()`)
         }
       },
       {type:"separator"},
       {
-        label: "Github Page",
-
-        click() {
-          shell.openExternal("https://www.github.com/nerbler09")
+        label: "Update Game Config",
+        click () {
+          mainWindow.webContents.send("updateGameConfig")
         }
       },
-      
       {
-        label: "Github Repo",
-
-        click() {
-          shell.openExternal("https://www.github.com/nerbler09/exploding-kittens-in-electron")
+        label: "Clear Game Config",
+        click () {
+          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("isGameDataSaved")`)
+          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("username")`)
+          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("comAmount")`)
         }
       },
       {type:"separator"},
@@ -131,24 +136,47 @@ const menu = [
           shell.openExternal("https://explodingkittens.com/how-to-play")
         }
       },
+      { type: 'separator' },
+      {
+          label: "About",
+          click: function () {
+              dialog.showMessageBox({
+                  type: "info",
+                  title: "Exploding Kittens",
+                  message: "About",
+                  detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0\nPlease note that "Exploding Kittens In Electron" is still user development\nTo give feedback go to Options -> Github Repo ->\nErrors -> New Error To Submit A New Error`,
+              });
+          }
+      },
+
+    ]
+  },
+  {
+    label: "Other",
+    submenu: [
+      {type:"separator"},
+      {
+        label: "Github Page",
+
+        click() {
+          shell.openExternal("https://www.github.com/nerbler09")
+        }
+      },
+      
+      {
+        label: "Github Repo",
+
+        click() {
+          shell.openExternal("https://www.github.com/nerbler09/exploding-kittens-in-electron")
+        }
+      },
+      { type: "separator" },
       {
         label: "Toggle Dev Tools",
         role: "toggleDevTools"
       },
-      { type: 'separator' },
-        {
-            label: "About",
-            click: function () {
-                dialog.showMessageBox({
-                    type: "info",
-                    title: "Exploding Kittens",
-                    message: "About",
-                    detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0\nPlease note that "Exploding Kittens In Electron" is still user development\nTo give feedback go to Options -> Github Repo ->\nErrors -> New Error To Submit A New Error`,
-                });
-            }
-        }
     ]
-  }
+  },
 ]
 
 ipcMain.on("createGameWindow", () => {

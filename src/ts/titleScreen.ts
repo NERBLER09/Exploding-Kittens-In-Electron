@@ -3,7 +3,6 @@
 // const $ = require("jquery")
 const electron = require('electron')
 const {ipcRenderer} = electron;
-import { idText } from "../../node_modules/typescript/lib/typescript.js";
 import { askToSaveGameConfigs, checkIfGameDataIsSaved } from "./manageGameConfigurations.js";
 import { displayMessageBox } from "./messageBox.js";
 import { messages } from "./messages.js";

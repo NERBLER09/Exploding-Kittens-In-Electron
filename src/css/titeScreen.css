@@ -31,25 +31,3 @@ body {
   width: 10rem;
   height: 10rem;
 }
-
-#message_box {
-  width: 45%; 
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  border-style: dashed;
-  /* border-color: grey; */
-  border-color: black;
-
-  /* background-color: lightgrey; */
-  background-color: white;
-
-  display: none;
-
-  padding: 20px;
-
-  box-shadow: 10px 10px 10px lightgrey;
-}

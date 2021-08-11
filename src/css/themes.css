@@ -1,0 +1,19 @@
+@media (prefers-color-scheme:dark) {
+    :root {
+        --background-color: #333;
+        --font-color: white;
+        --border-color: white;
+        --box-shadow-color: white;
+        --scrollbar-background: #333;
+    }    
+}
+  
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-color: white;
+        --font-color: black;
+        --border-color: black;
+        --box-shadow-color: grey;
+        --scrollbar-background: white;
+    } 
+}

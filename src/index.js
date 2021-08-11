@@ -17,7 +17,8 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
-    // icon: path.join(__dirname, "../assets/Exploding-Kitten-Logo.ico"), // xLaunch freaks out when running in WSl and crashes with a window icon set (??)
+    title:"Exploding Kittens In Electron",
+    icon: path.join(__dirname, "../assets/favicon.png"), // xLaunch freaks out when running in WSl and crashes with a window icon set (??)
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false

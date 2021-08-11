@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400&family=Noto+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400&family=Noto+Sans&display=swap'); 
 
 body {
   -webkit-user-select: none;
@@ -6,6 +6,8 @@ body {
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
+  background-color: var(--background-color);
+  color: var(--font-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -17,8 +19,9 @@ p, label {
 }
 
 button {
-  background-color: white;
-  border: black solid;
+  background-color: var(--background-color);
+  border: var(--border-color) solid;
+  color: var(--font-color);
   border-radius: 20px;
   cursor: pointer;
 
@@ -44,11 +47,11 @@ button:hover {
 button:focus { outline: none; }
 
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: var(--scrollbar-background);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -62,4 +65,26 @@ button:focus { outline: none; }
 
 img {
   pointer-events: none;
+}
+
+#message_box {
+  width: 45%; 
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-style: dashed;
+  /* border-color: grey; */
+  border-color: var(--border-color);
+
+  /* background-color: lightgrey; */
+  background-color: var(--background-color);
+
+  display: none;
+
+  padding: 20px;
+
+  box-shadow: 10px 10px 10px var(--box-shadow-color);
 }

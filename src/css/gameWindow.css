@@ -9,7 +9,7 @@
     
     bottom: 0;
 
-    border-color: black;
+    border-color: var(--border-color);
 
     overflow-x: auto;
 
@@ -102,29 +102,6 @@
     padding: 5px;
 }
 
-#message_box {
-    text-align: start;
-
-    width: 45%; 
-
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    border-style: dashed;
-    /* border-color: grey; */
-    border-color: black;
-
-    /* background-color: lightgrey; */
-    background-color: white;
-
-   display: none;
-
-    padding: 20px;
-
-    box-shadow: 10px 10px 10px lightgrey;
-}
 .see-the-future-cards-container {
     display: flex;
 }

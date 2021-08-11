@@ -1,8 +1,8 @@
 {
   "name": "exploding-kittens-in-electron",
-  "productName": "exploding-kittens-in-electron",
+  "productName": "Exploding Kittens In Electron",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A fan port of Exploding Kittens to the desktop",
   "main": "src/index.js",
   "build": {
     "win": { 
@@ -23,7 +23,7 @@
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
     "package-win": "electron-packager . Exploding-Kittens-In-Electron --overwrite --asar=true --platform=win32  --arch=x64 --icon=\"assets/Exploding-Kitten-Logo.ico\" --prune=true --out=out --version-string.CompanyName=\"Noah Beaudin\" --version-string.FileDescription=\"Exploding Kittens recreated in Electron (sigh)\" --version-string.ProductName=\"Exploding Kittens In Electron\"",
-    "package-linux": "electron-packager . Exploding-Kittens-In-Electron --overwrite --asar=true --platform=linux --arch=x64 --icon=\"assets/Exploding-Kitten-Logo.ico\" --prune=true --out=out"
+    "package-linux": "electron-packager . Exploding-Kittens-In-Electron --overwrite --asar=true --platform=linux --arch=x64 --icon=\"assets/favicon.png\" --prune=true --out=out"
   },
   "keywords": [],
   "author": {

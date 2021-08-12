@@ -2,7 +2,7 @@ import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { card } from "../../models/cards.interface.js"
-import { checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
+import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { askCardForFavor, catCardPlayed } from "../com1Player/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3Player/playCardCom3.js"
@@ -25,21 +25,26 @@ const choseCardForCom2 = () => {
     if(checkForPlayableCard(cardsInCom2Hand, cardToPlay)) {
         updateDiscardPile(cardToPlay)
 
-        nopePlayedCard(cardToPlay, "Com 2")
+        if(checkForNopeCardInHand()) {
+            nopePlayedCard(cardToPlay, "Com 2")
 
-        const waitUntilMessageBoxClosed = setInterval(() => {
-            // Checks if the player has closed the #message_box
-            if ($("#message_box").is(":hidden")) {
-                clearInterval(waitUntilMessageBoxClosed)
+            const waitUntilMessageBoxClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxClosed)
 
-                if (!checkIfNopeCardPlayed()) {
-                    playCardForCom2(cardToPlay)
+                    if (!checkIfNopeCardPlayed()) {
+                        playCardForCom2(cardToPlay)
+                    }
+                    else {
+                        drawCardForCom2()
+                    }
                 }
-                else {
-                    drawCardForCom2()
-                }
-            }
-        }, 100);
+            }, 100);
+        }
+        else {
+            playCardForCom2(cardToPlay)
+        }
     }
     else {
         drawCardForCom2()

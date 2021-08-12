@@ -15,22 +15,24 @@ const checkIfNopeCardPlayed = (): boolean => {
     else return false
 }
 
-/** Checks for a nope card in the player's hand */
-const checkForNopeCardInHand = (): boolean => {
-    for(const e of playerCardsInHand) {
-        if(e === "nope")  { 
-            const cardIndex = playerCardsInHand.indexOf("nope")
+/** Removes the played nope card from the player's hand*/
+const removeNopeCardFromHand = () => {
+    if(checkForNopeCardInHand()) {
+        const cardIndex = playerCardsInHand.indexOf("nope")
 
-            // Removes the played card from the players hand 
-            playerCardsInHand.splice(cardIndex, 1)
+        // Removes the played card from the players hand 
+        playerCardsInHand.splice(cardIndex, 1)
 
-            // Removes the played card from the player's view
-            $(".player_cards").get(cardIndex).remove()
-            
-            return true     
-        }
+        // Removes the played card from the player's view
+        $(".player_cards").get(cardIndex).remove()
     }
+}
 
+/** Checks if there is a nope card in the players hand */
+const checkForNopeCardInHand = ():boolean => {
+    for(const e of playerCardsInHand) {
+        if(e === "nope") return true
+    }
     return false
 }
 
@@ -47,7 +49,9 @@ const nopePlayedCard = (card: card, comPlayer: "Com 1" | "Com 2" | "Com 3") => {
         $("#message_box").hide()
         $("#message_box").html("")    
     
-        if(checkForNopeCardInHand() === true) {
+        if(checkForNopeCardInHand()) {
+            removeNopeCardFromHand()
+
             isNopeCardPlayed = !isNopeCardPlayed
 
             updateDiscardPile("nope")
@@ -64,4 +68,8 @@ const nopePlayedCard = (card: card, comPlayer: "Com 1" | "Com 2" | "Com 3") => {
     })
     $("#message_box").show()
 }
-export { nopePlayedCard, checkIfNopeCardPlayed }
+export { 
+    nopePlayedCard, 
+    checkIfNopeCardPlayed, 
+    checkForNopeCardInHand 
+}

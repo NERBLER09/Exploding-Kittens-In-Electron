@@ -2,7 +2,7 @@ import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { card } from "../../models/cards.interface.js"
-import { checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
+import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { choseCardForCom2 } from "../com2Player/playCardCom2.js"
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js"
@@ -25,21 +25,26 @@ const choseCardForCom1 = () => {
     if (checkForPlayableCard(cardsInCom1Hand, cardToPlay) == true) {
         updateDiscardPile(cardToPlay)
 
-        nopePlayedCard(cardToPlay, "Com 1")
+        if(checkForNopeCardInHand()) {
+            nopePlayedCard(cardToPlay, "Com 1")
 
-        const waitUntilMessageBoxClosed = setInterval(() => {
-            // Checks if the player has closed the #message_box
-            if ($("#message_box").is(":hidden")) {
-                clearInterval(waitUntilMessageBoxClosed)
+            const waitUntilMessageBoxClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxClosed)
 
-                if (!checkIfNopeCardPlayed()) {
-                    playCard(cardToPlay)
+                    if (!checkIfNopeCardPlayed()) {
+                        playCard(cardToPlay)
+                    }
+                    else {
+                        drawCardForCom1()
+                    }
                 }
-                else {
-                    drawCardForCom1()
-                }
-            }
-        }, 100);
+            }, 100);
+        }
+        else {
+            playCard(cardToPlay)
+        }
     }
     else {
         drawCardForCom1()

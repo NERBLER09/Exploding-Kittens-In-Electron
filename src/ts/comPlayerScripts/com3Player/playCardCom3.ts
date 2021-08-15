@@ -62,6 +62,12 @@ const playCardForCom3 = (cardToPlay) => {
     // Plays the card (Checks what card was played)
     switch(cardToPlay) {
         case "skip":
+            if(turnsNeedToPlay === 1) {
+                displayMessageBox("Com 1 has skipped 1 of their turns", `Com 1 has ${turnsNeedToPlay} more turn(s) to play. It's now Com 1's turn`)
+                choseCardForCom3()
+                break
+            }
+        
             displayMessageBox("Com 3 has skipped there turn","It's now your turn.")
 
             // Makes it be the players turn
@@ -145,8 +151,8 @@ const playCardForCom3 = (cardToPlay) => {
 
             // Re-chooses a card to play
             choseCardForCom3()
-        case "diffuse":
-            console.error("No cards to diffuse (Com 1)")
+        case "defuse":
+            console.error("No cards to defuse (Com 1)")
 
             // Re-chooses card to play
 

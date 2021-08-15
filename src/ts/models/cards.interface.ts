@@ -1,10 +1,10 @@
 type catCard = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" | "cattermellon"
 
 type card = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" | "cattermellon" | "nope" | "attack" | 
-"favor" | "shuffle" | "see the future" | "diffuse" | "exploding kitten" | "skip"
+"favor" | "shuffle" | "see the future" | "defuse" | "exploding kitten" | "skip"
 
 type cardHyphened = "potato-cat" | "taco-cat" | "rainbow-ralphing-cat" | "beard-cat" | "cattermellon" | "nope" | "attack" | 
-"favor" | "shuffle" | "see-the-future" | "diffuse" | "exploding-kitten"| "skip"
+"favor" | "shuffle" | "see-the-future" | "defuse" | "exploding-kitten"| "skip"
 
 interface cardAmounts {
     "nope": number,
@@ -18,7 +18,7 @@ interface cardAmounts {
     'rainbow ralphing cat': number,
     'beard cat': number,
     'cattermellon': number,
-    'diffuse': number,
+    'defuse': number,
     'exploding-kitten'?: number
 }
 

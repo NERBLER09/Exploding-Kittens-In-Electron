@@ -72,22 +72,22 @@ const drawCardForPlayer = () => {
             else if(cardDrawn === "exploding kitten") {
                 updateVariable("explodingKittenCardDrawn", true)
 
-                // Checks if the player has a diffuse card in hand
-                let playerHasDiffuse = false
+                // Checks if the player has a defuse card in hand
+                let playerHasDefuse = false
 
                 for(const playerCard in playerCardsInHand) {
-                    if(playerCardsInHand[playerCard] === "diffuse"){
-                        displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your diffuse card to diffuse the Exploding Kitten")
+                    if(playerCardsInHand[playerCard] === "defuse"){
+                        displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your defuse card to defuse the Exploding Kitten")
 
-                        playerHasDiffuse = true
+                        playerHasDefuse = true
                         updateVariable("isPlayerTurn", false)
 
                         break
                     }
                 }
 
-                // Checks if the player has a diffuse card
-                if(playerHasDiffuse === false) {
+                // Checks if the player has a defuse card
+                if(playerHasDefuse === false) {
                     // Tells the player that they have exploded 
                     displayMessageBox("You've exploded!", "Go to: Options -> New Game to start a new game")
 

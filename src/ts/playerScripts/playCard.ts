@@ -2,7 +2,7 @@ import { drawCardForCom1 } from "../comPlayerScripts/com1Player/drawCardForCom1.
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { cardsInCom2Hand, drawCardForCom2 } from "../comPlayerScripts/com2Player/drawCardForCom2.js"
 import { cardsInCom3Hand, drawCardForCom3 } from "../comPlayerScripts/com3Player/drawCardForCom3.js"
-import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, updateVariable } from "../gameFunctions.js"
+import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
 import { displayMessageBox, displaySeeTheFutureCards } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { updateDiscardPile } from "../updateDiscardPile.js"
@@ -117,13 +117,21 @@ const playCard = (playerCard) => {
         }
     }
 
-    if(isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed === "diffuse") {
+    if(isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed === "defuse") {
+        const cardIndex = playerCardsInHand.indexOf(cardPlayed)
+        
         updateDiscardPile(cardPlayed)
         
+        // Removes the played card from the players hand 
+        playerCardsInHand.splice(cardIndex, 1)
+
+        // Removes the played card from the player's view
+        $(".player_cards").get(cardIndex).remove()
+
         checkPlayerCardPlayed(cardPlayed)
     }
-    else if (isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed !== "diffuse") {
-        displayMessageBox("Not a diffuse card", `Sorry, but a ${cardPlayed} card is not a diffuse card.`)
+    else if (isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed !== "defuse") {
+        displayMessageBox("Not a defuse card", `Sorry, but a ${cardPlayed} card is not a defuse card.`)
     }
 }
 
@@ -141,10 +149,16 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
         case "skip":
             updateVariable("isPlayerTurn", false) // Makes it not be the players turn
             updateVariable("removeFromTurnsNeedToPlay")
-            displayMessageBox("Skipped Turn","You have skipped your turn. It's now com 1's turn")
+            
+            if(turnsNeedToPlay === 1) {
+                displayMessageBox("Skipped Turn","You have skipped your turn. It's now com 1's turn")
+                choseCard()
 
-            // Makes it be com 1's turn
-            choseCard()
+            }
+            else {
+                displayMessageBox("Skipped Turn",`You have skipped your turn. But, you have ${turnsNeedToPlay} turn(s) you have remaining. It's now your turn.`)
+            }
+                // Makes it be com 1's turn
 
             break
         case "attack":
@@ -196,13 +210,13 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
 
             break
 
-        case "diffuse":
+        case "defuse":
             // Checks if the player has drawn an Exploding Kitten
             if(explodingKittenCardDrawn === true) {
                 updateVariable("explodingKittenCardDrawn", false)
-
-                // Tells the player that they have diffused the Exploding Kitten
-                displayMessageBox("Exploding Kitten Diffused","You have successfully diffused the Exploding Kitten card. It's now Com 1's turn")
+                
+                // Tells the player that they have defused the Exploding Kitten
+                displayMessageBox("Exploding Kitten defused","You have successfully defused the Exploding Kitten card. It's now Com 1's turn")
 
                 updateVariable("resetTurnsNeedToPlay")
 
@@ -223,7 +237,7 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             }
 
             else {
-                displayMessageBox("Nothing to diffuse", "There is no Exploding Kitten that needs to be diffused.")
+                displayMessageBox("Nothing to defuse", "There is no Exploding Kitten that needs to be defused.")
 
                 displayCardToPlayer(cardPLayed)
             }

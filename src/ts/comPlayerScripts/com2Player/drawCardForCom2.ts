@@ -94,21 +94,21 @@ const drawCardForCom2 = () => {
         // Tells the player that Com 2 has drawn an Exploding Kitten card
         displayMessageBox("An Exploding Kitten card has been drawn","Com 2 has drawn an Exploding Kitten!")
 
-        let com2HasDiffuseCard = false
+        let com2HasdefuseCard = false
 
         // Sets a time pause
         setTimeout(() => {
-            // Checks if Com 2 has a diffuse card   
+            // Checks if Com 2 has a defuse card   
             for(const card of cardsInCom2Hand) {
-                if(card === "diffuse") {
-                    com2HasDiffuseCard = true
+                if(card === "defuse") {
+                    com2HasdefuseCard = true
 
                     break   
                 }
             }
 
-            // Checks if Com 2 didn't have a diffuse card
-            if(com2HasDiffuseCard === false) {
+            // Checks if Com 2 didn't have a defuse card
+            if(com2HasdefuseCard === false) {
                 setTimeout(() => {
                     // Dose nothing here
                 }, 1000);
@@ -117,9 +117,9 @@ const drawCardForCom2 = () => {
                 displayMessageBox("Com 2 has exploded!","You won!")
             }
             else {
-                // Diffuses the Exploding Kitten card
+                // defuses the Exploding Kitten card
 
-                // Removes the diffuse card from Com 2's hand 
+                // Removes the defuse card from Com 2's hand 
                 const cardIndex = cardsInCom2Hand.indexOf(cardDrawn)
 
                 cardsInCom2Hand.splice(cardIndex, 1)
@@ -128,8 +128,8 @@ const drawCardForCom2 = () => {
                     // Dose nothing here 
                 }, 1000);
 
-                // Tells the player the Com 2 has diffused the Exploding Kitten
-                $("#current_player_turn").html("Com 2 has diffused the Exploding Kitten")
+                // Tells the player the Com 2 has defused the Exploding Kitten
+                $("#current_player_turn").html("Com 2 has defused the Exploding Kitten")
 
                 // Makes it be Com 3's turn
 
@@ -138,7 +138,7 @@ const drawCardForCom2 = () => {
 
                 // Checks if there are 3 selected computer players
                 if(comAmount === "3comPlayer") {
-                    displayMessageBox("Com 2 has diffused the Exploding Kitten","It's now com 3's turn")
+                    displayMessageBox("Com 2 has defused the Exploding Kitten","It's now com 3's turn")
 
                     const setCom1Turn = setInterval(() => {
                         // Checks if the player has closed the #message_box

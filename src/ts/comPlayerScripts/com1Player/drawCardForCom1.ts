@@ -93,21 +93,21 @@ const drawCardForCom1 = () => {
         // Tells the player that Com 1 has drawn an Exploding Kitten card
         displayMessageBox("An Exploding Kitten card has been drawn","Com 1 has drawn an Exploding Kitten!")
 
-        let com1HasDiffuseCard = false
+        let com1HasdefuseCard = false
 
         // Sets a time pause
         setTimeout(() => {
-            // Checks if Com 1 has a diffuse card   
+            // Checks if Com 1 has a defuse card   
             for(const card of cardsInCom1Hand) {
-                if(card === "diffuse") {
-                    com1HasDiffuseCard = true
+                if(card === "defuse") {
+                    com1HasdefuseCard = true
 
                     break   
                 }
             }
 
-            // Checks if Com 1 didn't have a diffuse card
-            if(com1HasDiffuseCard === false) {
+            // Checks if Com 1 didn't have a defuse card
+            if(com1HasdefuseCard === false) {
                 setTimeout(() => {
                     // Dose nothing here
                 }, 1000);
@@ -116,9 +116,9 @@ const drawCardForCom1 = () => {
                 displayMessageBox("Com 1 has exploded!","You won!")
             }
             else {
-                // Diffuses the Exploding Kitten card
+                // defuses the Exploding Kitten card
 
-                // Removes the diffuse card from Com 1's hand 
+                // Removes the defuse card from Com 1's hand 
                 const cardIndex = cardsInCom1Hand.indexOf(cardDrawn)
 
                 cardsInCom1Hand.splice(cardIndex, 1)
@@ -131,7 +131,7 @@ const drawCardForCom1 = () => {
                 const comAmount = localStorage.getItem("comAmount")
 
                 if (comAmount === "2comPlayer" || comAmount === "3comPlayer") {
-                    displayMessageBox("Com 1 has diffused the Exploding Kitten","It's now com 2's turn")
+                    displayMessageBox("Com 1 has defused the Exploding Kitten","It's now com 2's turn")
 
                     const setCom1Turn = setInterval(() => {
                         // Checks if the player has closed the #message_box
@@ -144,7 +144,7 @@ const drawCardForCom1 = () => {
                     }, 100);
                 }
                 else {
-                    displayMessageBox("Com 1 has diffused the Exploding Kitten","It's now your turn")
+                    displayMessageBox("Com 1 has defused the Exploding Kitten","It's now your turn")
 
                     // Makes it be the players turn
                     updateVariable("isPlayerTurn", true)

@@ -34,7 +34,11 @@ const choseCardForCom1 = () => {
                     clearInterval(waitUntilMessageBoxClosed)
 
                     if (!checkIfNopeCardPlayed()) {
-                        playCard(cardToPlay)
+                        const waitUntilMessageBoxClosed = setInterval(() => {
+                            if ($("#message_box").is(":hidden")) {
+                                playCard(cardToPlay)
+                            }
+                        }, 100)
                     }
                     else {
                         drawCardForCom1()
@@ -53,6 +57,8 @@ const choseCardForCom1 = () => {
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
+    cardToPlay = "skip"
+
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played
@@ -66,6 +72,12 @@ const playCard = (cardToPlay) => {
     // Plays the card (Checks what card was played)
     switch (cardToPlay) {
         case "skip":
+            if(turnsNeedToPlay === 1) {
+                displayMessageBox("Com 1 has skipped 1 of their turns", `Com 1 has ${turnsNeedToPlay} more turn(s) to play. It's now Com 1's turn`)
+                choseCardForCom1()
+                break
+            }
+
             // Checks if there are more then 1 com player to pass turn to the right player
             if (localStorage.getItem("comAmount") !== "1comPlayer") {
                 // Tells the player that Com 1 has played a skip and that it's now Com 2's turn
@@ -216,8 +228,8 @@ const playCard = (cardToPlay) => {
 
             break
 
-        case "diffuse":
-            console.error("No cards to diffuse (Com 1)")
+        case "defuse":
+            console.error("No cards to defuse (Com 1)")
 
             // Re-chooses card to play
 

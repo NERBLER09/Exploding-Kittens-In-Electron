@@ -19,11 +19,11 @@ const dealCardsToCom1 = () => {
         removeDrawnCardFromDeck(card)
     }
 
-    // Deals the diffuse card to com 1 
-    cardsInCom1Hand.push("diffuse")
+    // Deals the defuse card to com 1 
+    cardsInCom1Hand.push("defuse")
 
-    // Removes the diffuse card from the 
-    removeDrawnCardFromDeck("diffuse")
+    // Removes the defuse card from the 
+    removeDrawnCardFromDeck("defuse")
 }
 
 // Draws the 7 card to computer player 2
@@ -41,11 +41,11 @@ const dealCardsToCom2 = () => {
         removeDrawnCardFromDeck(card)
     }
 
-    // Deals the diffuse card to com 2
-    cardsInCom2Hand.push("diffuse")
+    // Deals the defuse card to com 2
+    cardsInCom2Hand.push("defuse")
 
-    // Removes the diffuse card from the 
-    removeDrawnCardFromDeck("diffuse")
+    // Removes the defuse card from the 
+    removeDrawnCardFromDeck("defuse")
 }
 
 // Draws the 7 card to computer player 3
@@ -63,11 +63,11 @@ const dealCardsToCom3 = () => {
         removeDrawnCardFromDeck(card)
     }
 
-    // Deals the diffuse card to com 3
-    cardsInCom3Hand.push("diffuse")
+    // Deals the defuse card to com 3
+    cardsInCom3Hand.push("defuse")
 
-    // Removes the diffuse card from the 
-    removeDrawnCardFromDeck("diffuse")
+    // Removes the defuse card from the 
+    removeDrawnCardFromDeck("defuse")
 }
 
 export {

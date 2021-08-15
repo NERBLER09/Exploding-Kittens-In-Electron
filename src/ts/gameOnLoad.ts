@@ -41,11 +41,11 @@ function onLoadFunc() {
         displayCardToPlayer(card)
     }
 
-    // Deals the diffuse card to the player
-    displayCardToPlayer("diffuse")
+    // Deals the defuse card to the player
+    displayCardToPlayer("defuse")
 
-    // Removes the diffuse card from the 
-    removeDrawnCardFromDeck("diffuse")
+    // Removes the defuse card from the 
+    removeDrawnCardFromDeck("defuse")
 
     // Checks how many com players where selected
     switch(comPlayerAmount) {

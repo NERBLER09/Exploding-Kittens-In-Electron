@@ -20,7 +20,7 @@ const cardAmounts: cardAmounts = {
     'rainbow ralphing cat': 5,
     'beard cat': 5,
     'cattermellon': 5,
-    'diffuse': 6
+    'defuse': 6
 }
 
 // Creates a list containing the cards in the player hands

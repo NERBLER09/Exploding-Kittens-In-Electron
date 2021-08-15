@@ -69,21 +69,21 @@ const drawCardForCom3 = () => {
         // Tells the player that Com 3 has drawn an Exploding Kitten card
         displayMessageBox("An Exploding Kitten card has been drawn","Com 3 has drawn an Exploding Kitten!")
 
-        let com3HasDiffuseCard = false
+        let com3HasdefuseCard = false
 
         // Sets a time pause
         setTimeout(() => {
-            // Checks if Com 3 has a diffuse card   
+            // Checks if Com 3 has a defuse card   
             for(const card of cardsInCom3Hand) {
-                if(card === "diffuse") {
-                    com3HasDiffuseCard = true
+                if(card === "defuse") {
+                    com3HasdefuseCard = true
 
                     break   
                 }
             }
 
-            // Checks if Com 3 didn't have a diffuse card
-            if(com3HasDiffuseCard === false) {
+            // Checks if Com 3 didn't have a defuse card
+            if(com3HasdefuseCard === false) {
                 setTimeout(() => {
                     // Dose nothing here
                 }, 1000);
@@ -92,9 +92,9 @@ const drawCardForCom3 = () => {
                 displayMessageBox("Com 3 has exploded!","You won!")
             }
             else {
-                // Diffuses the Exploding Kitten card
+                // defuses the Exploding Kitten card
 
-                // Removes the diffuse card from Com 3's hand 
+                // Removes the defuse card from Com 3's hand 
                 const cardIndex = cardsInCom3Hand.indexOf(cardDrawn)
 
                 cardsInCom3Hand.splice(cardIndex, 1)
@@ -103,8 +103,8 @@ const drawCardForCom3 = () => {
                     // Dose nothing here 
                 }, 1000);
 
-                // Tells the player the Com 3 has diffused the Exploding Kitten
-                $("#current_player_turn").html("Com 3 has diffused the Exploding Kitten")
+                // Tells the player the Com 3 has defused the Exploding Kitten
+                $("#current_player_turn").html("Com 3 has defused the Exploding Kitten")
 
                 // Makes it be the player's turn
 

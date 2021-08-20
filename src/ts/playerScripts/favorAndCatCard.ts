@@ -1,6 +1,7 @@
 import { cardsInCom1Hand } from "../comPlayerScripts/com1Player/drawCardForCom1.js"
 import { cardsInCom2Hand } from "../comPlayerScripts/com2Player/drawCardForCom2.js"
 import { cardsInCom3Hand } from "../comPlayerScripts/com3Player/drawCardForCom3.js"
+import { decideCardToGiveAsFavor } from "../comPlayerScripts/decideCardToGiveAsFavor.js"
 import { displayMessageBox } from "../messageBox.js"
 import { playerCardsInHand } from "../messages.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
@@ -92,13 +93,15 @@ const askComPLayerForFavorCard = (comTarget) => {
     // Enters a switch statement to check what com player was selected 
     switch(comTarget) {
         case "com1":
-            // Gives a random card from com 1's hand to the player
-            indexOfCard = Math.floor(Math.random() * cardsInCom1Hand.length)
+            // // Gives a random card from com 1's hand to the player
+            // indexOfCard = Math.floor(Math.random() * cardsInCom1Hand.length)
 
-            cardToGive = cardsInCom1Hand[indexOfCard]
+            // cardToGive = cardsInCom1Hand[indexOfCard]
 
-            // Removes the given card from com 1's hand
-            cardsInCom1Hand.splice(indexOfCard, 1)
+            // // Removes the given card from com 1's hand
+            // cardsInCom1Hand.splice(indexOfCard, 1)
+
+            cardToGive = decideCardToGiveAsFavor(cardsInCom1Hand)
 
             displayCardToPlayer(cardToGive)
 
@@ -106,27 +109,17 @@ const askComPLayerForFavorCard = (comTarget) => {
 
             break
         case "com2":
-            // Gives a random card from com 2's hand to the player
-            indexOfCard = Math.floor(Math.random() * cardsInCom2Hand.length)
-
-            cardToGive = cardsInCom2Hand[indexOfCard]
-
-            // Removes the given card from com 2's hand
-            cardsInCom2Hand.splice(indexOfCard, 1)
-
-            comTarget = "Com 2"
+            cardToGive = decideCardToGiveAsFavor(cardsInCom2Hand)
 
             displayCardToPlayer(cardToGive)
 
+            comTarget = "Com 2"
+
             break
         case "com3":
-            // Gives a random card from com 3's hand to the player
-            indexOfCard = Math.floor(Math.random() * cardsInCom3Hand.length)
+            cardToGive = decideCardToGiveAsFavor(cardsInCom3Hand)
 
-            cardToGive = cardsInCom3Hand[indexOfCard]
-
-            // Removes the given card from com 3's hand
-            cardsInCom3Hand.splice(indexOfCard, 1)
+            displayCardToPlayer(cardToGive)
 
             comTarget = "Com 3"
 

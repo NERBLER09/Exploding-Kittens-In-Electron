@@ -13,8 +13,7 @@ const choseCardForCom1 = () => {
     const cardToPlay: card = cardsInCom1Hand[Math.floor(Math.random() * cardsInCom1Hand.length)]
     // Removes the played card from com 1's hand
     const cardIndex = cardsInCom1Hand.indexOf(cardToPlay)
-    cardsInCom1Hand.splice(cardIndex, 1)
-
+    
     // Sets a pause 
     setTimeout(() => {
         // Dose nothing here
@@ -36,11 +35,14 @@ const choseCardForCom1 = () => {
                     if (!checkIfNopeCardPlayed()) {
                         const waitUntilMessageBoxClosed = setInterval(() => {
                             if ($("#message_box").is(":hidden")) {
+                                clearInterval(waitUntilMessageBoxClosed)
+                                cardsInCom1Hand.splice(cardIndex, 1)
                                 playCard(cardToPlay)
                             }
                         }, 100)
                     }
                     else {
+                        cardsInCom1Hand.splice(cardIndex, 1)
                         drawCardForCom1()
                     }
                 }
@@ -57,8 +59,6 @@ const choseCardForCom1 = () => {
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
-    cardToPlay = "skip"
-
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played

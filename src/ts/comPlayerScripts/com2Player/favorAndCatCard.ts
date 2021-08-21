@@ -34,7 +34,12 @@ const catCardPlayedForCom2 = (catCard: catCard) => {
                     // Adds the stolen card to Com 2's hand
                     cardsInCom2Hand.push(cardToSteal)
 
-                    drawCardForCom1()
+                    const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+                        if ($("#message_box").is(":hidden")) {
+                            clearInterval(waitUntilMessageBoxClosed)
+                            drawCardForCom2()
+                        }
+                    }, 100)
                 }
             }, 100);
 
@@ -184,7 +189,7 @@ const askCardForFavorForCom2 = (favorCardTarget: number): card => {
             // Asks for a card from the player
 
             // Tells the player to give a card to Com 2
-            displayMessageBox("Can I have a card?", "Com 2 has asked you for a favor card. Click on a card to give it to Com 1")
+            displayMessageBox("Can I have a card?", "Com 2 has asked you for a favor card. Click on a card to give it to Com 2")
 
             // Adds the needed information to comPlayerPlayedFavor list 
             comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = "Com 2"

@@ -13,7 +13,6 @@ const choseCardForCom3 = () => {
 
     // Removes the played card from com 3's hand
     const cardIndex = cardsInCom3Hand.indexOf(cardToPlay)
-    cardsInCom3Hand.splice(cardIndex, 1)
 
     // Sets a pause 
     setTimeout(() => {
@@ -24,7 +23,7 @@ const choseCardForCom3 = () => {
         updateDiscardPile(cardToPlay)
 
         if(checkForNopeCardInHand()) {
-            nopePlayedCard(cardToPlay, "Com 2")
+            nopePlayedCard(cardToPlay, "Com 3")
 
             const waitUntilMessageBoxClosed = setInterval(() => {
                 // Checks if the player has closed the #message_box
@@ -32,9 +31,11 @@ const choseCardForCom3 = () => {
                     clearInterval(waitUntilMessageBoxClosed)
 
                     if (!checkIfNopeCardPlayed()) {
+                        cardsInCom3Hand.splice(cardIndex, 1)
                         playCardForCom3(cardToPlay)
                     }
                     else {
+                        cardsInCom3Hand.splice(cardIndex, 1)
                         drawCardForCom3()
                     }
                 }
@@ -63,7 +64,7 @@ const playCardForCom3 = (cardToPlay) => {
     switch(cardToPlay) {
         case "skip":
             if(turnsNeedToPlay === 1) {
-                displayMessageBox("Com 1 has skipped 1 of their turns", `Com 1 has ${turnsNeedToPlay} more turn(s) to play. It's now Com 1's turn`)
+                displayMessageBox("Com 3 has skipped 1 of their turns", `Com 3 has ${turnsNeedToPlay} more turn(s) to play. It's now Com 3's turn`)
                 choseCardForCom3()
                 break
             }
@@ -100,7 +101,7 @@ const playCardForCom3 = (cardToPlay) => {
 
             break
         case "see the future":
-            displayMessageBox("Com 1 has played a see the future card","Com 1 has seen the top 3 cards of the deck")
+            displayMessageBox("Com 3 has played a see the future card","Com 3 has seen the top 3 cards of the deck")
 
             // Choses the top three cards
             updateVariable("seeTheFutureCards")
@@ -119,7 +120,7 @@ const playCardForCom3 = (cardToPlay) => {
             // Choses which player to ask for a favor
             // 1 - The Player
             // 2 - Com 1
-            // 3 - Com 2
+            // 3 - Com 3
 
             let favorCardTarget: number
 
@@ -152,11 +153,11 @@ const playCardForCom3 = (cardToPlay) => {
             // Re-chooses a card to play
             choseCardForCom3()
         case "defuse":
-            console.error("No cards to defuse (Com 1)")
+            console.error("No cards to defuse (Com 3)")
 
             // Re-chooses card to play
 
-            // Readds the played card back into com 1's hand
+            // Readds the played card back into com 3's hand
             cardsInCom3Hand.push(cardToPlay)
 
             // Re-chooses a card to play

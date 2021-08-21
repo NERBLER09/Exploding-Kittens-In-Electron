@@ -38,7 +38,12 @@ const catCardPlayed = (catCard: catCard) => {
                     // Adds the stolen card to Com 1's hand
                     cardsInCom1Hand.push(cardToSteal)
 
-                    drawCardForCom1()
+                    const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+                        if ($("#message_box").is(":hidden")) {
+                            clearInterval(waitUntilMessageBoxClosed)
+                            drawCardForCom1()
+                        }
+                    }, 100)
                 }
             }, 100);
 

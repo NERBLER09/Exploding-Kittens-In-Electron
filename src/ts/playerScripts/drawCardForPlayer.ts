@@ -54,7 +54,6 @@ const drawCardForPlayer = () => {
                     const setCom1Turn = setInterval(() => {
                         // Checks if the player has closed the #message_box
                         if($("#message_box").is(":hidden") ) {
-                            console.log("Passing turn")
                             clearInterval(setCom1Turn)
 
                             // Makes it be com 1's turn

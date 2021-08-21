@@ -4,7 +4,7 @@ import { card, catCard } from "../../models/cards.interface.js";
 import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
 import { cardsInCom1Hand } from "../com1Player/drawCardForCom1.js";
 import { cardsInCom2Hand } from "../com2Player/drawCardForCom2.js";
-import { cardsInCom3Hand } from "./drawCardForCom3.js";
+import { cardsInCom3Hand, drawCardForCom3 } from "./drawCardForCom3.js";
 import { choseCardForCom3 } from "./playCardCom3.js";
 
 // Runs when com 3 has played 2 matching cat cards
@@ -17,7 +17,7 @@ const catCardPlayed = (catCard: catCard) => {
     for(const card of cardsInCom3Hand) {
         // Matching card
         if(catCard === card) {
-            displayMessageBox("Cat cards",`Com 1 has played 2 matching ${catCard}`)
+            displayMessageBox("Cat cards",`Com 3 has played 2 matching ${catCard}`)
 
             const waitUntilMessageBoxIsClosed = setInterval(() => {
                 // Checks if the player has closed the #message_box
@@ -34,6 +34,12 @@ const catCardPlayed = (catCard: catCard) => {
                     // Adds the stolen card to Com 3's hand
                     cardsInCom3Hand.push(cardToSteal)
 
+                    const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+                        if ($("#message_box").is(":hidden")) {
+                            clearInterval(waitUntilMessageBoxClosed)
+                            drawCardForCom3()
+                        }
+                    }, 100)
                 }
             }, 100);
             break
@@ -88,7 +94,7 @@ const stealCard = (): card => {
 
             $(".player_cards").get(cardIndex).remove()
 
-            displayMessageBox("Card stolen",`Com 1 has stolen your ${cardToStealFromPlayer}`)
+            displayMessageBox("Card stolen",`Com 3 has stolen your ${cardToStealFromPlayer}`)
 
             returnStolenCard = setInterval(() => {
                 // Checks if the player has closed the #message_box
@@ -114,7 +120,7 @@ const stealCard = (): card => {
             // Removes the stolen card from Com 1's hand
             cardsInCom1Hand.splice(cardIndex, 1)
 
-            displayMessageBox("Card stolen","Com 3 has stolen a card from Com 1")
+            displayMessageBox("Card stolen","Com 3 has stolen a card from Com 3")
 
             returnStolenCard = setInterval(() => {
                 // Checks if the player has closed the #message_box
@@ -147,7 +153,7 @@ const stealCard = (): card => {
             // Removes the stolen card from Com 2's hand
             cardsInCom2Hand.splice(cardIndex, 1)
 
-            displayMessageBox("Card stolen","Com 1 has stolen a card from Com 2")
+            displayMessageBox("Card stolen","Com 3 has stolen a card from Com 2")
 
             returnStolenCard = setInterval(() => {
                 // Checks if the player has closed the #message_box
@@ -185,7 +191,7 @@ const askCardForFavor = (favorCardTarget) => {
             // Asks for a card from the player
 
             // Tells the player to give a card to Com 1
-            displayMessageBox("Can I have a card?", "Com 1 has asked you for a favor card. Click on a card to give it to Com 1")
+            displayMessageBox("Can I have a card?", "Com 3 has asked you for a favor card. Click on a card to give it to Com 3")
 
             // Adds the needed information to comPlayerPlayedFavor list 
             comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = "Com 3"
@@ -205,8 +211,8 @@ const askCardForFavor = (favorCardTarget) => {
             cardsInCom1Hand.splice(cardIndex, 1)
 
             // Displays that Com 3 asked for a card from Com 1
-            console.log(`Com 3 got a ${cardToGive} card from Com 1`)
-            displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 1")
+            console.log(`Com 3 got a ${cardToGive} card from Com 3`)
+            displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 3")
 
             returnFavoredCard = setInterval(() => {
                 // Checks if the player has closed the #message_box

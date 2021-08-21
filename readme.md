@@ -4,9 +4,15 @@ Welcome to Exploding Kittens In Python. This is a clone of [Exploding Kittens](h
 
 ## Screenshots
 
+Light mode:
 ![title-screen](https://user-images.githubusercontent.com/67165926/123548732-4700e400-d723-11eb-9f46-5a3bac9a264f.PNG)
 
 ![game-window](https://user-images.githubusercontent.com/67165926/123548772-71eb3800-d723-11eb-80d0-6dfb225cd218.PNG)
+
+Dark mode:
+![game-screen-dark](https://user-images.githubusercontent.com/67165926/130336034-a4e38885-d240-4da7-84ad-82b87a060292.png)
+![title-screen-dark](https://user-images.githubusercontent.com/67165926/130336036-b512216c-dc46-4392-920e-741cec701595.png)
+
 
 ## Releases 
 

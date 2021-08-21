@@ -140,14 +140,6 @@ const menu = [
       { type: 'separator' },
       {
           label: "About",
-          // click: function () {
-          //     dialog.showMessageBox({
-          //         type: "info",
-          //         title: "Exploding Kittens",
-          //         message: "About",
-          //         detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0\nPlease note that "Exploding Kittens In Electron" is still user development\nTo give feedback go to Options -> Github Repo ->\nErrors -> New Error To Submit A New Error`,
-          //     });
-          // }
           click () {
             mainWindow.webContents.send("showAboutMessageBox")
           }

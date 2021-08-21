@@ -91,50 +91,6 @@ function onLoadFunc() {
     displayMessageBox("It's your turn", "It is your turn.")
 }
 
-const updateGameConfig = () => {
-    const messageBoxElement = `
-        <h2>What game configurations do you want to change?</h2>
-        <p>Username: </p>
-        <input type="text" placeholder="New username" id="new-usrnameInput">
-        <p>Computer player amount</p>
-        <input type="radio" value="1comPlayer" name="comPlayer" class="update-comSelection">
-        <label for="1comPlayer">1 Computer Player</label>
-        <input type="radio" value="2comPlayer" name="comPlayer" class="update-comSelection">
-        <label for="1comPlayer">2 Computer Players</label>
-        <input type="radio" value="3comPlayer" name="comPlayer" class="update-comSelection">
-        <label for="1comPlayer">3 Computer Players</label>
-        <div class="update-game-config-container">
-            <button id="update-game-config-button">Update Game Config</button>
-            <button id="cancel-update-game-config">Cancel</button>
-        </div>
-    `
-
-    $("#message_box").append(messageBoxElement)
-    $("#cancel-update-game-config").click(() => {
-        $("#message_box").html("")
-        $("#message_box").hide()
-    })
-    $("#update-game-config-button").click(handleGameConfigUpdate)
-}
-
-const handleGameConfigUpdate = () => {
-    const newComAmount:any = $(".update-comSelection[type='radio']:checked").val()
-    const newUsername:any = $("#new-usrnameInput").val()
-
-    localStorage.setItem("username", newUsername)
-    localStorage.setItem("comAmount", newComAmount)
-    localStorage.setItem("isGameDataSaved", "true")
-
-    $("#message_box").html("")
-
-    displayMessageBox("Updated game config", "You have updated you game config. If you want the changes to take affect you'll need to start a new game")
-}
-
-ipcRenderer.on("updateGameConfig", () => {
-    updateGameConfig()
-    $("#message_box").show()
-})
-
 // Sets the onload func
 $("body").ready(onLoadFunc)
 

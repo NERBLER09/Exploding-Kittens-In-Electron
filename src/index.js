@@ -140,13 +140,16 @@ const menu = [
       { type: 'separator' },
       {
           label: "About",
-          click: function () {
-              dialog.showMessageBox({
-                  type: "info",
-                  title: "Exploding Kittens",
-                  message: "About",
-                  detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0\nPlease note that "Exploding Kittens In Electron" is still user development\nTo give feedback go to Options -> Github Repo ->\nErrors -> New Error To Submit A New Error`,
-              });
+          // click: function () {
+          //     dialog.showMessageBox({
+          //         type: "info",
+          //         title: "Exploding Kittens",
+          //         message: "About",
+          //         detail: `Exploding Kittens In Electron\nVersion: 1.0.0.0\nPlease note that "Exploding Kittens In Electron" is still user development\nTo give feedback go to Options -> Github Repo ->\nErrors -> New Error To Submit A New Error`,
+          //     });
+          // }
+          click () {
+            mainWindow.webContents.send("showAboutMessageBox")
           }
       },
 
@@ -157,19 +160,18 @@ const menu = [
     submenu: [
       {type:"separator"},
       {
-        label: "Github Page",
-
-        click() {
-          shell.openExternal("https://www.github.com/nerbler09")
-        }
-      },
-      
-      {
-        label: "Github Repo",
+        label: "Github",
 
         click() {
           shell.openExternal("https://www.github.com/nerbler09/exploding-kittens-in-electron")
         }
+      },
+      { type: "separator" },
+      {
+        label: "Open Issuse",
+        click() {
+          shell.openExternal("https://github.com/NERBLER09/Exploding-Kittens-In-Electron/issues/new")
+        } 
       },
       { type: "separator" },
       {

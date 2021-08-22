@@ -17,9 +17,6 @@ const catCardPlayed = (catCard: catCard) => {
     for (const card of cardsInCom1Hand) {
         // Matching card
         if (catCard === card) {
-            console.log("Matching cat cards")
-            console.log(catCard)
-            console.log(card)
 
             displayMessageBox("Cat cards",`Com 1 has played 2 matching ${catCard}`)
 

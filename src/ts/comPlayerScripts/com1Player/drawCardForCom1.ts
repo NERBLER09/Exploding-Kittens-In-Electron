@@ -1,5 +1,5 @@
 import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
-import { displayMessageBox } from "../../messageBox.js"
+import { displayMessageBox, explodedMessageBox } from "../../messageBox.js"
 import { cards } from "../../messages.js"
 import { card } from "../../models/cards.interface.js"
 import { choseCardForCom2 } from "../com2Player/playCardCom2.js"
@@ -113,7 +113,7 @@ const drawCardForCom1 = () => {
                 }, 1000);
 
                 // Tells the player that Com 1 has exploded
-                displayMessageBox("Com 1 has exploded!", `You won! Click on "Start new game to start a new game" or "Quit" to quit`)
+                explodedMessageBox("Com 1 has exploded!", `You won! Click on "Start new game" to start a new game or "Quit" to quit`)
             }
             else {
                 // defuses the Exploding Kitten card

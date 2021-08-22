@@ -1,4 +1,4 @@
-import { drawCardForCom1 } from "../comPlayerScripts/com1Player/drawCardForCom1.js"
+import { cardsInCom1Hand, drawCardForCom1 } from "../comPlayerScripts/com1Player/drawCardForCom1.js"
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { cardsInCom2Hand, drawCardForCom2 } from "../comPlayerScripts/com2Player/drawCardForCom2.js"
 import { cardsInCom3Hand, drawCardForCom3 } from "../comPlayerScripts/com3Player/drawCardForCom3.js"
@@ -13,7 +13,7 @@ const playCard = (playerCard) => {
     const cardPlayed = playerCard.data.param1
 
     // Checks if its the player's turn 
-    if(isPlayerTurn === true || comPlayerPlayedFavor["favorCardPlayed"] == true) {
+    if(isPlayerTurn === true || comPlayerPlayedFavor["favorCardPlayed"] === true) {
         // Gets the index of the played card from the players hand
         const cardIndex = playerCardsInHand.indexOf(cardPlayed)
 
@@ -30,7 +30,7 @@ const playCard = (playerCard) => {
 
             updateDiscardPile(cardPlayed)
         }
-        else {
+        else if(comPlayerPlayedFavor["favorCardPlayed"] === true){
             let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
             // Tells the player which card they game to a com player
@@ -42,7 +42,7 @@ const playCard = (playerCard) => {
             switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
                 case "Com 1":
                     // Adds the given card to Com 1's hand 
-                    cardsInCom2Hand.push()
+                    cardsInCom1Hand.push()
 
                     // Resets the comPlayerPlayedFavor list 
                     comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
@@ -58,6 +58,7 @@ const playCard = (playerCard) => {
                         // Checks if the player has closed the #message_box
                         if($("#message_box").is(":hidden") ) {
                             clearInterval(waitUntilMessageBoxIsClosed)
+                            console.log("jfe[ow")
                             // Draws the card
                             drawCardForCom1()
                         }
@@ -91,7 +92,7 @@ const playCard = (playerCard) => {
                     break
 
                 case "Com 3":
-                    // Adds the given card to Com 2's hand 
+                    // Adds the given card to Com 3's hand 
                     cardsInCom3Hand.push()
 
                     // Resets the comPlayerPlayedFavor list 
@@ -150,16 +151,19 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             updateVariable("isPlayerTurn", false) // Makes it not be the players turn
             updateVariable("removeFromTurnsNeedToPlay")
             
-            if(turnsNeedToPlay === 1) {
+            if(turnsNeedToPlay <= 1) {
                 displayMessageBox("Skipped Turn","You have skipped your turn. It's now com 1's turn")
-                choseCard()
-
+             
+                const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxClosed)
+                        choseCard()
+                    }
+                }, 100)
             }
-            else {
+            else if(turnsNeedToPlay > 1) {
                 displayMessageBox("Skipped Turn",`You have skipped your turn. But, you have ${turnsNeedToPlay} turn(s) you have remaining. It's now your turn.`)
             }
-                // Makes it be com 1's turn
-
             break
         case "attack":
             console.log("Player played a attack")

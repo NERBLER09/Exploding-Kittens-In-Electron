@@ -88,7 +88,7 @@ const drawCardForPlayer = () => {
                 // Checks if the player has a defuse card
                 if(playerHasDefuse === false) {
                     // Tells the player that they have exploded 
-                    explodedMessageBox("You've exploded!",  `Click on "Start new game to start a new game" or "Quit" to quit`)
+                    explodedMessageBox("You've exploded!",  `Click on "Start new game" to start a new game or "Quit" to quit`)
 
                     updateVariable("isPlayerTurn", false)
 

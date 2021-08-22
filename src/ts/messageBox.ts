@@ -46,7 +46,7 @@ const explodedMessageBox = (header: string, mainText: string) => {
     const messageBoxElement = `
         <h2>${header}</h2>
         <p>${mainText}</p>
-        <button id="quit_button">Quit</button>
+        <button id="quit-button">Quit</button>
         <button id="start-new-game">Start a new game</button>
     `
     $("#message_box").append(messageBoxElement)

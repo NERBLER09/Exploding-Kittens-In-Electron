@@ -7,7 +7,6 @@ const goodCards: card[] = ["attack","defuse","see the future","skip", "nope"]
  * eg, defuse, skip, attack, or see the future
 */
 const checkIfGivingAWayAGoodCard = (cardToGive: card): boolean => {
-    console.log(goodCards.includes(cardToGive))
     if(goodCards.indexOf(cardToGive) === 1) {
         return false
     }

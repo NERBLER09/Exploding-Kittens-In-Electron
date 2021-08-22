@@ -5,16 +5,18 @@
   "description": "A fan port of Exploding Kittens to the desktop",
   "main": "src/index.js",
   "build": {
-    "win": { 
+    "win": {
       "icon": "assets/Exploding-Kitten-Logo.ico",
-      "target": ["appx"] 
+      "target": [
+        "appx"
+      ]
     },
     "appx": {
       "applicationId": "ExplodimgKittensFanGame",
       "identityName": "11103Nerbler09.ExplodimgKittensFanGame",
       "publisher": "CN=8FCAC29E-A771-4806-AD92-B16FDCD3656F",
       "publisherDisplayName": "Nerbler09",
-      "backgroundColor":"#a0beeb"
+      "backgroundColor": "#a0beeb"
     }
   },
   "scripts": {

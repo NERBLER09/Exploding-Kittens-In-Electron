@@ -4,7 +4,7 @@ import { card } from "./models/cards.interface"
  * Used to prevent an infinite loop
  */
 
-const playableCards = ['nope', 'attack',
+const playableCards = ['attack',
 'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
 'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
 

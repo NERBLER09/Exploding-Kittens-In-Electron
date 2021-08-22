@@ -42,7 +42,22 @@ const displaySeeTheFutureCards = (card1: string, card2: string, card3: string) =
     $("#message_box").show()
 }
 
+const explodedMessageBox = (header: string, mainText: string) => {
+    const messageBoxElement = `
+        <h2>${header}</h2>
+        <p>${mainText}</p>
+        <button id="quit_button">Quit</button>
+        <button id="start-new-game">Start a new game</button>
+    `
+    $("#message_box").append(messageBoxElement)
+    $("#quit-button").click(() => window.close())
+    $("#start-new-game").click(() => location.reload())
+    $("#message_box").show()
+
+}
+
 export {
     displayMessageBox,
-    displaySeeTheFutureCards
+    displaySeeTheFutureCards,
+    explodedMessageBox
 }

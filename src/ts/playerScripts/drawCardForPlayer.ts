@@ -1,6 +1,6 @@
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { isPlayerTurn, removeDrawnCardFromDeck, seeTheFutureCards, totalCardAmount, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
-import { displayMessageBox } from "../messageBox.js"
+import { displayMessageBox, explodedMessageBox } from "../messageBox.js"
 import { cards, comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
@@ -88,7 +88,7 @@ const drawCardForPlayer = () => {
                 // Checks if the player has a defuse card
                 if(playerHasDefuse === false) {
                     // Tells the player that they have exploded 
-                    displayMessageBox("You've exploded!", "Go to: Game -> New Game (From Game Window) to start a new game")
+                    explodedMessageBox("You've exploded!",  `Click on "Start new game to start a new game" or "Quit" to quit`)
 
                     updateVariable("isPlayerTurn", false)
 

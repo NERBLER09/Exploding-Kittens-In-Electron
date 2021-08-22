@@ -113,7 +113,7 @@ const drawCardForCom1 = () => {
                 }, 1000);
 
                 // Tells the player that Com 1 has exploded
-                displayMessageBox("Com 1 has exploded!","You won!")
+                displayMessageBox("Com 1 has exploded!", `You won! Click on "Start new game to start a new game" or "Quit" to quit`)
             }
             else {
                 // defuses the Exploding Kitten card

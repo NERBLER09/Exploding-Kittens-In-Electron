@@ -1,7 +1,7 @@
 import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
 import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
-import { card } from "../../models/cards.interface.js"
+import { card, catCard } from "../../models/cards.interface.js"
 import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { askCardForFavor, catCardPlayed } from "../com1Player/favorAndCatCardFor1.js"
@@ -57,13 +57,14 @@ const choseCardForCom2 = () => {
     }
 }
 
+const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "beard cat", "cattermellon"]
+
 // Choses a card to play and plays the card
 const playCardForCom2 = (cardToPlay) => {
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played
-    if(cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' || 
-    cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {
+    if(catCard.includes(cardToPlay)) {
         // Checks if there's a matching cat card
         catCardPlayed(cardToPlay)
     }

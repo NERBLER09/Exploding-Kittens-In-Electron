@@ -39,7 +39,7 @@ const drawCardForCom1 = () => {
 
         // Com 1 has no additional turns
 
-        if (turnsNeedToPlay == 0) {
+        if (turnsNeedToPlay <= 0) {
             // Checks if there are 2 selected computer players
             const comAmount = localStorage.getItem("comAmount")
 
@@ -70,11 +70,11 @@ const drawCardForCom1 = () => {
 
         // Com 1 has additional turns
 
-        else {
+        else if (turnsNeedToPlay > 1){
             // Removes 1 from turnsNeedToPlay to have Com 1 has 1 less turn
             updateVariable("removeFromTurnsNeedToPlay")
 
-            displayMessageBox("It's com 1's turn.", "It's now com 1's turn again")
+            displayMessageBox("It's com 1's turn.", `It's now com 1's turn again. Com 1 has ${turnsNeedToPlay} more turn(s) remaining.`)
 
             const setCom2Turn = setInterval(() => {
                 // Checks if the player has closed the #message_box

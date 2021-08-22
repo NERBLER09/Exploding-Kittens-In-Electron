@@ -42,7 +42,7 @@ const drawCardForCom2 = () => {
 
         // Com 2 has no additional turns
 
-        if(turnsNeedToPlay == 0) {
+        if(turnsNeedToPlay <= 0) {
             // Checks if there are 3 com players 
             const comAmount = localStorage.getItem("comAmount")
 
@@ -70,7 +70,7 @@ const drawCardForCom2 = () => {
 
         // Com 2 has additional turns
 
-        else {
+        else if(turnsNeedToPlay > 1){
             // Removes 2 from turnsNeedToPlay to have Com 2 has 2 less turn
             updateVariable("removeFromTurnsNeedToPlay")
 

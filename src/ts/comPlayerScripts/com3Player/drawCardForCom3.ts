@@ -41,7 +41,7 @@ const drawCardForCom3 = () => {
 
         // Com 3 has no additional turns
 
-        if(turnsNeedToPlay == 0) {
+        if(turnsNeedToPlay <= 0) {
             // Sets a time pause
             displayMessageBox("Com 3 has drawn card", "It's now your turn")
 
@@ -51,7 +51,7 @@ const drawCardForCom3 = () => {
 
         // Com 3 has additional turns
 
-        else {
+        else if(turnsNeedToPlay > 1) {
             // Removes 3 from turnsNeedToPlay to have Com 3 has 3 less turn
             updateVariable("removeFromTurnsNeedToPlay")
 

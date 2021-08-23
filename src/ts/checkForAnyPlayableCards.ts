@@ -17,7 +17,6 @@ const checkForPlayableCard = (hand: card[], cardToPlay: any): boolean => {
             if(catCard.includes(cardToPlay) && e === cardToPlay) {
                 // If a com player wants to steal a card checks if there are 2 matching cat cards
                 if(checkForMatchingCatCards(hand, cardToPlay)) {
-                    console.log("2 matching cat cards")
                     return true
                 }
                 else return false

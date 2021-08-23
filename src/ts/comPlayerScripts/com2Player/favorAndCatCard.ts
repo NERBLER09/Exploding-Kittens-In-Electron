@@ -268,7 +268,21 @@ const askCardForFavorForCom2 = (favorCardTarget: number): card => {
         default:
             console.error("Unknown player to ask for favor card")
 
-            askCardForFavorForCom2(null)
+            // Check how many com players were selected 
+            switch(localStorage.getItem("comAmount")) {
+                case "2comPlayer":
+                    favorCardTarget = Math.floor(Math.random() * 2)
+
+                    break
+                case "3comPlayer":
+                    favorCardTarget = Math.floor(Math.random() * 3)
+
+                    break
+            }
+
+            askCardForFavorForCom2(favorCardTarget)
+            
+            break
 
     }
 }

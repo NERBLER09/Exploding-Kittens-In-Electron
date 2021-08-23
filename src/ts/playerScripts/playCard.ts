@@ -58,7 +58,7 @@ const playCard = (playerCard) => {
                         // Checks if the player has closed the #message_box
                         if($("#message_box").is(":hidden") ) {
                             clearInterval(waitUntilMessageBoxIsClosed)
-                            console.log("jfe[ow")
+                            
                             // Draws the card
                             drawCardForCom1()
                         }

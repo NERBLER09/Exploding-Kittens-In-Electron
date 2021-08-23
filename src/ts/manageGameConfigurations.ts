@@ -7,7 +7,7 @@ const {ipcRenderer} = electron;
 const checkIfGameDataIsSaved = (): boolean => {
     const isGameDataSaved = localStorage.getItem("isGameDataSaved")
     
-    if(isGameDataSaved) {
+    if(isGameDataSaved !== null) {
         return true
     }
     else return false

@@ -3,6 +3,8 @@
 // const $ = require("jquery")
 const electron = require('electron')
 const {ipcRenderer} = electron;
+const path = require('path');
+
 import { askToSaveGameConfigs, checkIfGameDataIsSaved } from "./manageGameConfigurations.js";
 import { displayMessageBox } from "./messageBox.js";
 import { messages } from "./messages.js";
@@ -41,13 +43,22 @@ function startGame() {
         localStorage.setItem("username", username)
         localStorage.setItem("comAmount", comPlayerAmount)
         
-        checkIfGameDataIsSaved() ? ipcRenderer.send("createGameWindow") : askToSaveGameConfigs()
+        if(checkIfGameDataIsSaved()) {
+            ipcRenderer.send("createGameWindow")
+        }
+        else {
+            askToSaveGameConfigs()
+        }
+
     }
 } 
 
 $("#playButton").click(startGame)
 $("body").ready(() => {
-    if(checkIfGameDataIsSaved()) { ipcRenderer.send("createGameWindow") }
+    if(checkIfGameDataIsSaved()) { 
+        const newUrl = `${path.join(__dirname, 'gameWindow.html')}`
+        window.history.replaceState(null, null, newUrl)
+    }
 })
 
 export {

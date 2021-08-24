@@ -3,6 +3,7 @@
 // drawing a card for a player, and
 // and the onclick function for the player cards
 
+import { isGetAccessor } from "../../node_modules/typescript/lib/typescript.js"
 import { cards, cardAmounts } from "./messages.js"
 import { card } from "./models/cards.interface.js"
 
@@ -47,7 +48,7 @@ const removeDrawnCardFromDeck = (cardToRemoveFromDeck: card) => {
 }
 
 type updateVariableType = "isPlayerTurn" | "turnsNeedToPlay" | "seeTheFutureCards" | "removeFromTurnsNeedToPlay" |
-"explodingKittenCardDrawn" | "resetTurnsNeedToPlay"
+"explodingKittenCardDrawn" | "resetTurnsNeedToPlay" | "resetSeeTheFutureCards"
 
 // Updates a specified variable
 const updateVariable = (variableToUpdate: updateVariableType, status?: boolean) => {
@@ -72,12 +73,17 @@ const updateVariable = (variableToUpdate: updateVariableType, status?: boolean) 
             break
         case "seeTheFutureCards":
             // Adds the top 3 cards to the list
-            seeTheFutureCards = [cards[Math.floor(Math.random() * cards.length)],
-                cards[Math.floor(Math.random() * cards.length)], 
-                cards[Math.floor(Math.random() * cards.length)]]
+            for(let i = 3; i > 0; i--) {
+                if(seeTheFutureCards.length === 3) {
+                    break
+                }
+                
+                seeTheFutureCards[i] = cards[Math.floor(Math.random() * cards.length)]
+            }
 
-                console.log(`The Current Top 3 Cards: 1. ${seeTheFutureCards[0]},
-                2. ${seeTheFutureCards[1]}, 3. ${seeTheFutureCards[2]} `)
+            if(!seeTheFutureCards[0]) {
+                seeTheFutureCards.splice(0, 1)
+            }
 
             break
         case "removeFromTurnsNeedToPlay":
@@ -89,6 +95,10 @@ const updateVariable = (variableToUpdate: updateVariableType, status?: boolean) 
             break
         case "resetTurnsNeedToPlay":
             turnsNeedToPlay = 0
+            break
+        case "resetSeeTheFutureCards" :
+            seeTheFutureCards = []
+            
             break
     }
 }

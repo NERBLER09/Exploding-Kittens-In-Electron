@@ -185,8 +185,8 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             break
         case "shuffle":
             // Card is a placebo, this card really dose nothing
-            console.log("Player played a shuffle") 
             displayMessageBox("Shuffled the deck", "The deck has been shuffled.")
+            updateVariable("resetSeeTheFutureCards")
             break
         case "see the future":
             console.log("Player played a see the future")

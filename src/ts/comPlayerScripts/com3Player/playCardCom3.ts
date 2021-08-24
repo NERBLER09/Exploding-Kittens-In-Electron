@@ -89,6 +89,7 @@ const playCardForCom3 = (cardToPlay) => {
         case "shuffle":
             // Card is a placebo, this card really dose nothing
             displayMessageBox("The deck has been shuffled","Com 3 has shuffled the deck")
+            updateVariable("resetSeeTheFutureCards")
 
             waitUntilMessageBoxIsClosed = setInterval(() => {
                 // Checks if the player has closed the #message_box

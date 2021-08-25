@@ -44,8 +44,6 @@ const drawCardForCom1 = () => {
             const comAmount = localStorage.getItem("comAmount")
 
             if (comAmount === "2comPlayer" || comAmount === "3comPlayer") {
-                console.log("Passing turn")
-
                 displayMessageBox("Com 1 has drawn a card.", "It's now com 2's turn")
 
                 const setCom2Turn = setInterval(() => {
@@ -60,8 +58,6 @@ const drawCardForCom1 = () => {
                 }, 100);
             }
             else {
-                console.log("Passing turn")
-
                 displayMessageBox("Com 1 has drawn card", "It's now your turn")
 
                 // Makes it be the players turn

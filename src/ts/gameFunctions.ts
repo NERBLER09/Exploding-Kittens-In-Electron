@@ -27,7 +27,6 @@ let explodingKittenCardDrawn = false
 // Removes the drawn card from the deck
 const removeDrawnCardFromDeck = (cardToRemoveFromDeck: card) => {
     cardAmounts[cardToRemoveFromDeck] -= 1
-    // console.log(totalCardAmount)
     totalCardAmount -= 1
 
     // Checks of there are no more remaining cards

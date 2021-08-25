@@ -179,8 +179,7 @@ const stealCard = (): card => {
 
 // Choses a player to ask for a favor from
 const askCardForFavor = (favorCardTarget) => {
-    console.log(favorCardTarget)
-
+    
     let cardIndex: number
     let cardToGive: string
     let returnFavoredCard: NodeJS.Timeout
@@ -204,14 +203,12 @@ const askCardForFavor = (favorCardTarget) => {
             // Picks a random card from com 1's hand
             cardIndex = Math.floor(Math.random() * cardsInCom1Hand.length)
 
-            console.log(cardsInCom1Hand[cardIndex])
             cardToGive = cardsInCom1Hand[cardIndex]
 
             // Removes the card from com 1's hand
             cardsInCom1Hand.splice(cardIndex, 1)
 
             // Displays that Com 3 asked for a card from Com 1
-            console.log(`Com 3 got a ${cardToGive} card from Com 3`)
             displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 3")
 
             returnFavoredCard = setInterval(() => {
@@ -244,7 +241,6 @@ const askCardForFavor = (favorCardTarget) => {
             cardsInCom2Hand.splice(cardIndex, 1)
 
             // Displays that Com 3 asked for a card from Com 2
-            console.log(`Com 3 got a ${cardToGive} card from Com 2`)
             displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 2")
 
             returnFavoredCard = setInterval(() => {

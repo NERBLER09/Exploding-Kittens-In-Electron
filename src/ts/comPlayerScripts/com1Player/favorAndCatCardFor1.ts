@@ -203,7 +203,6 @@ const askCardForFavor = (favorCardTarget): card => {
             cardsInCom2Hand.splice(cardIndex, 1)
 
             // Displays that Com 1 asked for a card from Com 2
-            console.log(`Com 1 got a ${cardToGive} card from Com 2`)
             displayMessageBox("Can I have a card?","Com 1 ask for a card from Com 2")
 
             returnFavoredCard = setInterval(() => {
@@ -236,7 +235,6 @@ const askCardForFavor = (favorCardTarget): card => {
             cardsInCom3Hand.splice(cardIndex, 1)
 
             // Displays that Com 1 asked for a card from Com 3
-            console.log(`Com 1 got a ${cardToGive} card from Com 3`)
             displayMessageBox("Can I have a card?","Com 1 ask for a card from Com 3")
 
             returnFavoredCard = setInterval(() => {

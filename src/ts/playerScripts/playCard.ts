@@ -141,8 +141,6 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
     // Checks if the player played a cat card (can't be in the switch statement because of the multiple cards)
     if(cardPLayed == 'potato cat' || cardPLayed == 'taco cat' || cardPLayed == 'rainbow ralphing cat' || 
     cardPLayed == 'beard cat' || cardPLayed == 'cattermellon') {
-        console.log(`Player played a cat card (${cardPLayed})`)
-
         catCardPlayed(cardPLayed)
     }
 
@@ -166,8 +164,6 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             }
             break
         case "attack":
-            console.log("Player played a attack")
-
             // Displays that it's now com 1's turn and that com 1 has 2 turns
             displayMessageBox("Attacked Com 1", `It it now Com 1's turn, Com 1 has 2 turns.`)
 
@@ -189,19 +185,12 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             updateVariable("resetSeeTheFutureCards")
             break
         case "see the future":
-            console.log("Player played a see the future")
-            // seeTheFutureCards = [cards[Math.floor(Math.random() * cards.length)],
-            //     cards[Math.floor(Math.random() * cards.length)], 
-            //     cards[Math.floor(Math.random() * cards.length)]]
-
             updateVariable("seeTheFutureCards")
 
             displaySeeTheFutureCards(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2])
             
             break
         case "favor":
-            console.log("Player played a favor")
-
             // Asks what com player the player wants a favor from
             promptFavorTarget()
 

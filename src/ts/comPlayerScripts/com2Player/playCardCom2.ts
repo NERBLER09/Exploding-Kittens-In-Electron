@@ -21,8 +21,6 @@ const choseCardForCom2 = () => {
         // Dose nothing here
     }, 2000);
 
-    console.log("Com 2 test")
-
     if(checkForPlayableCard(cardsInCom2Hand, cardToPlay)) {
         updateDiscardPile(cardToPlay)
 
@@ -67,7 +65,6 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 
 // Choses a card to play and plays the card
 const playCardForCom2 = (cardToPlay) => {
-    console.log("playing card to play (com 2)")
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played

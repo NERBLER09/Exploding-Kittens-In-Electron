@@ -19,8 +19,6 @@ const choseCardForCom1 = () => {
         // Dose nothing here
     }, 1000);
 
-    console.log("Choosing card to play (com 1)")
-
     if (checkForPlayableCard(cardsInCom1Hand, cardToPlay) == true) {
         updateDiscardPile(cardToPlay)
 
@@ -64,7 +62,6 @@ const choseCardForCom1 = () => {
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
-    console.log("playing card to play (com 1)")
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played

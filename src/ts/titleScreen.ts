@@ -15,7 +15,6 @@ let comPlayerAmount:any = null
 /** Checks if a username is entered or a com player amount is selected */
 const checkForGameConfigs = (): boolean => {
     if(username !== "" && comPlayerAmount !== undefined ) {
-        console.log("Meets requirements")
         return true
     }
     else {

@@ -29,7 +29,6 @@ const drawCardForCom2 = () => {
     // Checks if Com 2 has drawn an Exploding Kitten
 
     // Exploding Kitten was not drawn
-
     if(cardDrawn !== "exploding kitten") {
         // Adds the drawn card the the list
         cardsInCom2Hand.push(cardDrawn)
@@ -106,7 +105,7 @@ const drawCardForCom2 = () => {
 }
 
 /** Runs when Com 2 draws a exploding kitten card */
-const defuseExplodingKittenCard = (cardDrawn) => {
+const defuseExplodingKittenCard = (cardDrawn) => {    
     let com2HasdefuseCard = false
 
     // Checks if Com 2 has a defuse card   
@@ -162,6 +161,8 @@ const defuseExplodingKittenCard = (cardDrawn) => {
             }, 100);
         }
         else if(comAmount !== "3comPlayer"){
+            displayMessageBox("Com 2 has defused the Exploding Kitten","It's now your turn")
+            
             // Sets a time pause
             setTimeout(() => {
                 $("#current_player_turn").html("It's now your turn")

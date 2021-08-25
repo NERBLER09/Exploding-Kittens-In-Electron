@@ -114,14 +114,7 @@ const defuseExplodingKittenCard = (cardDrawn) => {
         }, 1000);
 
         // Tells the player the Com 3 has defused the Exploding Kitten
-        $("#current_player_turn").html("Com 3 has defused the Exploding Kitten")
-
-        // Makes it be the player's turn
-
-        // Sets a time pause
-        setTimeout(() => {
-            $("#current_player_turn").html("It's now your turn")
-        }, 2000);
+        displayMessageBox("Com 3 has defused the Exploding Kitten","It's now your turn")
 
         // Makes it be the players turn
         updateVariable("isPlayerTurn", true)

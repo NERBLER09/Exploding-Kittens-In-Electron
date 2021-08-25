@@ -94,73 +94,80 @@ const drawCardForCom2 = () => {
         // Tells the player that Com 2 has drawn an Exploding Kitten card
         displayMessageBox("An Exploding Kitten card has been drawn","Com 2 has drawn an Exploding Kitten!")
 
-        let com2HasdefuseCard = false
+        const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxClosed)
+                defuseExplodingKittenCard(cardDrawn)
+            }
+        }, 100)
+    }
+}
 
-        // Sets a time pause
+/** Runs when Com 2 draws a exploding kitten card */
+const defuseExplodingKittenCard = (cardDrawn) => {
+    let com2HasdefuseCard = false
+
+    // Checks if Com 2 has a defuse card   
+    for(const card of cardsInCom2Hand) {
+        if(card === "defuse") {
+            com2HasdefuseCard = true
+
+            break   
+        }
+    }
+
+    // Checks if Com 2 didn't have a defuse card
+    if(com2HasdefuseCard === false) {
         setTimeout(() => {
-            // Checks if Com 2 has a defuse card   
-            for(const card of cardsInCom2Hand) {
-                if(card === "defuse") {
-                    com2HasdefuseCard = true
+            // Dose nothing here
+        }, 1000);
 
-                    break   
+        // Tells the player that Com 2 has exploded
+        explodedMessageBox("Com 2 has exploded!",`You won! Click on "Start new game" to start a new game or "Quit" to quit`)
+    }
+    else {
+        // defuses the Exploding Kitten card
+
+        // Removes the defuse card from Com 2's hand 
+        const cardIndex = cardsInCom2Hand.indexOf(cardDrawn)
+
+        cardsInCom2Hand.splice(cardIndex, 1)
+
+        setTimeout(() => {
+            // Dose nothing here 
+        }, 1000);
+
+        // Tells the player the Com 2 has defused the Exploding Kitten
+        $("#current_player_turn").html("Com 2 has defused the Exploding Kitten")
+
+        // Makes it be Com 3's turn
+
+        // Checks if there are 2 or 3 selected computer players
+        const comAmount = localStorage.getItem("comAmount")
+
+        // Checks if there are 3 selected computer players
+        if(comAmount === "3comPlayer") {
+            displayMessageBox("Com 2 has defused the Exploding Kitten","It's now com 3's turn")
+
+            const setCom1Turn = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    clearInterval(setCom1Turn)
+
+                    // Makes it be com 1's turn
+                    choseCardForCom3()
                 }
-            }
+            }, 100);
+        }
+        else if(comAmount !== "3comPlayer"){
+            // Sets a time pause
+            setTimeout(() => {
+                $("#current_player_turn").html("It's now your turn")
+            }, 2000);
 
-            // Checks if Com 2 didn't have a defuse card
-            if(com2HasdefuseCard === false) {
-                setTimeout(() => {
-                    // Dose nothing here
-                }, 1000);
-
-                // Tells the player that Com 2 has exploded
-                explodedMessageBox("Com 2 has exploded!",`You won! Click on "Start new game" to start a new game or "Quit" to quit`)
-            }
-            else {
-                // defuses the Exploding Kitten card
-
-                // Removes the defuse card from Com 2's hand 
-                const cardIndex = cardsInCom2Hand.indexOf(cardDrawn)
-
-                cardsInCom2Hand.splice(cardIndex, 1)
-
-                setTimeout(() => {
-                    // Dose nothing here 
-                }, 1000);
-
-                // Tells the player the Com 2 has defused the Exploding Kitten
-                $("#current_player_turn").html("Com 2 has defused the Exploding Kitten")
-
-                // Makes it be Com 3's turn
-
-                // Checks if there are 2 or 3 selected computer players
-                const comAmount = localStorage.getItem("comAmount")
-
-                // Checks if there are 3 selected computer players
-                if(comAmount === "3comPlayer") {
-                    displayMessageBox("Com 2 has defused the Exploding Kitten","It's now com 3's turn")
-
-                    const setCom1Turn = setInterval(() => {
-                        // Checks if the player has closed the #message_box
-                        if($("#message_box").is(":hidden") ) {
-                            clearInterval(setCom1Turn)
-
-                            // Makes it be com 1's turn
-                            choseCardForCom3()
-                        }
-                    }, 100);
-                }
-                else if(comAmount !== "3comPlayer"){
-                    // Sets a time pause
-                    setTimeout(() => {
-                        $("#current_player_turn").html("It's now your turn")
-                    }, 2000);
-
-                    // Makes it be the players turn
-                    updateVariable("isPlayerTurn", true)
-                }  
-            }
-        }, 2000);
+            // Makes it be the players turn
+            updateVariable("isPlayerTurn", true)
+        }  
     }
 }
 

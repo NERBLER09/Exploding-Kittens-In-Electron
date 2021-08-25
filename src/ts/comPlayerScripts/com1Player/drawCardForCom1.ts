@@ -93,64 +93,66 @@ const drawCardForCom1 = () => {
         // Tells the player that Com 1 has drawn an Exploding Kitten card
         displayMessageBox("An Exploding Kitten card has been drawn","Com 1 has drawn an Exploding Kitten!")
 
-        let com1HasdefuseCard = false
+        defuseExplodingKittenCard(cardDrawn)
+    }
+}
 
-        // Sets a time pause
+/** Runs when Com 1 draws a exploding kitten card card */
+const defuseExplodingKittenCard = (cardDrawn) => {
+    let com1HasdefuseCard = false
+
+    // Checks if Com 1 has a defuse card   
+    for(const card of cardsInCom1Hand) {
+        if(card === "defuse") {
+            com1HasdefuseCard = true
+
+            break   
+        }
+    }
+
+    // Checks if Com 1 didn't have a defuse card
+    if(com1HasdefuseCard === false) {
         setTimeout(() => {
-            // Checks if Com 1 has a defuse card   
-            for(const card of cardsInCom1Hand) {
-                if(card === "defuse") {
-                    com1HasdefuseCard = true
+            // Dose nothing here
+        }, 1000);
 
-                    break   
+        // Tells the player that Com 1 has exploded
+        explodedMessageBox("Com 1 has exploded!", `You won! Click on "Start new game" to start a new game or "Quit" to quit`)
+    }
+    else {
+        // defuses the Exploding Kitten card
+
+        // Removes the defuse card from Com 1's hand 
+        const cardIndex = cardsInCom1Hand.indexOf(cardDrawn)
+
+        cardsInCom1Hand.splice(cardIndex, 1)
+
+        setTimeout(() => {
+            // Dose nothing here 
+        }, 1000);
+
+        // Checks if there are 2 selected computer players
+        const comAmount = localStorage.getItem("comAmount")
+
+        if (comAmount === "2comPlayer" || comAmount === "3comPlayer") {
+            displayMessageBox("Com 1 has defused the Exploding Kitten","It's now com 2's turn")
+
+            const setCom1Turn = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if($("#message_box").is(":hidden") ) {
+                    clearInterval(setCom1Turn)
+
+                    // Makes it be com 1's turn
+                    choseCardForCom2()
                 }
-            }
+            }, 100);
+        }
+        else {
+            displayMessageBox("Com 1 has defused the Exploding Kitten","It's now your turn")
 
-            // Checks if Com 1 didn't have a defuse card
-            if(com1HasdefuseCard === false) {
-                setTimeout(() => {
-                    // Dose nothing here
-                }, 1000);
-
-                // Tells the player that Com 1 has exploded
-                explodedMessageBox("Com 1 has exploded!", `You won! Click on "Start new game" to start a new game or "Quit" to quit`)
-            }
-            else {
-                // defuses the Exploding Kitten card
-
-                // Removes the defuse card from Com 1's hand 
-                const cardIndex = cardsInCom1Hand.indexOf(cardDrawn)
-
-                cardsInCom1Hand.splice(cardIndex, 1)
-
-                setTimeout(() => {
-                    // Dose nothing here 
-                }, 1000);
-
-                // Checks if there are 2 selected computer players
-                const comAmount = localStorage.getItem("comAmount")
-
-                if (comAmount === "2comPlayer" || comAmount === "3comPlayer") {
-                    displayMessageBox("Com 1 has defused the Exploding Kitten","It's now com 2's turn")
-
-                    const setCom1Turn = setInterval(() => {
-                        // Checks if the player has closed the #message_box
-                        if($("#message_box").is(":hidden") ) {
-                            clearInterval(setCom1Turn)
-
-                            // Makes it be com 1's turn
-                            choseCardForCom2()
-                        }
-                    }, 100);
-                }
-                else {
-                    displayMessageBox("Com 1 has defused the Exploding Kitten","It's now your turn")
-
-                    // Makes it be the players turn
-                    updateVariable("isPlayerTurn", true)
-                }
-            }
-        }, 2000);
+            // Makes it be the players turn
+            updateVariable("isPlayerTurn", true)
+        }
     }
 }
 

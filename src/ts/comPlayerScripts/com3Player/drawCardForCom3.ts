@@ -69,55 +69,63 @@ const drawCardForCom3 = () => {
         // Tells the player that Com 3 has drawn an Exploding Kitten card
         displayMessageBox("An Exploding Kitten card has been drawn","Com 3 has drawn an Exploding Kitten!")
 
-        let com3HasdefuseCard = false
+        const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxClosed)
+                defuseExplodingKittenCard(cardDrawn)
+            }
+        }, 100)
+    }
+}   
+
+/** Runs when Com 3 draws a exploding kitten card card */
+const defuseExplodingKittenCard = (cardDrawn) => {
+    let com3HasdefuseCard = false
+
+    // Checks if Com 3 has a defuse card   
+    
+    for(const card of cardsInCom3Hand) {
+        if(card === "defuse") {
+            com3HasdefuseCard = true
+
+            break   
+        }
+    }
+
+    // Checks if Com 3 didn't have a defuse card
+    if(com3HasdefuseCard === false) {
+        setTimeout(() => {
+            // Dose nothing here
+        }, 1000);
+
+        // Tells the player that Com 3 has exploded
+        explodedMessageBox("Com 3 has exploded!",`You won! Click on "Start new game" to start a new game or "Quit" to quit`)
+    }
+    else {
+        // defuses the Exploding Kitten card
+
+        // Removes the defuse card from Com 3's hand 
+        const cardIndex = cardsInCom3Hand.indexOf(cardDrawn)
+
+        cardsInCom3Hand.splice(cardIndex, 1)
+
+        setTimeout(() => {
+            // Dose nothing here 
+        }, 1000);
+
+        // Tells the player the Com 3 has defused the Exploding Kitten
+        $("#current_player_turn").html("Com 3 has defused the Exploding Kitten")
+
+        // Makes it be the player's turn
 
         // Sets a time pause
         setTimeout(() => {
-            // Checks if Com 3 has a defuse card   
-            for(const card of cardsInCom3Hand) {
-                if(card === "defuse") {
-                    com3HasdefuseCard = true
-
-                    break   
-                }
-            }
-
-            // Checks if Com 3 didn't have a defuse card
-            if(com3HasdefuseCard === false) {
-                setTimeout(() => {
-                    // Dose nothing here
-                }, 1000);
-
-                // Tells the player that Com 3 has exploded
-                explodedMessageBox("Com 3 has exploded!",`You won! Click on "Start new game" to start a new game or "Quit" to quit`)
-            }
-            else {
-                // defuses the Exploding Kitten card
-
-                // Removes the defuse card from Com 3's hand 
-                const cardIndex = cardsInCom3Hand.indexOf(cardDrawn)
-
-                cardsInCom3Hand.splice(cardIndex, 1)
-
-                setTimeout(() => {
-                    // Dose nothing here 
-                }, 1000);
-
-                // Tells the player the Com 3 has defused the Exploding Kitten
-                $("#current_player_turn").html("Com 3 has defused the Exploding Kitten")
-
-                // Makes it be the player's turn
-
-                // Sets a time pause
-                setTimeout(() => {
-                    $("#current_player_turn").html("It's now your turn")
-                }, 2000);
-
-                // Makes it be the players turn
-                updateVariable("isPlayerTurn", true)
-            }
+            $("#current_player_turn").html("It's now your turn")
         }, 2000);
+
+        // Makes it be the players turn
+        updateVariable("isPlayerTurn", true)
     }
-}   
+}
 
 export { cardsInCom3Hand, drawCardForCom3 }

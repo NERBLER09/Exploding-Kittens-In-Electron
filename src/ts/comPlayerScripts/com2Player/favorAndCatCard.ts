@@ -38,6 +38,7 @@ const catCardPlayedForCom2 = (catCard: catCard) => {
                         if ($("#message_box").is(":hidden")) {
                             clearInterval(waitUntilMessageBoxClosed)
                             drawCardForCom2()
+                            return ""
                         }
                     }, 100)
                 }
@@ -177,8 +178,6 @@ const stealCard = (): card => {
 
 // Choses a player to ask for a favor from
 const askCardForFavorForCom2 = (favorCardTarget: number): card => {
-    console.log(favorCardTarget)
-
     let cardIndex: number
     let cardToGive: card
     let returnFavoredCard: NodeJS.Timeout

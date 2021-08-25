@@ -57,6 +57,7 @@ const drawCardForCom2 = () => {
 
                         // Makes it be com 2's turn
                         choseCardForCom3()    
+                        return ""
                     }
                 }, 100);
             }
@@ -70,7 +71,7 @@ const drawCardForCom2 = () => {
 
         // Com 2 has additional turns
 
-        else if(turnsNeedToPlay > 1){
+        else {
             // Removes 2 from turnsNeedToPlay to have Com 2 has 2 less turn
             updateVariable("removeFromTurnsNeedToPlay")
 
@@ -83,6 +84,7 @@ const drawCardForCom2 = () => {
                     clearInterval(setCom2Turn)
 
                     choseCardForCom2()    
+                    return ""
                 }
             }, 100);
         }

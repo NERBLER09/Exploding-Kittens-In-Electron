@@ -40,22 +40,26 @@ const choseCardForCom2 = () => {
                                 clearInterval(waitUntilMessageBoxClosed)
                                 cardsInCom2Hand.splice(cardIndex, 1)
                                 playCardForCom2(cardToPlay)
+                                return ""
                             }
                         }, 100)
                     }
                     else {
                         cardsInCom2Hand.splice(cardIndex, 1)
                         drawCardForCom2()
+                        return ""
                     }
                 }
             }, 100);
         }
         else {
             playCardForCom2(cardToPlay)
+            return ""
         }
     }
     else {
         drawCardForCom2()
+        return ""
     }
 }
 
@@ -63,6 +67,7 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 
 // Choses a card to play and plays the card
 const playCardForCom2 = (cardToPlay) => {
+    console.log("playing card to play (com 2)")
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played
@@ -120,7 +125,7 @@ const playCardForCom2 = (cardToPlay) => {
                         clearInterval(setCom2Turn)
 
                         // Makes it be com 2's turn
-                        choseCardForCom2()    
+                        choseCardForCom3()    
                     }
                 }, 100);
             }
@@ -201,6 +206,7 @@ const playCardForCom2 = (cardToPlay) => {
 
                 // Draws the card
                 drawCardForCom2()
+                return ""
             }
 
             break

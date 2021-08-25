@@ -55,6 +55,7 @@ const drawCardForCom1 = () => {
 
                         // Makes it be com 1's turn
                         choseCardForCom2()    
+                        return ""
                     }
                 }, 100);
             }
@@ -70,7 +71,7 @@ const drawCardForCom1 = () => {
 
         // Com 1 has additional turns
 
-        else if (turnsNeedToPlay > 1){
+        else{
             // Removes 1 from turnsNeedToPlay to have Com 1 has 1 less turn
             updateVariable("removeFromTurnsNeedToPlay")
 
@@ -82,6 +83,7 @@ const drawCardForCom1 = () => {
                     clearInterval(setCom2Turn)
 
                     choseCard()    
+                    return ""
                 }
             }, 100);
         }
@@ -93,7 +95,13 @@ const drawCardForCom1 = () => {
         // Tells the player that Com 1 has drawn an Exploding Kitten card
         displayMessageBox("An Exploding Kitten card has been drawn","Com 1 has drawn an Exploding Kitten!")
 
-        defuseExplodingKittenCard(cardDrawn)
+        const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxClosed)
+                defuseExplodingKittenCard(cardDrawn)
+            }
+        }, 100)
+
     }
 }
 

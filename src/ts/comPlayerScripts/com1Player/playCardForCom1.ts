@@ -38,27 +38,33 @@ const choseCardForCom1 = () => {
                                 clearInterval(waitUntilMessageBoxClosed)
                                 cardsInCom1Hand.splice(cardIndex, 1)
                                 playCard(cardToPlay)
+                                return ""
                             }
                         }, 100)
                     }
                     else {
                         cardsInCom1Hand.splice(cardIndex, 1)
                         drawCardForCom1()
+                        return ""
                     }
                 }
             }, 100);
         }
         else {
             playCard(cardToPlay)
+
+            return ""
         }
     }
     else {
         drawCardForCom1()
+        return ""
     }
 }
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
+    console.log("playing card to play (com 1)")
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played
@@ -211,6 +217,7 @@ const playCard = (cardToPlay) => {
 
                 // Draws the card
                 drawCardForCom1()
+                return ""
             }
 
             break

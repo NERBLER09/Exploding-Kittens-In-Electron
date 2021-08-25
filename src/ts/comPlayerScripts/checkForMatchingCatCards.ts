@@ -4,7 +4,6 @@ type catCard = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" 
 const checkForMatchingCatCards = (hand: string[], catCard: catCard): boolean => {
     for(const e of hand) {
         if(e === catCard) {
-            console.log("Two matching cat cards")
             return true
         }
     }

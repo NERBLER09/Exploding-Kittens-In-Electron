@@ -39,6 +39,7 @@ const catCardPlayed = (catCard: catCard) => {
                         if ($("#message_box").is(":hidden")) {
                             clearInterval(waitUntilMessageBoxClosed)
                             drawCardForCom1()
+                            return ""
                         }
                     }, 100)
                 }
@@ -258,9 +259,23 @@ const askCardForFavor = (favorCardTarget): card => {
             return cardToGive
 
         default:
-            console.error("Unknown player to ask for favor card")
+            // Check how many com players were selected 
+            switch (localStorage.getItem("comAmount")) {
+                case "1comPlayer":
+                    favorCardTarget = 1
 
-            askCardForFavor(null)
+                    break
+                case "2comPlayer":
+                    favorCardTarget = Math.floor(Math.random() * 3)
+
+                    break
+                case "3comPlayer":
+                    favorCardTarget = Math.floor(Math.random() * 4)
+
+                    break
+            }
+
+            askCardForFavor(favorCardTarget)
 
     }
 }

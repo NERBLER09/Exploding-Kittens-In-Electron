@@ -6,6 +6,7 @@ import { cardsInCom3Hand } from "../com3Player/drawCardForCom3.js";
 import { cardsInCom1Hand, drawCardForCom1 } from "./drawCardForCom1.js";
 import { choseCard } from "./playCardForCom1.js";
 import {card, catCard} from "../../models/cards.interface"
+import { updateVariable } from "../../gameFunctions.js";
 
 // Runs when com 1 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {
@@ -190,6 +191,8 @@ const askCardForFavor = (favorCardTarget): card => {
             // Adds the needed information to comPlayerPlayedFavor list 
             comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = "Com 1"
             comPlayerPlayedFavor["favorCardPlayed"] = true
+
+            updateVariable("isPlayerTurn", true)
 
             break
         case 2:

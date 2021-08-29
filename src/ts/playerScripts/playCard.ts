@@ -7,115 +7,33 @@ import { displayMessageBox, displaySeeTheFutureCards } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { updateDiscardPile } from "../updateDiscardPile.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
-import { catCardPlayed, promptFavorTarget } from "./favorAndCatCard.js"
+import { catCardPlayed, giveFavorCardToComPlayer, promptFavorTarget } from "./favorAndCatCard.js"
 
 const playCard = (playerCard) => {
     const cardPlayed = playerCard.data.param1
 
     // Checks if its the player's turn 
-    if(isPlayerTurn === true || comPlayerPlayedFavor["favorCardPlayed"] === true) {
+    if(isPlayerTurn === true && !comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
         // Gets the index of the played card from the players hand
         const cardIndex = playerCardsInHand.indexOf(cardPlayed)
 
-        // Checks if a com player has played a favor card
-        if(comPlayerPlayedFavor["favorCardPlayed"] === false) {
-            // Removes the played card from the players hand 
-            playerCardsInHand.splice(cardIndex, 1)
+        // Removes the played card from the players hand 
+        playerCardsInHand.splice(cardIndex, 1)
 
-            // Removes the played card from the player's view
-            $(".player_cards").get(cardIndex).remove()
+        // Removes the played card from the player's view
+        $(".player_cards").get(cardIndex).remove()
 
-            // Checks what card is played
-            checkPlayerCardPlayed(cardPlayed)
+        // Checks what card is played
+        checkPlayerCardPlayed(cardPlayed)
 
-            updateDiscardPile(cardPlayed)
-        }
-        else if(comPlayerPlayedFavor["favorCardPlayed"] === true){
-            let waitUntilMessageBoxIsClosed: NodeJS.Timeout
-
-            // Tells the player which card they game to a com player
-            displayMessageBox("Favor Card", `You gave you ${playerCardsInHand[cardIndex]} to ${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]}`)
+        updateDiscardPile(cardPlayed)
+    }
+    if(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]){
+        // Gets the index of the played card from the players hand
+        const cardIndex = playerCardsInHand.indexOf(cardPlayed)
+        console.log("Test")
         
-            updateVariable("isPlayerTurn", false)
-
-            // Checks what com player played the favor card
-            switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
-                case "Com 1":
-                    // Adds the given card to Com 1's hand 
-                    cardsInCom1Hand.push()
-
-                    // Resets the comPlayerPlayedFavor list 
-                    comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
-                    comPlayerPlayedFavor["favorCardPlayed"] = null
-
-                    // Removes the given card from the players hand
-                    playerCardsInHand.splice(cardIndex, 1)
-
-                    // Removes the given played card from the player's view
-                    $(".player_cards").get(cardIndex).remove()
-
-                    waitUntilMessageBoxIsClosed = setInterval(() => {
-                        // Checks if the player has closed the #message_box
-                        if($("#message_box").is(":hidden") ) {
-                            clearInterval(waitUntilMessageBoxIsClosed)
-                            
-                            // Draws the card
-                            drawCardForCom1()
-                        }
-                    }, 100);
-
-                    break
-                
-                case "Com 2":
-                    // Adds the given card to Com 2's hand 
-                    cardsInCom2Hand.push()
-
-                    // Resets the comPlayerPlayedFavor list 
-                    comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
-                    comPlayerPlayedFavor["favorCardPlayed"] = null
-
-                    // Removes the given card from the players hand
-                    playerCardsInHand.splice(cardIndex, 1)
-
-                    // Removes the given played card from the player's view
-                    $(".player_cards").get(cardIndex).remove()
-
-                    waitUntilMessageBoxIsClosed = setInterval(() => {
-                        // Checks if the player has closed the #message_box
-                        if($("#message_box").is(":hidden") ) {
-                            clearInterval(waitUntilMessageBoxIsClosed)
-                            // Draws the card
-                            drawCardForCom2()
-                        }
-                    }, 100);
-                    
-                    break
-
-                case "Com 3":
-                    // Adds the given card to Com 3's hand 
-                    cardsInCom3Hand.push()
-
-                    // Resets the comPlayerPlayedFavor list 
-                    comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
-                    comPlayerPlayedFavor["favorCardPlayed"] = null
-
-                    // Removes the given card from the players hand
-                    playerCardsInHand.splice(cardIndex, 1)
-
-                    // Removes the given played card from the player's view
-                    $(".player_cards").get(cardIndex).remove()
-
-                    waitUntilMessageBoxIsClosed = setInterval(() => {
-                        // Checks if the player has closed the #message_box
-                        if($("#message_box").is(":hidden") ) {
-                            clearInterval(waitUntilMessageBoxIsClosed)
-                            // Draws the card
-                            drawCardForCom3()
-                        }
-                    }, 100);
-                    break                            
-            }
-        }
+        giveFavorCardToComPlayer(cardIndex)
     }
 
     if(isPlayerTurn === false && explodingKittenCardDrawn === true && cardPlayed === "defuse") {

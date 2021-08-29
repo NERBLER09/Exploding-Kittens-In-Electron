@@ -62,9 +62,6 @@ const choseCardForCom1 = () => {
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
-    cardToPlay = "favor"
-    console.log(cardToPlay)    
-
     let waitUntilMessageBoxIsClosed: NodeJS.Timeout
 
     // Checks if a cat card was played

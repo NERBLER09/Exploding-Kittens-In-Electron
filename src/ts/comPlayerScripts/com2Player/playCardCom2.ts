@@ -106,38 +106,20 @@ const playCardForCom2 = (cardToPlay) => {
 
             break
         case "attack":
-             // Checks if there are 3 com players (So it doesn't target the player)
+            // Checks if there are 2 or more com players (So it doesn't target the player)
 
             // There are 2 or more com players
             const comAmount = localStorage.getItem("comAmount")
 
-            if(comAmount === "3comPlayer") {
-                // Makes Com 2 has 2 turns 
-                updateVariable("turnsNeedToPlay")
+            // Checks how many com players are there
 
-                displayMessageBox("Com 2 has played an attack",`It's now Com 3's turn, Com 3 has ${turnsNeedToPlay} turns`)
-
-                const setCom2Turn = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
-                        clearInterval(setCom2Turn)
-
-                        // Makes it be com 2's turn
-                        choseCardForCom3()    
-                    }
-                }, 100);
+            // There is only 1 com player
+            if (comAmount === "1comPlayer") {
+                com2Player.playAttackCard(false)
             }
-
-            // There is only 2 com players
-
+            // More then 1 com player
             else {
-                // Makes the player have 2 turns
-                updateVariable("turnsNeedToPlay")
-
-                // Displays that it's now the player's turn and how many turns that they have
-                displayMessageBox("Com 2 has played an attack", `It's now you turn, you have ${turnsNeedToPlay} turns`)
-                // Makes it be the player's turn
-                updateVariable("isPlayerTurn", true)
+                com2Player.playAttackCard(true, choseCardForCom3)
             }
 
             break

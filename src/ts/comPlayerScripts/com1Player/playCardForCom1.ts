@@ -114,37 +114,14 @@ const playCard = (cardToPlay) => {
 
             // Checks how many com players are there
 
-            // More then 1 com player
-
-            if (comAmount !== "1comPlayer") {
-                // Makes Com 2 has 2 turns 
-                updateVariable("turnsNeedToPlay")
-
-                // Displays the amount of turns Com 2 has 
-                displayMessageBox("Com 1 has played an attack", `It's now Com 2's turn, Com 2 has ${turnsNeedToPlay} turns`)
-
-                const setCom2Turn = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if ($("#message_box").is(":hidden")) {
-                        clearInterval(setCom2Turn)
-
-                        // Makes it be com 2's turn
-                        choseCardForCom2()
-                    }
-                }, 100);
+            // There is only 1 com player
+            if (comAmount === "1comPlayer") {
+                com1Player.playAttackCard(false)
             }
 
-            // There is only 1 com player
-
+            // More then 1 com player
             else {
-                // Makes the player have 2 turns
-                updateVariable("turnsNeedToPlay")
-
-                // Displays that it's now the player's turn and how many turns that they have
-                displayMessageBox("Com 1 has played an attack", `It's now you turn, you have ${turnsNeedToPlay} turns`)
-
-                // Makes it be the player's turn
-                updateVariable("isPlayerTurn", true)
+                com1Player.playAttackCard(true, choseCardForCom2)
             }
 
             break

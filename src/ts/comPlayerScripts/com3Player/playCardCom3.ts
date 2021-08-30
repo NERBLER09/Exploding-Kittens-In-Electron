@@ -78,13 +78,7 @@ const playCardForCom3 = (cardToPlay) => {
             break
         case "attack":
             // Makes the player have 2 turns
-            updateVariable("turnsNeedToPlay")
-
-            // Displays that it's now the player's turn and how many turns that they have
-            displayMessageBox("Com 3 has played an attack", `It's now you turn, you have ${turnsNeedToPlay} turns`)
-
-            // Makes it be the player's turn
-            updateVariable("isPlayerTurn", true)
+            com3Player.playAttackCard(false)
 
             break
         case "shuffle":

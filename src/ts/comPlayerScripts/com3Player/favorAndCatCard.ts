@@ -2,19 +2,18 @@ import { displayMessageBox } from "../../messageBox.js";
 import { comPlayerPlayedFavor, playerCardsInHand } from "../../messages.js";
 import { card, catCard } from "../../models/cards.interface.js";
 import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
-import { cardsInCom1Hand } from "../com1Player/drawCardForCom1.js";
-import { cardsInCom2Hand } from "../com2Player/drawCardForCom2.js";
-import { cardsInCom3Hand, drawCardForCom3 } from "./drawCardForCom3.js";
+import { com1Player, com2Player, com3Player } from "../comPlayerClass.js";
+import { drawCardForCom3 } from "./drawCardForCom3.js";
 import { choseCardForCom3 } from "./playCardCom3.js";
 
 // Runs when com 3 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {
-    if(checkForMatchingCatCards(cardsInCom2Hand, catCard) === false) {
+    if(checkForMatchingCatCards(com2Player.hand, catCard) === false) {
         choseCardForCom3()
     }
     
     // Checks if there is a matching cat card
-    for(const card of cardsInCom3Hand) {
+    for(const card of com3Player.hand) {
         // Matching card
         if(catCard === card) {
             displayMessageBox("Cat cards",`Com 3 has played 2 matching ${catCard}`)
@@ -25,14 +24,14 @@ const catCardPlayed = (catCard: catCard) => {
                     clearInterval(waitUntilMessageBoxIsClosed)
                      
                     // Removes the matching card from com 3's hand
-                    const cardIndex = cardsInCom3Hand.indexOf(card)
-                    cardsInCom3Hand.splice(cardIndex, 1)
+                    const cardIndex = com3Player.hand.indexOf(card)
+                    com3Player.hand.splice(cardIndex, 1)
 
                     // Steals a random card from a chosen player
                     const cardToSteal: card = stealCard()
 
                     // Adds the stolen card to Com 3's hand
-                    cardsInCom3Hand.push(cardToSteal)
+                    com3Player.hand.push(cardToSteal)
 
                     const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
                         if ($("#message_box").is(":hidden")) {
@@ -113,12 +112,12 @@ const stealCard = (): card => {
             // Steals a random card from Com 1
 
             // Choses a random card from Com 1's hand to steal
-            cardIndex = Math.floor(Math.random() * cardsInCom1Hand.length)
+            cardIndex = Math.floor(Math.random() * com1Player.hand.length)
 
-            cardToStealFromPlayer = cardsInCom1Hand[cardIndex]
+            cardToStealFromPlayer = com1Player.hand[cardIndex]
 
             // Removes the stolen card from Com 1's hand
-            cardsInCom1Hand.splice(cardIndex, 1)
+            com1Player.hand.splice(cardIndex, 1)
 
             displayMessageBox("Card stolen","Com 3 has stolen a card from Com 3")
 
@@ -146,12 +145,12 @@ const stealCard = (): card => {
             // Steals a random card from Com 2
 
             // Choses a random card from Com 2's hand to steal
-            cardIndex = Math.floor(Math.random() * cardsInCom2Hand.length)
+            cardIndex = Math.floor(Math.random() * com2Player.hand.length)
 
-            cardToStealFromPlayer = cardsInCom2Hand[cardIndex]
+            cardToStealFromPlayer = com2Player.hand[cardIndex]
 
             // Removes the stolen card from Com 2's hand
-            cardsInCom2Hand.splice(cardIndex, 1)
+            com2Player.hand.splice(cardIndex, 1)
 
             displayMessageBox("Card stolen","Com 3 has stolen a card from Com 2")
 
@@ -201,12 +200,12 @@ const askCardForFavor = (favorCardTarget) => {
             // Asks for a card from com 1
 
             // Picks a random card from com 1's hand
-            cardIndex = Math.floor(Math.random() * cardsInCom1Hand.length)
+            cardIndex = Math.floor(Math.random() * com1Player.hand.length)
 
-            cardToGive = cardsInCom1Hand[cardIndex]
+            cardToGive = com1Player.hand[cardIndex]
 
             // Removes the card from com 1's hand
-            cardsInCom1Hand.splice(cardIndex, 1)
+            com1Player.hand.splice(cardIndex, 1)
 
             // Displays that Com 3 asked for a card from Com 1
             displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 3")
@@ -234,11 +233,11 @@ const askCardForFavor = (favorCardTarget) => {
             // Asks for a card from com 2
 
             // Picks a random card from com 2's hand
-            cardIndex = Math.floor(Math.random() * cardsInCom2Hand.length)
-            cardToGive = cardsInCom2Hand[cardIndex]
+            cardIndex = Math.floor(Math.random() * com2Player.hand.length)
+            cardToGive = com2Player.hand[cardIndex]
 
             // Removes the card from com 2's hand
-            cardsInCom2Hand.splice(cardIndex, 1)
+            com2Player.hand.splice(cardIndex, 1)
 
             // Displays that Com 3 asked for a card from Com 2
             displayMessageBox("Can I have a card?","Com 3 ask for a card from Com 2")

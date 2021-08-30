@@ -1,7 +1,4 @@
-import { cardsInCom1Hand, drawCardForCom1 } from "../comPlayerScripts/com1Player/drawCardForCom1.js"
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
-import { cardsInCom2Hand, drawCardForCom2 } from "../comPlayerScripts/com2Player/drawCardForCom2.js"
-import { cardsInCom3Hand, drawCardForCom3 } from "../comPlayerScripts/com3Player/drawCardForCom3.js"
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
 import { displayMessageBox, displaySeeTheFutureCards } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"

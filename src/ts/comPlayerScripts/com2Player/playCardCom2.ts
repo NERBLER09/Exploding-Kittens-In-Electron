@@ -6,22 +6,23 @@ import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from ".
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { askCardForFavor, catCardPlayed } from "../com1Player/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3Player/playCardCom3.js"
-import { cardsInCom2Hand, drawCardForCom2 } from "./drawCardForCom2.js"
+import { com2Player } from "../comPlayerClass.js"
+import { drawCardForCom2 } from "./drawCardForCom2.js"
 import { askCardForFavorForCom2 } from "./favorAndCatCard.js"
 
 const choseCardForCom2 = () => {
     // Choses a card to play
-    const cardToPlay = cardsInCom2Hand[Math.floor(Math.random() * cardsInCom2Hand.length)]
+    const cardToPlay = com2Player.hand[Math.floor(Math.random() * com2Player.hand.length)]
 
     // Removes the played card from com 2's hand
-    const cardIndex = cardsInCom2Hand.indexOf(cardToPlay)
+    const cardIndex = com2Player.hand.indexOf(cardToPlay)
 
     // Sets a pause 
     setTimeout(() => {
         // Dose nothing here
     }, 2000);
 
-    if(checkForPlayableCard(cardsInCom2Hand, cardToPlay)) {
+    if(checkForPlayableCard(com2Player.hand, cardToPlay)) {
         updateDiscardPile(cardToPlay)
 
         if(checkForNopeCardInHand()) {
@@ -36,14 +37,14 @@ const choseCardForCom2 = () => {
                         const waitUntilMessageBoxClosed = setInterval(() => {
                             if ($("#message_box").is(":hidden")) {
                                 clearInterval(waitUntilMessageBoxClosed)
-                                cardsInCom2Hand.splice(cardIndex, 1)
+                                com2Player.hand.splice(cardIndex, 1)
                                 playCardForCom2(cardToPlay)
                                 return ""
                             }
                         }, 100)
                     }
                     else {
-                        cardsInCom2Hand.splice(cardIndex, 1)
+                        com2Player.hand.splice(cardIndex, 1)
                         drawCardForCom2()
                         return ""
                     }
@@ -199,7 +200,7 @@ const playCardForCom2 = (cardToPlay) => {
                 const givenCard: card = askCardForFavorForCom2(favorCardTarget)
 
                 // Adds the given card to Com 2's hand
-                cardsInCom2Hand.push(givenCard)
+                com2Player.hand.push(givenCard)
 
                 // Draws the card
                 drawCardForCom2()
@@ -212,7 +213,7 @@ const playCardForCom2 = (cardToPlay) => {
             console.error("No cards to nope (Com 2)")
 
             // Readds the played card back into com 2's hand
-            cardsInCom2Hand.push(cardToPlay)
+            com2Player.hand.push(cardToPlay)
 
             // Re-chooses a card to play
             choseCardForCom2()
@@ -223,7 +224,7 @@ const playCardForCom2 = (cardToPlay) => {
             // Re-chooses card to play
 
             // Readds the played card back into com 2's hand
-            cardsInCom2Hand.push(cardToPlay)
+            com2Player.hand.push(cardToPlay)
 
             // Re-chooses a card to play
             choseCardForCom2()

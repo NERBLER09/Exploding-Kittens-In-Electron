@@ -1,6 +1,7 @@
-import { cardsInCom1Hand, drawCardForCom1 } from "../comPlayerScripts/com1Player/drawCardForCom1.js"
-import { cardsInCom2Hand, drawCardForCom2 } from "../comPlayerScripts/com2Player/drawCardForCom2.js"
-import { cardsInCom3Hand, drawCardForCom3 } from "../comPlayerScripts/com3Player/drawCardForCom3.js"
+import { drawCardForCom1 } from "../comPlayerScripts/com1Player/drawCardForCom1.js"
+import { drawCardForCom2 } from "../comPlayerScripts/com2Player/drawCardForCom2.js"
+import { drawCardForCom3 } from "../comPlayerScripts/com3Player/drawCardForCom3.js"
+import { com1Player, com2Player, com3Player } from "../comPlayerScripts/comPlayerClass.js"
 import { decideCardToGiveAsFavor } from "../comPlayerScripts/decideCardToGiveAsFavor.js"
 import { updateVariable } from "../gameFunctions.js"
 import { displayMessageBox } from "../messageBox.js"
@@ -94,15 +95,7 @@ const askComPLayerForFavorCard = (comTarget) => {
     // Enters a switch statement to check what com player was selected 
     switch(comTarget) {
         case "com1":
-            // // Gives a random card from com 1's hand to the player
-            // indexOfCard = Math.floor(Math.random() * cardsInCom1Hand.length)
-
-            // cardToGive = cardsInCom1Hand[indexOfCard]
-
-            // // Removes the given card from com 1's hand
-            // cardsInCom1Hand.splice(indexOfCard, 1)
-
-            cardToGive = decideCardToGiveAsFavor(cardsInCom1Hand)
+            cardToGive = decideCardToGiveAsFavor(com1Player.hand)
 
             displayCardToPlayer(cardToGive)
 
@@ -110,7 +103,7 @@ const askComPLayerForFavorCard = (comTarget) => {
 
             break
         case "com2":
-            cardToGive = decideCardToGiveAsFavor(cardsInCom2Hand)
+            cardToGive = decideCardToGiveAsFavor(com2Player.hand)
 
             displayCardToPlayer(cardToGive)
 
@@ -118,7 +111,7 @@ const askComPLayerForFavorCard = (comTarget) => {
 
             break
         case "com3":
-            cardToGive = decideCardToGiveAsFavor(cardsInCom3Hand)
+            cardToGive = decideCardToGiveAsFavor(com3Player.hand)
 
             displayCardToPlayer(cardToGive)
 
@@ -191,12 +184,12 @@ const stealCardFromComPlayer = (comTarget) => {
     switch(comTarget) {
         case "com1":
             // Gives a random card from com 1's hand to the player
-            indexOfCard = Math.floor(Math.random() * cardsInCom1Hand.length)
+            indexOfCard = Math.floor(Math.random() * com1Player.hand.length)
 
-            cardToGive = cardsInCom1Hand[indexOfCard]
+            cardToGive = com1Player.hand[indexOfCard]
 
             // Removes the given card from com 1's hand
-            cardsInCom1Hand.splice(indexOfCard, 1)
+            com1Player.hand.splice(indexOfCard, 1)
 
             comTarget = "Com 1"
 
@@ -205,12 +198,12 @@ const stealCardFromComPlayer = (comTarget) => {
             break
         case "com2":
             // Gives a random card from com 2's hand to the player
-            indexOfCard = Math.floor(Math.random() * cardsInCom2Hand.length)
+            indexOfCard = Math.floor(Math.random() * com2Player.hand.length)
 
-            cardToGive = cardsInCom2Hand[indexOfCard]
+            cardToGive = com2Player.hand[indexOfCard]
 
             // Removes the given card from com 2's hand
-            cardsInCom2Hand.splice(indexOfCard, 1)
+            com2Player.hand.splice(indexOfCard, 1)
 
             comTarget = "Com 2"
 
@@ -219,12 +212,12 @@ const stealCardFromComPlayer = (comTarget) => {
             break
         case "com3":
             // Gives a random card from com 3's hand to the player
-            indexOfCard = Math.floor(Math.random() * cardsInCom3Hand.length)
+            indexOfCard = Math.floor(Math.random() * com3Player.hand.length)
 
-            cardToGive = cardsInCom3Hand[indexOfCard]
+            cardToGive = com3Player.hand[indexOfCard]
 
             // Removes the given card from com 3's hand
-            cardsInCom3Hand.splice(indexOfCard, 1)
+            com3Player.hand.splice(indexOfCard, 1)
 
             comTarget = "Com 3"
 
@@ -251,7 +244,7 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
     switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
         case "Com 1":
             // Adds the given card to Com 1's hand 
-            cardsInCom1Hand.push()
+            com1Player.hand.push()
 
             // Resets the comPlayerPlayedFavor list 
             comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
@@ -277,7 +270,7 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
         
         case "Com 2":
             // Adds the given card to Com 2's hand 
-            cardsInCom2Hand.push()
+            com2Player.hand.push()
 
             // Resets the comPlayerPlayedFavor list 
             comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
@@ -302,7 +295,7 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
 
         case "Com 3":
             // Adds the given card to Com 3's hand 
-            cardsInCom3Hand.push()
+            com3Player.hand.push()
 
             // Resets the comPlayerPlayedFavor list 
             comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false

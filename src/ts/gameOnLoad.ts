@@ -8,6 +8,7 @@ import { dealCardsToCom1, dealCardsToCom2, dealCardsToCom3 } from "./comPlayerSc
 import { displayCardToPlayer } from "./playerScripts/displayCardToPlayer.js";
 import { drawCardForPlayer } from "./playerScripts/drawCardForPlayer.js";
 import { displayMessageBox } from "./messageBox.js";
+import { com1Player, com2Player, com3Player } from "./comPlayerScripts/comPlayerClass.js";
 
 const electron = require('electron')
 const {ipcRenderer} = electron;
@@ -52,7 +53,8 @@ function onLoadFunc() {
         case "1comPlayer":
             $("#comAmount").html(`Selected amount of computer players: 1 computer player`)
 
-            dealCardsToCom1()
+            // Deals the 7 cards to com 1 
+            com1Player.dealInitialHand()
 
             amountOfPlayers = 2
 
@@ -61,8 +63,9 @@ function onLoadFunc() {
         case "2comPlayer":
             $("#comAmount").html(`Selected amount of computer players: 2 computer players`)
 
-            dealCardsToCom1()
-            dealCardsToCom2()
+            // Deals the 7 cards to com 1 + 2 
+            com1Player.dealInitialHand()
+            com2Player.dealInitialHand()
 
             amountOfPlayers = 3
 
@@ -72,9 +75,9 @@ function onLoadFunc() {
             $("#comAmount").html(`Selected amount of computer players: 3 computer players`)
 
             // Deals the cards to every computer player
-            dealCardsToCom1()
-            dealCardsToCom2()
-            dealCardsToCom3()
+            com1Player.dealInitialHand()
+            com2Player.dealInitialHand()
+            com3Player.dealInitialHand()
 
             amountOfPlayers = 4
 

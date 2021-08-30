@@ -64,16 +64,7 @@ const playCardForCom3 = (cardToPlay) => {
     // Plays the card (Checks what card was played)
     switch(cardToPlay) {
         case "skip":
-            if(turnsNeedToPlay === 1) {
-                displayMessageBox("Com 3 has skipped 1 of their turns", `Com 3 has ${turnsNeedToPlay} more turn(s) to play. It's now Com 3's turn`)
-                choseCardForCom3()
-                break
-            }
-        
-            displayMessageBox("Com 3 has skipped there turn","It's now your turn.")
-
-            // Makes it be the players turn
-            updateVariable("isPlayerTurn", true)
+            com3Player.playSkipCard(false)
 
             break
         case "attack":

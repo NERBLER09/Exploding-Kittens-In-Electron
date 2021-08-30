@@ -77,31 +77,12 @@ const playCardForCom2 = (cardToPlay) => {
     // Plays the card (Checks what card was played)
     switch(cardToPlay) {
         case "skip":            
-            if(turnsNeedToPlay === 1) {
-                displayMessageBox("Com 2 has skipped 1 of their turns", `Com 2 has ${turnsNeedToPlay} more turn(s) to play. It's now Com 2's turn`)
-                choseCardForCom2()
-                break
-            }
             // Checks if there are 3 com player to pass turn to the right player
             if(localStorage.getItem("comAmount") === "3comPlayer") {
-                // Tells the player that Com 2 has played a skip and that it's now Com 2's turn
-                displayMessageBox("Com 2 has skipped there turn"," It's now Com 3's turn.")
-
-                const setCom2Turn = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
-                        clearInterval(setCom2Turn)
-
-                        // Makes it be com 3's turn
-                        choseCardForCom3()
-                    }
-                }, 100);
+                com2Player.playSkipCard(true, "Com 3", choseCardForCom3) 
             }
             else {
-                displayMessageBox("Com 2 has skipped there turn","Com 2 has skipped there turn. It's now your turn.")
-
-                // Makes it be the players turn
-                updateVariable("isPlayerTurn", true)
+                com2Player.playSkipCard(false)
             }
 
             break

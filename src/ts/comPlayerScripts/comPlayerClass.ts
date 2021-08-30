@@ -9,7 +9,8 @@ interface comPlayerInterface {
     hand: card[],
     checkForPlayableCard: Function,
     dealInitialHand: Function,
-    playAttackCard: Function
+    playAttackCard: Function,
+    playSkipCard: Function
 }
 
 const playableCards = ['attack',
@@ -25,7 +26,7 @@ class comPlayerClass implements comPlayerInterface {
     private comAmount = localStorage.getItem("comAmount")
     private comPlayerName: "Com 1" | "Com 2" | "Com 3"
 
-    constructor(comName) { this.comPlayerName = comName}
+    constructor(comName: "Com 1" | "Com 2" | "Com 3") { this.comPlayerName = comName}
 
     checkForPlayableCard(card: any) {
         for(const e of this.hand) {
@@ -105,6 +106,45 @@ class comPlayerClass implements comPlayerInterface {
                 updateVariable("isPlayerTurn", true)
 
                 break
+        }
+    }
+
+    /** Skips to the next player 
+     * 
+     * Checks if to target the player or not
+     * 
+     * @param skipToNextComPlayer - Stores if to pass the turn to the next com player
+     * 
+     * @param choseCardForNextComPlayer - The choseCard function for the next com player
+    */
+    playSkipCard(skipToNextComPlayer: boolean, nextComPlayer?: string, choseCardForNextComPlayer?: Function) {
+        if(turnsNeedToPlay === 1) {
+            displayMessageBox(`${this.comPlayerName} has skipped 1 of their turns`, `${this.comPlayerName} has ${turnsNeedToPlay} more turn(s) to play. It's now ${this.comPlayerName}'s turn`)
+            choseCardForNextComPlayer()    
+        }
+
+        // Checks if there are more then 1 com player to pass turn to the right player
+        
+        switch(skipToNextComPlayer) {
+            case true:
+                // Tells the player that 
+                displayMessageBox(`${this.comPlayerName} has skipped there turn`, `It's now ${nextComPlayer}'s turn.`)
+
+                const waitUntilMessageBoxClosed = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxClosed)
+                        // Makes it be com 2's turn
+                        choseCardForNextComPlayer()
+                    }
+                }, 100);
+
+                    
+            case false:
+                displayMessageBox(`${this.comPlayerName} has skipped there turn`, "It's now your turn.")
+
+                // Makes it be the players turn
+                updateVariable("isPlayerTurn", true)
         }
     }
 }

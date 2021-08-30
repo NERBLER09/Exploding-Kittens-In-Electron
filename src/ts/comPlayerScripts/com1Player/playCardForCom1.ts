@@ -83,26 +83,11 @@ const playCard = (cardToPlay) => {
             }
 
             // Checks if there are more then 1 com player to pass turn to the right player
-            if (localStorage.getItem("comAmount") !== "1comPlayer") {
-                // Tells the player that Com 1 has played a skip and that it's now Com 2's turn
-                displayMessageBox("Com 1 has skipped there turn", " It's now Com 2's turn.")
-
-                const setCom2Turn = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if ($("#message_box").is(":hidden")) {
-                        clearInterval(setCom2Turn)
-
-                        // Makes it be com 2's turn
-                        choseCardForCom2()
-                    }
-                }, 100);
-
+            if (localStorage.getItem("comAmount") === "1comPlayer") {
+                com1Player.playSkipCard(false)
             }
             else {
-                displayMessageBox("Com 1 has skipped there turn", "It's now your turn.")
-
-                // Makes it be the players turn
-                updateVariable("isPlayerTurn", true)
+                com1Player.playSkipCard(true, "Com 2", choseCardForCom2) 
             }
 
             break

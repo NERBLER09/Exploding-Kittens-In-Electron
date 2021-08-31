@@ -111,17 +111,7 @@ const playCard = (cardToPlay) => {
 
             break
         case "shuffle":
-            // Card is a placebo, this card really dose nothing
-            displayMessageBox("The deck has been shuffled", "Com 1 has shuffled the deck")
-
-            waitUntilMessageBoxIsClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if ($("#message_box").is(":hidden")) {
-                    clearInterval(waitUntilMessageBoxIsClosed)
-                    // Draws the card
-                    drawCardForCom1()
-                }
-            }, 100);
+            com1Player.playShuffleCard()    
 
             break
         case "see the future":

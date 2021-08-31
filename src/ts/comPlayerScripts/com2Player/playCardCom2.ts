@@ -105,17 +105,7 @@ const playCardForCom2 = (cardToPlay) => {
 
             break
         case "shuffle":
-            displayMessageBox("The deck has been shuffled","Com 2 has shuffled the deck")
-            updateVariable("resetSeeTheFutureCards")
-
-            waitUntilMessageBoxIsClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
-                    clearInterval(waitUntilMessageBoxIsClosed)
-                    // Draws the card
-                    drawCardForCom2()
-                }
-            }, 100);
+            com2Player.playShuffleCard()
 
             break
         case "see the future":

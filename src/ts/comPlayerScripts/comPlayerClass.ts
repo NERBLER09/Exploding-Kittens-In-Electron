@@ -3,7 +3,9 @@ import { displayMessageBox } from "../messageBox.js";
 import { cards } from "../messages.js";
 import { card, catCard } from "../models/cards.interface";
 import { checkForMatchingCatCards } from "./checkForMatchingCatCards.js";
-import { choseCardForCom2 } from "./com2Player/playCardCom2.js";
+import { drawCardForCom1 } from "./com1Player/drawCardForCom1.js";
+import { drawCardForCom2 } from "./com2Player/drawCardForCom2.js";
+import { drawCardForCom3 } from "./com3Player/drawCardForCom3.js";
 
 interface comPlayerInterface {
     hand: card[],
@@ -25,8 +27,12 @@ class comPlayerClass implements comPlayerInterface {
     hand = []
     private comAmount = localStorage.getItem("comAmount")
     private comPlayerName: "Com 1" | "Com 2" | "Com 3"
+    private drawCardForComPlayer: Function
 
-    constructor(comName: "Com 1" | "Com 2" | "Com 3") { this.comPlayerName = comName}
+    constructor(comName: "Com 1" | "Com 2" | "Com 3", drawCardFunction: Function) { 
+        this.comPlayerName = comName
+        this.drawCardForComPlayer = drawCardFunction
+    }
 
     checkForPlayableCard(card: any) {
         for(const e of this.hand) {
@@ -147,11 +153,26 @@ class comPlayerClass implements comPlayerInterface {
                 updateVariable("isPlayerTurn", true)
         }
     }
+
+    /** Tells the player that the deck has been shuffled */
+    playShuffleCard() {
+        // Card is a placebo, this card really dose nothing
+        displayMessageBox("The deck has been shuffled", `${this.comPlayerName} has shuffled the deck`)
+
+        const waitUntilMessageBoxIsClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxIsClosed)
+                // Draws the card
+                this.drawCardForComPlayer()
+            }
+        }, 100);
+    }
 }
 
-const com1Player = new comPlayerClass("Com 1")
-const com2Player = new comPlayerClass("Com 2")
-const com3Player = new comPlayerClass("Com 3")
+const com1Player = new comPlayerClass("Com 1", drawCardForCom1)
+const com2Player = new comPlayerClass("Com 2", drawCardForCom2)
+const com3Player = new comPlayerClass("Com 3", drawCardForCom3)
 
 export {
     com1Player,

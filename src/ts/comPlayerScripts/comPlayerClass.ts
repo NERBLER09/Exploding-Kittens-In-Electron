@@ -25,14 +25,9 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 /** Class holds reusable functions from the com players  */
 class comPlayerClass implements comPlayerInterface {
     hand = []
-    private comAmount = localStorage.getItem("comAmount")
     private comPlayerName: "Com 1" | "Com 2" | "Com 3"
-    private drawCardForComPlayer: Function
-
-    constructor(comName: "Com 1" | "Com 2" | "Com 3", drawCardFunction: Function) { 
-        this.comPlayerName = comName
-        this.drawCardForComPlayer = drawCardFunction
-    }
+    
+    constructor(comName: "Com 1" | "Com 2" | "Com 3", ) { this.comPlayerName = comName }
 
     checkForPlayableCard(card: any) {
         for(const e of this.hand) {
@@ -79,7 +74,7 @@ class comPlayerClass implements comPlayerInterface {
      * 
      * @param choseCardForNextComPlayer - The choseCard function for the next com player
     */
-    playAttackCard(skipToNextComPlayer: boolean, choseCardForNextComPlayer?: Function) {
+    playAttackCard(skipToNextComPlayer: boolean, nextComPlayer?: string, choseCardForNextComPlayer?: Function) {
         updateVariable("turnsNeedToPlay")
 
         switch(skipToNextComPlayer) {
@@ -87,7 +82,7 @@ class comPlayerClass implements comPlayerInterface {
                 // Makes the next com player have 2 turns 
 
                 // Displays the amount of turns Com 2 has 
-                displayMessageBox(`${this.comPlayerName} has played an attack`, `It's now ${this.comPlayerName}'s turn, ${this.comPlayerName} has ${turnsNeedToPlay} turns`)
+                displayMessageBox(`${this.comPlayerName} has played an attack`, `It's now ${nextComPlayer}'s turn, ${nextComPlayer} has ${turnsNeedToPlay} turns`)
 
                 const setCom2Turn = setInterval(() => {
                     // Checks if the player has closed the #message_box
@@ -155,7 +150,7 @@ class comPlayerClass implements comPlayerInterface {
     }
 
     /** Tells the player that the deck has been shuffled */
-    playShuffleCard() {
+    playShuffleCard(drawCardFunction) {
         // Card is a placebo, this card really dose nothing
         displayMessageBox("The deck has been shuffled", `${this.comPlayerName} has shuffled the deck`)
 
@@ -164,13 +159,13 @@ class comPlayerClass implements comPlayerInterface {
             if ($("#message_box").is(":hidden")) {
                 clearInterval(waitUntilMessageBoxIsClosed)
                 // Draws the card
-                this.drawCardForComPlayer()
+                drawCardFunction()
             }
         }, 100);
     }
     
     /** Choses the top three cards */
-    playSeeTheFutureCard() {
+    playSeeTheFutureCard(drawCardFunction) {
         displayMessageBox(`${this.comPlayerName} has played a see the future card`, `${this.comPlayerName} has seen the top 3 cards of the deck`)
 
         updateVariable("seeTheFutureCards")
@@ -180,13 +175,13 @@ class comPlayerClass implements comPlayerInterface {
             if ($("#message_box").is(":hidden")) {
                 clearInterval(waitUntilMessageBoxIsClosed)
                 // Draws the card
-                this.drawCardForComPlayer()
+                drawCardFunction()
             }
         }, 100);
     }
 
     /** Ask the player or a com player for a favor card */
-    playFavorCard(askFavorCardFunction: Function) {
+    playFavorCard(askFavorCardFunction: Function, drawCardFunction) {
         // Choses which player to ask for a favor
         // 1 - The Player
         // 2 - Com 2
@@ -222,15 +217,15 @@ class comPlayerClass implements comPlayerInterface {
             com1Player.hand.push(givenCard)
 
             // Draws the card
-            this.drawCardForComPlayer()
+            drawCardFunction()
             return ""
         }
     }
 }
 
-const com1Player = new comPlayerClass("Com 1", drawCardForCom1)
-const com2Player = new comPlayerClass("Com 2", drawCardForCom2)
-const com3Player = new comPlayerClass("Com 3", drawCardForCom3)
+const com1Player = new comPlayerClass("Com 1")
+const com2Player = new comPlayerClass("Com 2")
+const com3Player = new comPlayerClass("Com 3")
 
 export {
     com1Player,

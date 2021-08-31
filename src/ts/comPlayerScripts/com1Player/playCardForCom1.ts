@@ -106,20 +106,20 @@ const playCard = (cardToPlay) => {
 
             // More then 1 com player
             else {
-                com1Player.playAttackCard(true, choseCardForCom2)
+                com1Player.playAttackCard(true, "Com 2", choseCardForCom2)
             }
 
             break
         case "shuffle":
-            com1Player.playShuffleCard()    
+            com1Player.playShuffleCard(drawCardForCom1)    
 
             break
         case "see the future":
-            com1Player.playSeeTheFutureCard()
+            com1Player.playSeeTheFutureCard(drawCardForCom1)
 
             break
         case "favor":
-            com1Player.playFavorCard(askCardForFavor)
+            com1Player.playFavorCard(askCardForFavor, drawCardForCom1)
 
             break
 

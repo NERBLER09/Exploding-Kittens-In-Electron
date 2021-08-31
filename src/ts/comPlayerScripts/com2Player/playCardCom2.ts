@@ -4,6 +4,7 @@ import { displayMessageBox } from "../../messageBox.js"
 import { card, catCard } from "../../models/cards.interface.js"
 import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
+import { drawCardForCom1 } from "../com1Player/drawCardForCom1.js"
 import { askCardForFavor, catCardPlayed } from "../com1Player/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3Player/playCardCom3.js"
 import { com2Player } from "../comPlayerClass.js"
@@ -100,20 +101,20 @@ const playCardForCom2 = (cardToPlay) => {
             }
             // More then 1 com player
             else {
-                com2Player.playAttackCard(true, choseCardForCom3)
+                com2Player.playAttackCard(true, "Com 3", choseCardForCom3)
             }
 
             break
         case "shuffle":
-            com2Player.playShuffleCard()
+            com2Player.playShuffleCard(drawCardForCom2)
 
             break
         case "see the future":
-            com2Player.playSeeTheFutureCard()
+            com2Player.playSeeTheFutureCard(drawCardForCom2)
 
             break
         case "favor":
-            com2Player.playFavorCard(askCardForFavorForCom2)
+            com2Player.playFavorCard(askCardForFavorForCom2, drawCardForCom2)
 
             break
 

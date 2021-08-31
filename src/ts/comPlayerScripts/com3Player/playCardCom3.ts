@@ -3,7 +3,7 @@ import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
 import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
-import { askCardForFavor } from "../com1Player/favorAndCatCardFor1.js"
+import { askCardForFavor } from "../com3Player/favorAndCatCard.js"
 import { catCardPlayedForCom2 } from "../com2Player/favorAndCatCard.js"
 import { com3Player } from "../comPlayerClass.js"
 import { drawCardForCom3 } from "./drawCardForCom3.js"
@@ -77,46 +77,11 @@ const playCardForCom3 = (cardToPlay) => {
 
             break
         case "see the future":
-            displayMessageBox("Com 3 has played a see the future card","Com 3 has seen the top 3 cards of the deck")
-
-            // Choses the top three cards
-            updateVariable("seeTheFutureCards")
-
-            waitUntilMessageBoxIsClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
-                    clearInterval(waitUntilMessageBoxIsClosed)
-                    // Draws the card
-                    drawCardForCom3()
-                }
-            }, 100);
+            com3Player.playSeeTheFutureCard()
 
             break
         case "favor":
-            // Choses which player to ask for a favor
-            // 1 - The Player
-            // 2 - Com 1
-            // 3 - Com 3
-
-            let favorCardTarget: number
-
-            // Selects the target
-            favorCardTarget = Math.floor(Math.random() * 4)
-
-            // Checks if selected target has a return in switch statement 
-            if(favorCardTarget == 1) {
-                askCardForFavor(favorCardTarget)
-            }
-            else {
-                // Ask for a card from the player of choice
-                const givenCard = askCardForFavor(favorCardTarget)
-
-                // Adds the given card to Com 1's hand
-                com3Player.hand.push(givenCard)
-
-                // Draws the card
-                drawCardForCom3()
-            }
+            com3Player.playFavorCard(askCardForFavor)
 
             break
 

@@ -178,7 +178,6 @@ const stealCard = (): card => {
 
 // Choses a player to ask for a favor from
 const askCardForFavor = (favorCardTarget) => {
-    
     let cardIndex: number
     let cardToGive: string
     let returnFavoredCard: NodeJS.Timeout
@@ -281,4 +280,4 @@ const askCardForFavor = (favorCardTarget) => {
     }
 }
 
-export { catCardPlayed }
+export { catCardPlayed, askCardForFavor }

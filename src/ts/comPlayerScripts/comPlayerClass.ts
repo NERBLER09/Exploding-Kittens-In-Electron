@@ -168,6 +168,64 @@ class comPlayerClass implements comPlayerInterface {
             }
         }, 100);
     }
+    
+    /** Choses the top three cards */
+    playSeeTheFutureCard() {
+        displayMessageBox(`${this.comPlayerName} has played a see the future card`, `${this.comPlayerName} has seen the top 3 cards of the deck`)
+
+        updateVariable("seeTheFutureCards")
+
+        const waitUntilMessageBoxIsClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxIsClosed)
+                // Draws the card
+                this.drawCardForComPlayer()
+            }
+        }, 100);
+    }
+
+    /** Ask the player or a com player for a favor card */
+    playFavorCard(askFavorCardFunction: Function) {
+        // Choses which player to ask for a favor
+        // 1 - The Player
+        // 2 - Com 2
+        // 3 - Com 3
+
+        let favorCardTarget: number
+
+        // Check how many com players were selected 
+        switch (localStorage.getItem("comAmount")) {
+            case "1comPlayer":
+                favorCardTarget = 1
+
+                break
+            case "2comPlayer":
+                favorCardTarget = Math.floor(Math.random() * 3)
+
+                break
+            case "3comPlayer":
+                favorCardTarget = Math.floor(Math.random() * 4)
+
+                break
+        }
+
+        // Checks if selected target has a return in switch statement 
+        if (favorCardTarget == 1) {
+            askFavorCardFunction(favorCardTarget)
+        }
+        else {
+            // Ask for a card from the player of choice
+            const givenCard: card = askFavorCardFunction(favorCardTarget)
+
+            // Adds the given card to Com 1's hand
+            com1Player.hand.push(givenCard)
+
+            // Draws the card
+            this.drawCardForComPlayer()
+            return ""
+        }
+    }
 }
 
 const com1Player = new comPlayerClass("Com 1", drawCardForCom1)

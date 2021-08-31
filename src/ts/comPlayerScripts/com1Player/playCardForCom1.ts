@@ -115,60 +115,11 @@ const playCard = (cardToPlay) => {
 
             break
         case "see the future":
-            displayMessageBox("Com 1 has played a see the future card", "Com 1 has seen the top 3 cards of the deck")
-
-            // Choses the top three cards
-            updateVariable("seeTheFutureCards")
-
-            waitUntilMessageBoxIsClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if ($("#message_box").is(":hidden")) {
-                    clearInterval(waitUntilMessageBoxIsClosed)
-                    // Draws the card
-                    drawCardForCom1()
-                }
-            }, 100);
+            com1Player.playSeeTheFutureCard()
 
             break
         case "favor":
-            // Choses which player to ask for a favor
-            // 1 - The Player
-            // 2 - Com 2
-            // 3 - Com 3
-
-            let favorCardTarget: number
-
-            // Check how many com players were selected 
-            switch (localStorage.getItem("comAmount")) {
-                case "1comPlayer":
-                    favorCardTarget = 1
-
-                    break
-                case "2comPlayer":
-                    favorCardTarget = Math.floor(Math.random() * 3)
-
-                    break
-                case "3comPlayer":
-                    favorCardTarget = Math.floor(Math.random() * 4)
-
-                    break
-            }
-
-            // Checks if selected target has a return in switch statement 
-            if (favorCardTarget == 1) {
-                askCardForFavor(favorCardTarget)
-            }
-            else {
-                // Ask for a card from the player of choice
-                const givenCard: card = askCardForFavor(favorCardTarget)
-
-                // Adds the given card to Com 1's hand
-                com1Player.hand.push(givenCard)
-
-                // Draws the card
-                drawCardForCom1()
-                return ""
-            }
+            com1Player.playFavorCard(askCardForFavor)
 
             break
 

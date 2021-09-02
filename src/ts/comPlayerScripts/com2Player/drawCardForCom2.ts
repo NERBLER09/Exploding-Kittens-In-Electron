@@ -3,10 +3,8 @@ import { displayMessageBox, explodedMessageBox } from "../../messageBox.js"
 import { cards } from "../../messages.js"
 import { card } from "../../models/cards.interface.js"
 import { choseCardForCom3 } from "../com3Player/playCardCom3.js"
+import { com2Player } from "../comPlayerClass.js"
 import { choseCardForCom2 } from "./playCardCom2.js"
-
-// Stores the cards in com 2's hand
-let cardsInCom2Hand:card[] = []
 
 // Draws a card to com 2
 const drawCardForCom2 = () => {
@@ -31,7 +29,7 @@ const drawCardForCom2 = () => {
     // Exploding Kitten was not drawn
     if(cardDrawn !== "exploding kitten") {
         // Adds the drawn card the the list
-        cardsInCom2Hand.push(cardDrawn)
+        com2Player.hand.push(cardDrawn)
 
         // Removes the drawn card from the deck
         removeDrawnCardFromDeck(cardDrawn)
@@ -106,19 +104,19 @@ const drawCardForCom2 = () => {
 
 /** Runs when Com 2 draws a exploding kitten card */
 const defuseExplodingKittenCard = (cardDrawn) => {    
-    let com2HasdefuseCard = false
+    let com2HasDefuseCard = false
 
     // Checks if Com 2 has a defuse card   
-    for(const card of cardsInCom2Hand) {
+    for(const card of com2Player.hand) {
         if(card === "defuse") {
-            com2HasdefuseCard = true
+            com2HasDefuseCard = true
 
             break   
         }
     }
 
     // Checks if Com 2 didn't have a defuse card
-    if(com2HasdefuseCard === false) {
+    if(com2HasDefuseCard === false) {
         setTimeout(() => {
             // Dose nothing here
         }, 1000);
@@ -130,9 +128,9 @@ const defuseExplodingKittenCard = (cardDrawn) => {
         // defuses the Exploding Kitten card
 
         // Removes the defuse card from Com 2's hand 
-        const cardIndex = cardsInCom2Hand.indexOf(cardDrawn)
+        const cardIndex = com2Player.hand.indexOf(cardDrawn)
 
-        cardsInCom2Hand.splice(cardIndex, 1)
+        com2Player.hand.splice(cardIndex, 1)
 
         setTimeout(() => {
             // Dose nothing here 
@@ -174,7 +172,4 @@ const defuseExplodingKittenCard = (cardDrawn) => {
     }
 }
 
-export {
-    cardsInCom2Hand,
-    drawCardForCom2
-}
+export { drawCardForCom2 }

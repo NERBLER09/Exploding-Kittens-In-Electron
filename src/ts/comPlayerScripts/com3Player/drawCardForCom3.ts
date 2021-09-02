@@ -2,10 +2,8 @@ import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVari
 import { displayMessageBox, explodedMessageBox } from "../../messageBox.js"
 import { cards } from "../../messages.js"
 import { card } from "../../models/cards.interface.js"
+import { com3Player } from "../comPlayerClass.js"
 import { choseCardForCom3 } from "./playCardCom3.js"
-
-// Stores the cards in com 3's hand
-let cardsInCom3Hand:card[] = []
 
 // Draws a card to com 3
 const drawCardForCom3 = () => {
@@ -31,7 +29,7 @@ const drawCardForCom3 = () => {
 
     if(cardDrawn !== "exploding kitten") {
         // Adds the drawn card the the list
-        cardsInCom3Hand.push(cardDrawn)
+        com3Player.hand.push(cardDrawn)
 
         // Removes the drawn card from the deck
         removeDrawnCardFromDeck(cardDrawn)
@@ -80,20 +78,20 @@ const drawCardForCom3 = () => {
 
 /** Runs when Com 3 draws a exploding kitten card card */
 const defuseExplodingKittenCard = (cardDrawn) => {
-    let com3HasdefuseCard = false
+    let com3HasDefuseCard = false
 
     // Checks if Com 3 has a defuse card   
     
-    for(const card of cardsInCom3Hand) {
+    for(const card of com3Player.hand) {
         if(card === "defuse") {
-            com3HasdefuseCard = true
+            com3HasDefuseCard = true
 
             break   
         }
     }
 
     // Checks if Com 3 didn't have a defuse card
-    if(com3HasdefuseCard === false) {
+    if(com3HasDefuseCard === false) {
         setTimeout(() => {
             // Dose nothing here
         }, 1000);
@@ -105,9 +103,9 @@ const defuseExplodingKittenCard = (cardDrawn) => {
         // defuses the Exploding Kitten card
 
         // Removes the defuse card from Com 3's hand 
-        const cardIndex = cardsInCom3Hand.indexOf(cardDrawn)
+        const cardIndex = com3Player.hand.indexOf(cardDrawn)
 
-        cardsInCom3Hand.splice(cardIndex, 1)
+        com3Player.hand.splice(cardIndex, 1)
 
         setTimeout(() => {
             // Dose nothing here 
@@ -121,4 +119,4 @@ const defuseExplodingKittenCard = (cardDrawn) => {
     }
 }
 
-export { cardsInCom3Hand, drawCardForCom3 }
+export { drawCardForCom3 }

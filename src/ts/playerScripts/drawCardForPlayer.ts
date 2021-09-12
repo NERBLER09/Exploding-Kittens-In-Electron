@@ -37,8 +37,10 @@ const drawCardForPlayer = () => {
                 // Displays the drawn cardDrawn
                 displayCardToPlayer(cardDrawn)
 
-                // Removes 1 from the turnsNeedToPlay
-                updateVariable("removeFromTurnsNeedToPlay")
+                // Removes 1 from the turnsNeedToPlay if turnsNeedToPlay is not 0
+                if(turnsNeedToPlay > 0) {
+                    updateVariable("removeFromTurnsNeedToPlay")
+                }
 
                 // Checks if the player has any more cars
                 updateVariable("isPlayerTurn", turnsNeedToPlay <= 0 ? false : true)

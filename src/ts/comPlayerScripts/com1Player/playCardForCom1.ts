@@ -11,8 +11,6 @@ const choseCardForCom1 = () => {
 
 // Choses a card to play and plays the card
 const playCard = (cardToPlay) => {
-    let waitUntilMessageBoxIsClosed: NodeJS.Timeout
-
     // Checks if a cat card was played
     if (cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' ||
         cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {

@@ -5,7 +5,6 @@ import { card, catCard } from "../models/cards.interface";
 import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../nopePlayedCard.js";
 import { updateDiscardPile } from "../updateDiscardPile.js";
 
-
 interface comPlayerInterface {
     hand: card[],
     checkForPlayableCard: Function,

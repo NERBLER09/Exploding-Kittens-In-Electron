@@ -6,10 +6,11 @@ import { decideCardToGiveAsFavor } from "../comPlayerScripts/decideCardToGiveAsF
 import { updateVariable } from "../gameFunctions.js"
 import { displayMessageBox } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
+import { card } from "../models/cards.interface.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
 
 // Runs when the player has played a cat card
-const catCardPlayed = (catCard:string) => {
+const catCardPlayed = (catCard:card) => {
     let playerHasCatCard = false
 
     // Loops through the players hand to see if there is a matching card

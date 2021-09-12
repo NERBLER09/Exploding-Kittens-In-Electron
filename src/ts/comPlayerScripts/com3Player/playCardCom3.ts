@@ -30,11 +30,11 @@ const playCardForCom3 = (cardToPlay) => {
 
             break
         case "shuffle":
-            com3Player.playShuffleCard(drawCardForCom3)
+            com3Player.playShuffleCard(drawCardForCom3, choseCardForCom3)
 
             break
         case "see the future":
-            com3Player.playSeeTheFutureCard(drawCardForCom3)
+            com3Player.playSeeTheFutureCard(drawCardForCom3, choseCardForCom3)
 
             break
         case "favor":

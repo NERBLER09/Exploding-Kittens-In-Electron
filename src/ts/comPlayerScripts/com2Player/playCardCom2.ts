@@ -52,11 +52,11 @@ const playCardForCom2 = (cardToPlay) => {
 
             break
         case "shuffle":
-            com2Player.playShuffleCard(drawCardForCom2)
+            com2Player.playShuffleCard(drawCardForCom2, choseCardForCom2)
 
             break
         case "see the future":
-            com2Player.playSeeTheFutureCard(drawCardForCom2)
+            com2Player.playSeeTheFutureCard(drawCardForCom2, choseCardForCom2)
 
             break
         case "favor":

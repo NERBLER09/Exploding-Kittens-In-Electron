@@ -5,6 +5,7 @@ import { card, catCard } from "../models/cards.interface";
 import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../nopePlayedCard.js";
 import { updateDiscardPile } from "../updateDiscardPile.js";
 
+
 interface comPlayerInterface {
     hand: card[],
     checkForPlayableCard: Function,
@@ -26,6 +27,7 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 class comPlayerClass implements comPlayerInterface {
     hand = []
     private comPlayerName: "Com 1" | "Com 2" | "Com 3"
+    private cardsToPlayList: card[] = []
     
     constructor(comName: "Com 1" | "Com 2" | "Com 3", ) { this.comPlayerName = comName }
 
@@ -33,10 +35,8 @@ class comPlayerClass implements comPlayerInterface {
         for(const e of this.hand) {
             if(playableCards.includes(e) && e === card) {
                 if(catCard.includes(card) && e === card) {
-                    console.log("trying to play cat card")
                     // If a com player wants to steal a card checks if there are 2 matching cat cards
                     if(this.checkForMatchingCatCards(card)) {
-                        console.table(this.hand)
                         return true
                     }
                     else {
@@ -72,6 +72,17 @@ class comPlayerClass implements comPlayerInterface {
         }
         else {
             return false
+        }
+    }
+
+    /** Decides how many cards a com player should play */
+    decideHowManyCardsToPlay() {
+        const amountOfCardsToPlay = Math.floor(Math.random() * this.hand.length)
+
+        for(let i = 0; i < amountOfCardsToPlay; i++) {
+            if(this.checkForPlayableCard(this.hand[i])) {
+                this.cardsToPlayList.push(this.hand[i])
+            }
         }
     }
 
@@ -180,7 +191,7 @@ class comPlayerClass implements comPlayerInterface {
     }
 
     /** Tells the player that the deck has been shuffled */
-    playShuffleCard(drawCardFunction) {
+    playShuffleCard(drawCardFunction, playCardFunction) {
         // Card is a placebo, this card really dose nothing
         displayMessageBox("The deck has been shuffled", `${this.comPlayerName} has shuffled the deck`)
 
@@ -188,14 +199,26 @@ class comPlayerClass implements comPlayerInterface {
             // Checks if the player has closed the #message_box
             if ($("#message_box").is(":hidden")) {
                 clearInterval(waitUntilMessageBoxIsClosed)
-                // Draws the card
-                drawCardFunction()
+
+                // Checks if there are any more cards to card
+                if(this.cardsToPlayList.length > 0) {
+                    // Plays the card
+                    playCardFunction()
+                
+                    return ""
+                }
+                else {
+                    // Draws the card
+                    drawCardFunction()
+                    
+                    return ""
+                }
             }
         }, 100);
     }
     
     /** Choses the top three cards */
-    playSeeTheFutureCard(drawCardFunction) {
+    playSeeTheFutureCard(drawCardFunction, playCardFunction) {
         displayMessageBox(`${this.comPlayerName} has played a see the future card`, `${this.comPlayerName} has seen the top 3 cards of the deck`)
 
         updateVariable("seeTheFutureCards")
@@ -204,9 +227,16 @@ class comPlayerClass implements comPlayerInterface {
             // Checks if the player has closed the #message_box
             if ($("#message_box").is(":hidden")) {
                 clearInterval(waitUntilMessageBoxIsClosed)
-                // Draws the card
-                drawCardFunction()
-            }
+                
+                // Checks if there are any more cards to card
+                if(this.cardsToPlayList.length > 0) {
+                    // Plays the card
+                    playCardFunction()
+                }
+                else {
+                    // Draws the card
+                    drawCardFunction()        
+                }}
         }, 100);
     }
 
@@ -252,10 +282,20 @@ class comPlayerClass implements comPlayerInterface {
         }
     }
 
-   /** Choses a card to play, checks if that card is playable, and checks if the player wants to nope it */ 
+   /** Choses a card to play, checks if that card is playable, and checks if the player wants to nope it 
+    * 
+    * @param {Function} playCardForComPlayer Takes the playCard function for the current com player
+    * 
+    * @param {Function} drawCardForComPlayer Takes the drawCard function for the current com player
+    */ 
     chooseCardToPlay(playCardForComPlayer: Function, drawCardForComPlayer: Function) {
+        // Checks if there are no cards in the cardToPlayList list
+        if(this.cardsToPlayList.length <= 0) {
+            this.decideHowManyCardsToPlay()
+        }
+
         // Choses a card to play from the com players's hand
-        const cardToPlay: card = this.hand[Math.floor(Math.random() * this.hand.length)]
+        const cardToPlay: card = this.cardsToPlayList[0]
         // Removes the played card from the com players's hand
         const cardIndex = this.hand.indexOf(cardToPlay)
 
@@ -275,15 +315,22 @@ class comPlayerClass implements comPlayerInterface {
                             const waitUntilMessageBoxClosed = setInterval(() => {
                                 if ($("#message_box").is(":hidden")) {
                                     clearInterval(waitUntilMessageBoxClosed)
+
                                     this.hand.splice(cardIndex, 1)
+                                    this.cardsToPlayList.splice(0, 1)
+                                    
                                     playCardForComPlayer(cardToPlay)
+                                    
                                     return ""
                                 }
                             }, 100)
                         }
                         else {
+                            this.cardsToPlayList.splice(0, 1)
                             this.hand.splice(cardIndex, 1)
+                            
                             drawCardForComPlayer()
+                            
                             return ""
                         }
                     }

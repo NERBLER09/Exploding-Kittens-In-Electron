@@ -2,10 +2,8 @@ import { removeDrawnCardFromDeck, turnsNeedToPlay, updateVariable } from "../gam
 import { displayMessageBox } from "../messageBox.js";
 import { cards } from "../messages.js";
 import { card, catCard } from "../models/cards.interface";
-import { checkForMatchingCatCards } from "./checkForMatchingCatCards.js";
-import { drawCardForCom1 } from "./com1Player/drawCardForCom1.js";
-import { drawCardForCom2 } from "./com2Player/drawCardForCom2.js";
-import { drawCardForCom3 } from "./com3Player/drawCardForCom3.js";
+import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../nopePlayedCard.js";
+import { updateDiscardPile } from "../updateDiscardPile.js";
 
 interface comPlayerInterface {
     hand: card[],
@@ -15,14 +13,16 @@ interface comPlayerInterface {
     playSkipCard: Function
 }
 
-const playableCards = ['attack',
+const playableCards:card[] = ['attack',
 'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
 'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
 
 const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "beard cat", "cattermellon"]
 
-
-/** Class holds reusable functions from the com players  */
+/** Class holds reusable functions from the com players 
+ * 
+ * @param comPlayerName Takes the name of the current com player 
+*/
 class comPlayerClass implements comPlayerInterface {
     hand = []
     private comPlayerName: "Com 1" | "Com 2" | "Com 3"
@@ -33,16 +33,46 @@ class comPlayerClass implements comPlayerInterface {
         for(const e of this.hand) {
             if(playableCards.includes(e) && e === card) {
                 if(catCard.includes(card) && e === card) {
+                    console.log("trying to play cat card")
                     // If a com player wants to steal a card checks if there are 2 matching cat cards
-                    if(checkForMatchingCatCards(this.hand, card)) {
+                    if(this.checkForMatchingCatCards(card)) {
+                        console.table(this.hand)
                         return true
                     }
-                    else return false
+                    else {
+                        return false
+                    }
                 }
                 return true
             }
         }
         return false
+    }
+
+    /** Checks if there are 2 or more matching car cards.
+     * 
+     * Counts how many times a cat card appears in the current com player hand
+     * 
+     * @param {card} catCardToPlay Takes the cat card that the com player wants to play
+     * 
+     * @returns {boolean} Returns true if there is 2 or more matching cat cards.
+     * Returns false if there is only 1 cat card.
+     */
+    checkForMatchingCatCards(catCardToPlay: card): boolean {
+        let countOfMatchingCatCards = 0
+
+        for(let i = 0; i > this.hand.length; i++) {
+            if(this.hand[i] === catCardToPlay) {
+                countOfMatchingCatCards++
+            }
+        }
+
+        if(countOfMatchingCatCards >= 2) {
+            return true
+        }
+        else {
+            return false
+        }
     }
 
     dealInitialHand() {
@@ -214,11 +244,59 @@ class comPlayerClass implements comPlayerInterface {
             const givenCard: card = askFavorCardFunction(favorCardTarget)
 
             // Adds the given card to Com 1's hand
-            com1Player.hand.push(givenCard)
+            this.hand.push(givenCard)
 
             // Draws the card
             drawCardFunction()
             return ""
+        }
+    }
+
+   /** Choses a card to play, checks if that card is playable, and checks if the player wants to nope it */ 
+    chooseCardToPlay(playCardForComPlayer: Function, drawCardForComPlayer: Function) {
+        // Choses a card to play from the com players's hand
+        const cardToPlay: card = this.hand[Math.floor(Math.random() * this.hand.length)]
+        // Removes the played card from the com players's hand
+        const cardIndex = this.hand.indexOf(cardToPlay)
+
+        // Checks if the chosen card is a playable card
+        if(this.checkForPlayableCard(cardToPlay)) {
+            updateDiscardPile(cardToPlay)
+
+            if(checkForNopeCardInHand()) {
+                nopePlayedCard(cardToPlay, this.comPlayerName)
+            
+                const waitUntilMessageBoxClosed = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxClosed)
+    
+                        if (!checkIfNopeCardPlayed()) {
+                            const waitUntilMessageBoxClosed = setInterval(() => {
+                                if ($("#message_box").is(":hidden")) {
+                                    clearInterval(waitUntilMessageBoxClosed)
+                                    this.hand.splice(cardIndex, 1)
+                                    playCardForComPlayer(cardToPlay)
+                                    return ""
+                                }
+                            }, 100)
+                        }
+                        else {
+                            this.hand.splice(cardIndex, 1)
+                            drawCardForComPlayer()
+                            return ""
+                        }
+                    }
+                }, 100);
+            }
+            else {
+                playCardForComPlayer(cardToPlay)
+                
+                return ""
+            }
+        }
+        else {
+            this.chooseCardToPlay(playCardForComPlayer, drawCardForComPlayer)
         }
     }
 }

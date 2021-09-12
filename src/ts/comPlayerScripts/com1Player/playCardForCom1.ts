@@ -1,64 +1,12 @@
-import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
-import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
+import { turnsNeedToPlay } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
-import { card } from "../../models/cards.interface.js"
-import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
-import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { choseCardForCom2 } from "../com2Player/playCardCom2.js"
 import { com1Player } from "../comPlayerClass.js"
 import { drawCardForCom1 } from "./drawCardForCom1.js"
 import { askCardForFavor, catCardPlayed } from "./favorAndCatCardFor1.js"
 
 const choseCardForCom1 = () => {
-    // Choses a card to play from com 1's hand
-    const cardToPlay: card = com1Player.hand[Math.floor(Math.random() * com1Player.hand.length)]
-    // Removes the played card from com 1's hand
-    const cardIndex = com1Player.hand.indexOf(cardToPlay)
-    
-    // Sets a pause 
-    setTimeout(() => {
-        // Dose nothing here
-    }, 1000);
-
-    if (checkForPlayableCard(com1Player.hand, cardToPlay) == true) {
-        updateDiscardPile(cardToPlay)
-
-        if(checkForNopeCardInHand()) {
-            nopePlayedCard(cardToPlay, "Com 1")
-
-            const waitUntilMessageBoxClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if ($("#message_box").is(":hidden")) {
-                    clearInterval(waitUntilMessageBoxClosed)
-
-                    if (!checkIfNopeCardPlayed()) {
-                        const waitUntilMessageBoxClosed = setInterval(() => {
-                            if ($("#message_box").is(":hidden")) {
-                                clearInterval(waitUntilMessageBoxClosed)
-                                com1Player.hand.splice(cardIndex, 1)
-                                playCard(cardToPlay)
-                                return ""
-                            }
-                        }, 100)
-                    }
-                    else {
-                        com1Player.hand.splice(cardIndex, 1)
-                        drawCardForCom1()
-                        return ""
-                    }
-                }
-            }, 100);
-        }
-        else {
-            playCard(cardToPlay)
-
-            return ""
-        }
-    }
-    else {
-        drawCardForCom1()
-        return ""
-    }
+    com1Player.chooseCardToPlay(playCard, drawCardForCom1)
 }
 
 // Choses a card to play and plays the card

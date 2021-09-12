@@ -4,7 +4,6 @@
 
 import { cards, cardAmounts } from "./messages.js"
 import { removeDrawnCardFromDeck, updateVariable } from "./gameFunctions.js";
-import { dealCardsToCom1, dealCardsToCom2, dealCardsToCom3 } from "./comPlayerScripts/dealCardToComPlayers.js";
 import { displayCardToPlayer } from "./playerScripts/displayCardToPlayer.js";
 import { drawCardForPlayer } from "./playerScripts/drawCardForPlayer.js";
 import { displayMessageBox } from "./messageBox.js";

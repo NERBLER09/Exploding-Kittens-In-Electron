@@ -1,14 +1,13 @@
 import { displayMessageBox } from "../../messageBox.js";
 import { comPlayerPlayedFavor, playerCardsInHand } from "../../messages.js";
 import { card, catCard } from "../../models/cards.interface.js";
-import { checkForMatchingCatCards } from "../checkForMatchingCatCards.js";
 import { com1Player, com2Player, com3Player } from "../comPlayerClass.js";
 import { drawCardForCom3 } from "./drawCardForCom3.js";
 import { choseCardForCom3 } from "./playCardCom3.js";
 
 // Runs when com 3 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {
-    if(checkForMatchingCatCards(com2Player.hand, catCard) === false) {
+    if(com3Player.checkForMatchingCatCards(catCard)) {
         choseCardForCom3()
     }
     

@@ -1,66 +1,12 @@
-import { checkForPlayableCard } from "../../checkForAnyPlayableCards.js"
-import { turnsNeedToPlay, updateVariable } from "../../gameFunctions.js"
-import { displayMessageBox } from "../../messageBox.js"
-import { card, catCard } from "../../models/cards.interface.js"
-import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../../nopePlayedCard.js"
-import { updateDiscardPile } from "../../updateDiscardPile.js"
-import { drawCardForCom1 } from "../com1Player/drawCardForCom1.js"
-import { askCardForFavor, catCardPlayed } from "../com1Player/favorAndCatCardFor1.js"
+import { catCard } from "../../models/cards.interface.js"
+import { catCardPlayed } from "../com1Player/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3Player/playCardCom3.js"
 import { com2Player } from "../comPlayerClass.js"
 import { drawCardForCom2 } from "./drawCardForCom2.js"
 import { askCardForFavorForCom2 } from "./favorAndCatCard.js"
 
 const choseCardForCom2 = () => {
-    // Choses a card to play
-    const cardToPlay = com2Player.hand[Math.floor(Math.random() * com2Player.hand.length)]
-
-    // Removes the played card from com 2's hand
-    const cardIndex = com2Player.hand.indexOf(cardToPlay)
-
-    // Sets a pause 
-    setTimeout(() => {
-        // Dose nothing here
-    }, 2000);
-
-    if(checkForPlayableCard(com2Player.hand, cardToPlay)) {
-        updateDiscardPile(cardToPlay)
-
-        if(checkForNopeCardInHand()) {
-            nopePlayedCard(cardToPlay, "Com 2")
-
-            const waitUntilMessageBoxClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if ($("#message_box").is(":hidden")) {
-                    clearInterval(waitUntilMessageBoxClosed)
-
-                    if (!checkIfNopeCardPlayed()) {
-                        const waitUntilMessageBoxClosed = setInterval(() => {
-                            if ($("#message_box").is(":hidden")) {
-                                clearInterval(waitUntilMessageBoxClosed)
-                                com2Player.hand.splice(cardIndex, 1)
-                                playCardForCom2(cardToPlay)
-                                return ""
-                            }
-                        }, 100)
-                    }
-                    else {
-                        com2Player.hand.splice(cardIndex, 1)
-                        drawCardForCom2()
-                        return ""
-                    }
-                }
-            }, 100);
-        }
-        else {
-            playCardForCom2(cardToPlay)
-            return ""
-        }
-    }
-    else {
-        drawCardForCom2()
-        return ""
-    }
+    com2Player.chooseCardToPlay(playCardForCom2, drawCardForCom2)
 }
 
 const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "beard cat", "cattermellon"]

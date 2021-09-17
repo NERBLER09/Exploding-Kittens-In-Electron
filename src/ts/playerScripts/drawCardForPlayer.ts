@@ -9,7 +9,7 @@ import { displayCardToPlayer } from "./displayCardToPlayer.js"
 const drawCardForPlayer = () => {
     // Checks if its the players turn
     // Checks if a com player has not played a favor card (Prevents the game from breaking)
-    if(isPlayerTurn === true && comPlayerPlayedFavor["favorCardPlayed"] === false) {
+    if(isPlayerTurn === true && comPlayerPlayedFavor["favorCardPlayed"] !== true) {
         // Checks if there are still cards in the deck
         if(totalCardAmount > 1) {
             let cardDrawn: card
@@ -45,8 +45,12 @@ const drawCardForPlayer = () => {
                 // Checks if the player has any more cars
                 updateVariable("isPlayerTurn", turnsNeedToPlay <= 0 ? false : true)
 
+                console.log(comPlayerPlayedFavor)
+                console.log(turnsNeedToPlay)
+                console.log(isPlayerTurn)
+
                 // Changes the current_player_turn text
-                if(isPlayerTurn === false && comPlayerPlayedFavor["favorCardPlayed"] === false && turnsNeedToPlay <= 0) {
+                if(isPlayerTurn === false && comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] === null && turnsNeedToPlay <= 0) {
                     displayMessageBox("Drawn Card: ", `The card you've drawn is a ${cardDrawn} card. It's now com 1's turn.`)
 
                     // Resets turnsNeedToPlay to 0 to fix some bugs

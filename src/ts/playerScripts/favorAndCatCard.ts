@@ -248,8 +248,8 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
             com1Player.hand.push()
 
             // Resets the comPlayerPlayedFavor list 
-            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
-            comPlayerPlayedFavor["favorCardPlayed"] = null
+            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
+            comPlayerPlayedFavor["favorCardPlayed"] = false
 
             // Removes the given card from the players hand
             playerCardsInHand.splice(cardIndex, 1)
@@ -274,8 +274,8 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
             com2Player.hand.push()
 
             // Resets the comPlayerPlayedFavor list 
-            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
-            comPlayerPlayedFavor["favorCardPlayed"] = null
+            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
+            comPlayerPlayedFavor["favorCardPlayed"] = false
 
             // Removes the given card from the players hand
             playerCardsInHand.splice(cardIndex, 1)
@@ -299,8 +299,8 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
             com3Player.hand.push()
 
             // Resets the comPlayerPlayedFavor list 
-            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = false
-            comPlayerPlayedFavor["favorCardPlayed"] = null
+            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
+            comPlayerPlayedFavor["favorCardPlayed"] = false
 
             // Removes the given card from the players hand
             playerCardsInHand.splice(cardIndex, 1)

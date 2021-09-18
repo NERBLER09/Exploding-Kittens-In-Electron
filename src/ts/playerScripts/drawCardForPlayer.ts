@@ -45,10 +45,6 @@ const drawCardForPlayer = () => {
                 // Checks if the player has any more cars
                 updateVariable("isPlayerTurn", turnsNeedToPlay <= 0 ? false : true)
 
-                console.log(comPlayerPlayedFavor)
-                console.log(turnsNeedToPlay)
-                console.log(isPlayerTurn)
-
                 // Changes the current_player_turn text
                 if(isPlayerTurn === false && comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] === null && turnsNeedToPlay <= 0) {
                     displayMessageBox("Drawn Card: ", `The card you've drawn is a ${cardDrawn} card. It's now com 1's turn.`)

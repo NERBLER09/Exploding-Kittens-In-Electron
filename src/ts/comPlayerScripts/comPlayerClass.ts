@@ -278,6 +278,15 @@ class comPlayerClass implements comPlayerInterface {
             // Adds the given card to the current com player's hand
             this.hand.push(givenCard)
 
+            const waitUntilMessageBoxIsClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+    
+                    drawCardFunction()
+                }
+            }, 100);
+
             // Draws the card
             drawCardFunction()
             return ""

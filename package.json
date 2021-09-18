@@ -1,7 +1,7 @@
 {
   "name": "exploding-kittens-in-electron",
   "productName": "exploding-kittens-in-electron",
-  "version": "1.2",
+  "version": "1.2.0",
   "description": "A fan port of Exploding Kittens to the desktop",
   "main": "src/index.js",
   "build": {

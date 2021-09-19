@@ -32,23 +32,25 @@
             <h1>Welcome To Exploding Kittens</h1>
             <img src="../assets/Exploding-Kitten-Logo.svg" alt="Exploding Kitten Logo" id="logo">
         </header>
-        <div id="usrInfo">
-            <p>Enter Your Username</p>
-            <input type="text" placeholder="Enter your username (eg, Exploding Kittens Master)" id="usrnameInput">
-        </div>
-        <br>
-        <hr>
-        <div id="comPlayerButtons">
-            <p>Select How Many Computer Players Do You Want</p>
-            <input type="radio" value="1comPlayer" name="comPlayer" class="comSelection">
-            <label for="1comPlayer">1 Computer Player</label>
-            <input type="radio" value="2comPlayer" name="comPlayer" class="comSelection">
-            <label for="1comPlayer">2 Computer Players</label>
-            <input type="radio" value="3comPlayer" name="comPlayer" class="comSelection">
-            <label for="1comPlayer">3 Computer Players</label>
-        </div>
-        <br>
-        <button id="playButton">Play!</button>
+        <form id="title-screen-config">
+            <div id="usrInfo">
+                <p>Enter Your Username</p>
+                <input type="text" placeholder="Enter your username (eg, Exploding Kittens Master)" id="usrnameInput">
+            </div>
+            <br>
+            <hr>
+            <div id="comPlayerButtons">
+                <p>Select How Many Computer Players Do You Want</p>
+                <input type="radio" value="1comPlayer" name="comPlayer" class="comSelection">
+                <label for="1comPlayer">1 Computer Player</label>
+                <input type="radio" value="2comPlayer" name="comPlayer" class="comSelection">
+                <label for="1comPlayer">2 Computer Players</label>
+                <input type="radio" value="3comPlayer" name="comPlayer" class="comSelection">
+                <label for="1comPlayer">3 Computer Players</label>
+            </div>
+            <br>
+            <button id="playButton">Play!</button>
+        </form>
     </div>
     <div id="message_box"></div>
 </body>

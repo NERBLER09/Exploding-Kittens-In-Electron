@@ -59,6 +59,10 @@ $("body").ready(() => {
         window.history.replaceState(null, null, newUrl)
     }
 })
+$("#title-screen-config").on("submit", (event) => {
+    event.preventDefault()
+    startGame
+})
 
 export {
     username,

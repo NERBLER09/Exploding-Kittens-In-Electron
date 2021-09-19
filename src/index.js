@@ -125,17 +125,21 @@ const menu = [
     label:"Help",
     submenu: [
       {
-        label: "Exploding Kittens",
+        label: "Exploding Kittens (View the original Exploding Kittens)",
         click() {
           shell.openExternal("https://www.explodingkittens.com")
         }
       },
       {
-        label: "How To Play",
+        label: "How To Play (Official)",
 
         click() {
-          shell.openExternal("https://explodingkittens.com/how-to-play")
+          shell.openExternal("https://www.explodingkittens.com/pages/rules-kittens")
         }
+      },
+      {
+        label: "How To Play (For Exploding Kittens In Electron)",
+        click() { mainWindow.webContents.send("showHowToPlay") }
       },
       { type: 'separator' },
       {
@@ -160,7 +164,7 @@ const menu = [
       },
       { type: "separator" },
       {
-        label: "Open Issuse",
+        label: "Open Issue",
         click() {
           shell.openExternal("https://github.com/NERBLER09/Exploding-Kittens-In-Electron/issues/new")
         } 

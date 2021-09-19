@@ -83,6 +83,8 @@ class comPlayerClass implements comPlayerInterface {
                 this.cardsToPlayList.push(this.hand[i])
             }
         }
+
+        return ""
     }
 
     dealInitialHand() {
@@ -286,9 +288,7 @@ class comPlayerClass implements comPlayerInterface {
                     drawCardFunction()
                 }
             }, 100);
-
-            // Draws the card
-            drawCardFunction()
+            
             return ""
         }
     }
@@ -354,6 +354,7 @@ class comPlayerClass implements comPlayerInterface {
             }
         }
         else {
+            this.cardsToPlayList.splice(0,1)
             this.chooseCardToPlay(playCardForComPlayer, drawCardForComPlayer)
         }
     }

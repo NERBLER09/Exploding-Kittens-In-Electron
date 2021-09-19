@@ -2,6 +2,7 @@ import { displayMessageBox } from "./messageBox.js";
 
 const electron = require('electron')
 const {ipcRenderer} = electron;
+const path = require('path');
 
 const closeMessageBox = ()  => {
     $("#message_box").html("")
@@ -63,9 +64,15 @@ const handleGameConfigUpdate = () => {
     displayMessageBox("Updated game config", "You have updated you game config. If you want the changes to take affect you'll need to start a new game")
 }
 
+const handleShowHowToPlay = () => {
+    window.open(path.join(__dirname, `howToPlay.html`))
+}
+
 ipcRenderer.on("updateGameConfig", () => {
     updateGameConfig()
     $("#message_box").show()
 })
 
 ipcRenderer.on("showAboutMessageBox", showAboutMessageBox)
+
+ipcRenderer.on("showHowToPlay", handleShowHowToPlay)

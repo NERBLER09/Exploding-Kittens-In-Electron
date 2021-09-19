@@ -88,3 +88,11 @@ img {
 
   box-shadow: 10px 10px 10px var(--box-shadow-color);
 }
+
+.how-to-play-iframe {
+  width: 100%;
+}
+
+a {
+  color: var(--font-color);
+}

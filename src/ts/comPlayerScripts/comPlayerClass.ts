@@ -447,10 +447,10 @@ class comPlayerClass implements comPlayerInterface {
             // the current com player has additional turns
 
             else {
+                displayMessageBox(`It's ${this.comPlayerName}'s turn.`, `It's now ${this.comPlayerName}'s turn again. ${this.comPlayerName} has ${turnsNeedToPlay} more turn(s) remaining.`)
+
                 // Removes 1 from turnsNeedToPlay to have the current com player has 1 less turn
                 updateVariable("removeFromTurnsNeedToPlay")
-
-                displayMessageBox(`It's ${this.comPlayerName}'s turn.`, `It's now ${this.comPlayerName}'s turn again. ${this.comPlayerName} has ${turnsNeedToPlay} more turn(s) remaining.`)
 
                 const setCom2Turn = setInterval(() => {
                     // Checks if the player has closed the #message_box

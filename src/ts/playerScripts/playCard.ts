@@ -90,8 +90,13 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
             // Makes com 1 have 2 turns 
             updateVariable("isPlayerTurn")
 
-            // Makes it be Com 1's turn
-            choseCard()
+            const waitUntilMessageBoxIsClosed = setInterval(() => {
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+                
+                    choseCard()
+                }
+            }, 100);
 
             break
         case "shuffle":

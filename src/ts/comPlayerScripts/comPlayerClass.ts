@@ -76,7 +76,7 @@ class comPlayerClass implements comPlayerInterface {
 
     /** Decides how many cards a com player should play */
     decideHowManyCardsToPlay() {
-        const amountOfCardsToPlay = Math.floor(Math.random() * this.hand.length)
+       const amountOfCardsToPlay = Math.floor(Math.random() * this.hand.length)
 
         for (let i = 0; i < amountOfCardsToPlay; i++) {
             if (this.checkForPlayableCard(this.hand[i])) {
@@ -316,6 +316,11 @@ class comPlayerClass implements comPlayerInterface {
             cardToPlay = decideCardToPlay
         }
 
+        if(cardToPlay === undefined) {
+            drawCardForComPlayer()
+            return ""
+        }
+
         // Removes the played card from the com players's hand
         const cardIndex = this.hand.indexOf(cardToPlay)
 
@@ -357,6 +362,9 @@ class comPlayerClass implements comPlayerInterface {
                 }, 100);
             }
             else {
+                this.hand.splice(cardIndex, 1)
+                this.cardsToPlayList.splice(0, 1)
+                
                 playCardForComPlayer(cardToPlay)
 
                 return ""

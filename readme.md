@@ -1,6 +1,6 @@
 # Exploding Kittens In Electron 
 
-Welcome to Exploding Kittens In Python. This is a clone of [Exploding Kittens](https://www.explodingkittens.com) card game created in [Electron](https://www.electronjs.org). This runs completely on its own with out Node or Electron needed to be installed.
+Welcome to Exploding Kittens In Electron. This is a clone of [Exploding Kittens](https://www.explodingkittens.com) card game created in [Electron](https://www.electronjs.org). This runs completely on its own with out Node or Electron needed to be installed.
 
 ## Screenshots
 

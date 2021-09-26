@@ -3,7 +3,7 @@ import { displayMessageBox, explodedMessageBox } from "../messageBox.js";
 import { cards } from "../messages.js";
 import { card, catCard } from "../models/cards.interface";
 import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../nopePlayedCard.js";
-import { updateDiscardPile } from "../updateDiscardPile.js";
+import { lastPlayedCard, updateDiscardPile } from "../updateDiscardPile.js";
 
 interface comPlayerInterface {
     hand: card[],
@@ -76,7 +76,7 @@ class comPlayerClass implements comPlayerInterface {
 
     /** Decides how many cards a com player should play */
     decideHowManyCardsToPlay() {
-        const amountOfCardsToPlay = Math.floor(Math.random() * this.hand.length)
+       const amountOfCardsToPlay = Math.floor(Math.random() * this.hand.length)
 
         for (let i = 0; i < amountOfCardsToPlay; i++) {
             if (this.checkForPlayableCard(this.hand[i])) {
@@ -305,8 +305,22 @@ class comPlayerClass implements comPlayerInterface {
             this.decideHowManyCardsToPlay()
         }
 
-        // Choses a card to play from the com players's hand
-        const cardToPlay: card = this.cardsToPlayList[0]
+        let cardToPlay:card
+        let decideCardList = this.decideWhatCardToPlay()
+        
+        if(!decideCardList) {
+            cardToPlay = this.cardsToPlayList[0]
+        }
+        else if(decideCardList){
+            const decideCardToPlay: card = decideCardList[Math.floor(Math.random() * decideCardList.length)]
+            cardToPlay = decideCardToPlay
+        }
+
+        if(cardToPlay === undefined) {
+            drawCardForComPlayer()
+            return ""
+        }
+
         // Removes the played card from the com players's hand
         const cardIndex = this.hand.indexOf(cardToPlay)
 
@@ -348,6 +362,9 @@ class comPlayerClass implements comPlayerInterface {
                 }, 100);
             }
             else {
+                this.hand.splice(cardIndex, 1)
+                this.cardsToPlayList.splice(0, 1)
+                
                 playCardForComPlayer(cardToPlay)
 
                 return ""
@@ -430,10 +447,10 @@ class comPlayerClass implements comPlayerInterface {
             // the current com player has additional turns
 
             else {
+                displayMessageBox(`It's ${this.comPlayerName}'s turn.`, `It's now ${this.comPlayerName}'s turn again. ${this.comPlayerName} has ${turnsNeedToPlay} more turn(s) remaining.`)
+
                 // Removes 1 from turnsNeedToPlay to have the current com player has 1 less turn
                 updateVariable("removeFromTurnsNeedToPlay")
-
-                displayMessageBox(`It's ${this.comPlayerName}'s turn.`, `It's now ${this.comPlayerName}'s turn again. ${this.comPlayerName} has ${turnsNeedToPlay} more turn(s) remaining.`)
 
                 const setCom2Turn = setInterval(() => {
                     // Checks if the player has closed the #message_box
@@ -528,6 +545,63 @@ class comPlayerClass implements comPlayerInterface {
 
                     break
             }
+        }
+    }
+
+    /** Determines what card to play based on what card was last played  */
+    decideWhatCardToPlay(): card[] {
+        const decideCardsToPlayList: card[] = []
+        let possibleCardsToPlay: card[]
+
+        switch(lastPlayedCard) {
+            case "skip":
+                possibleCardsToPlay = ["shuffle", "see the future", "attack"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+
+            case "defuse":
+                possibleCardsToPlay= ["shuffle", "see the future"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+            case "see the future":
+                possibleCardsToPlay= ["shuffle"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+            default:
+                return null
         }
     }
 }

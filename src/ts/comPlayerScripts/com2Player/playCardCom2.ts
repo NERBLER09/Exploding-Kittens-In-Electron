@@ -42,7 +42,7 @@ const playCardForCom2 = (cardToPlay) => {
             // Checks how many com players are there
 
             // There is only 1 com player
-            if (comAmount === "1comPlayer") {
+            if (comAmount === "2comPlayer") {
                 com2Player.playAttackCard(false)
             }
             // More then 1 com player

@@ -1,4 +1,3 @@
-echo "Needs to been ran in root directory"
-
-snapcraft
-snapcraft upload --release stable *.snap
+cd $PWD
+electron-builder --linux
+snapcraft upload --release stable ./dist/*.snap

@@ -16,7 +16,7 @@ Dark mode:
 
 ## Releases 
 
-Snapcraft package for Linux distros (requires snap to be installed up): `snap install exploding-kittens-in-electron`
+Snapcraft package for Linux distros (requires snap to be installed up): `snap install exploding-kittens-in-electron --classic`
 Windows store app for Windows 10 + 11: [Web Link](https://www.microsoft.com/store/apps/9NMBVTL9L5LX) 
 
 ## Running 
@@ -46,9 +46,9 @@ $ npm run package-win # This will package the app for Windows x64
 $ npm run package-linux # This will package the app for Linux x64
 ```
 
-This is create the packaged app in a folder under `out/`, click on the executable to run the packaged app
+This is create the packaged app in a folder under `dist/`
 
-The app is packaged using [Electron Packager](https://www.npmjs.com/package/electron-packager)
+The app is packaged using [Electron Builder](https://www.npmjs.com/package/electron-builder)
 
 ## License
 

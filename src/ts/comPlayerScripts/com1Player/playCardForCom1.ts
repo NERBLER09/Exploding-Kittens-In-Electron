@@ -1,5 +1,7 @@
 import { turnsNeedToPlay } from "../../gameFunctions.js"
 import { displayMessageBox } from "../../messageBox.js"
+import { card } from "../../models/cards.interface.js"
+import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { choseCardForCom2 } from "../com2Player/playCardCom2.js"
 import { com1Player } from "../comPlayerClass.js"
 import { drawCardForCom1 } from "./drawCardForCom1.js"
@@ -10,7 +12,9 @@ const choseCardForCom1 = () => {
 }
 
 // Choses a card to play and plays the card
-const playCard = (cardToPlay) => {
+const playCard = (cardToPlay: card) => {        
+    const comAmount = localStorage.getItem("comAmount")
+        
     // Checks if a cat card was played
     if (cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' ||
         cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {
@@ -39,9 +43,6 @@ const playCard = (cardToPlay) => {
             break
         case "attack":
             // Checks if there are 2 or more com players (So it doesn't target the player)
-
-            // There are 2 or more com players
-            const comAmount = localStorage.getItem("comAmount")
 
             // Checks how many com players are there
 
@@ -94,6 +95,26 @@ const playCard = (cardToPlay) => {
             choseCardForCom1()
 
             break
+
+        // Cards from the Imploding Kittens expansion pack
+        case "draw from the bottom":
+            updateDiscardPile("draw from the bottom")
+
+            // Checks how many com players are there
+
+            // There is only 1 com player
+            if (comAmount === "1comPlayer") {
+                com1Player.drawCardForComPlayer(false, "Com 1 has drawn from the button of the deck",null, choseCardForCom1)
+            }
+
+            // More then 1 com player
+            else {
+                com1Player.drawCardForComPlayer(true, "Com 1 has drawn from the button of the deck", choseCardForCom2, choseCardForCom1, "Com 2")
+            }    
+
+            break
+
+        // TODO: Add alter the future and targeted attack cards
     }
 }
 

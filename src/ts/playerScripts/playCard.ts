@@ -2,8 +2,10 @@ import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
 import { displayMessageBox, displaySeeTheFutureCards } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
+import { card } from "../models/cards.interface.js"
 import { updateDiscardPile } from "../updateDiscardPile.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
+import { drawCardForPlayer } from "./drawCardForPlayer.js"
 import { catCardPlayed, giveFavorCardToComPlayer, promptFavorTarget } from "./favorAndCatCard.js"
 
 const playCard = (playerCard) => {
@@ -52,7 +54,7 @@ const playCard = (playerCard) => {
 }
 
 // Checks what card the player played so it can do its respective action
-const checkPlayerCardPlayed = (cardPLayed:string) => {
+const checkPlayerCardPlayed = (cardPLayed:card) => {
     // Checks if the player played a cat card (can't be in the switch statement because of the multiple cards)
     if(cardPLayed == 'potato cat' || cardPLayed == 'taco cat' || cardPLayed == 'rainbow ralphing cat' || 
     cardPLayed == 'beard cat' || cardPLayed == 'cattermellon') {
@@ -154,6 +156,12 @@ const checkPlayerCardPlayed = (cardPLayed:string) => {
 
                 displayCardToPlayer(cardPLayed)
             }
+
+            break
+
+        // Cards from the Imploding Kittens expansion pack
+        case "draw from the bottom":
+            drawCardForPlayer("Draw from the bottom:")    
 
             break
     }

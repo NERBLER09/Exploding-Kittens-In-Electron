@@ -1,3 +1,5 @@
+// TODO: Add card face for draw from the bottom 
+
 import { card, cardAmounts } from "./models/cards.interface"
 
 // Messages that might get displayed to the player
@@ -20,7 +22,9 @@ const cardAmounts: cardAmounts = {
     'rainbow ralphing cat': 5,
     'beard cat': 5,
     'cattermellon': 5,
-    'defuse': 6
+    'defuse': 6,
+    "exploding kitten": 4,
+    "draw from the bottom": 4
 }
 
 // Creates a list containing the cards in the player hands
@@ -29,7 +33,8 @@ let playerCardsInHand = []
 // Stores the cards in the deck
 let cards: card[] = ['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
-    'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
+    'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon',
+    'draw from the bottom']
 
 // Stores if a com player has played a favor and who played the favor
 // Used when a com player asks a card from the player to give it to the right com player

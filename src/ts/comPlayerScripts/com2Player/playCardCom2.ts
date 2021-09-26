@@ -1,4 +1,5 @@
 import { catCard } from "../../models/cards.interface.js"
+import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { catCardPlayed } from "../com1Player/favorAndCatCardFor1.js"
 import { choseCardForCom3 } from "../com3Player/playCardCom3.js"
 import { com2Player } from "../comPlayerClass.js"
@@ -13,7 +14,7 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 
 // Choses a card to play and plays the card
 const playCardForCom2 = (cardToPlay) => {
-    let waitUntilMessageBoxIsClosed: NodeJS.Timeout
+        let comAmount = localStorage.getItem("comAmount")
 
     // Checks if a cat card was played
     if(catCard.includes(cardToPlay)) {
@@ -37,7 +38,7 @@ const playCardForCom2 = (cardToPlay) => {
             // Checks if there are 2 or more com players (So it doesn't target the player)
 
             // There are 2 or more com players
-            const comAmount = localStorage.getItem("comAmount")
+            comAmount = localStorage.getItem("comAmount")
 
             // Checks how many com players are there
 
@@ -85,6 +86,25 @@ const playCardForCom2 = (cardToPlay) => {
             choseCardForCom2()
             
             break
+
+        // Cards from the Imploding Kittens expansion pack
+        case "draw from the bottom":
+            updateDiscardPile("draw from the bottom")
+ 
+            // Checks how many com players are there
+
+            // There is only 1 com player
+            if (comAmount === "2comPlayer") {
+                com2Player.drawCardForComPlayer(false, "Com 2 has drawn from the button of the deck",null, choseCardForCom2)
+            }
+
+            // More then 1 com player
+            else {
+                com2Player.drawCardForComPlayer(true, "Com 2 has drawn from the button of the deck", choseCardForCom2, choseCardForCom3, "Com 2")
+            }    
+
+            break
+        // TODO: Add alter the future and targeted attack cards
     }
 }
 export { choseCardForCom2 }

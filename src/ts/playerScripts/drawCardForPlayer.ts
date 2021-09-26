@@ -6,7 +6,7 @@ import { card } from "../models/cards.interface.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
 
 // Draws a card for the player
-const drawCardForPlayer = () => {
+const drawCardForPlayer = (cardCardMessageBoxHeader: string) => {
     // Checks if its the players turn
     // Checks if a com player has not played a favor card (Prevents the game from breaking)
     if(isPlayerTurn === true && comPlayerPlayedFavor["favorCardPlayed"] !== true) {
@@ -47,7 +47,7 @@ const drawCardForPlayer = () => {
 
                 // Changes the current_player_turn text
                 if(isPlayerTurn === false && comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] === null && turnsNeedToPlay <= 0) {
-                    displayMessageBox("Drawn Card: ", `The card you've drawn is a ${cardDrawn} card. It's now com 1's turn.`)
+                    displayMessageBox(`${cardCardMessageBoxHeader}`, `The card you've drawn is a ${cardDrawn} card. It's now com 1's turn.`)
 
                     // Resets turnsNeedToPlay to 0 to fix some bugs
                     updateVariable("resetTurnsNeedToPlay")
@@ -64,41 +64,47 @@ const drawCardForPlayer = () => {
                     }, 100);
                 }
                 else{
-                    displayMessageBox("Drawn Card: ", `The card you've drawn is a ${cardDrawn} card. You have ${turnsNeedToPlay} more turn(s) remaining.`)
+                    displayMessageBox(`${cardCardMessageBoxHeader}`, `The card you've drawn is a ${cardDrawn} card. You have ${turnsNeedToPlay} more turn(s) remaining.`)
                 }
             }
 
             // Exploding Kitten card was drawn
 
             else if(cardDrawn === "exploding kitten") {
-                updateVariable("explodingKittenCardDrawn", true)
-
-                // Checks if the player has a defuse card in hand
-                let playerHasDefuse = false
-
-                for(const playerCard in playerCardsInHand) {
-                    if(playerCardsInHand[playerCard] === "defuse"){
-                        displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your defuse card to defuse the Exploding Kitten")
-
-                        playerHasDefuse = true
-                        updateVariable("isPlayerTurn", false)
-
-                        break
-                    }
-                }
-
-                // Checks if the player has a defuse card
-                if(playerHasDefuse === false) {
-                    // Tells the player that they have exploded 
-                    explodedMessageBox("You've exploded!",  `Click on "Start new game" to start a new game or "Quit" to quit`)
-
-                    updateVariable("isPlayerTurn", false)
-
-                    // Removes the Exploding Kitten card from the deck
-                    removeDrawnCardFromDeck("exploding kitten")
-                }
+                explodingKittenDraw()
             }
         }  
     }           
 }
+
+/** Runs when the player draws an exploding kitten card*/
+const explodingKittenDraw = () => {
+    updateVariable("explodingKittenCardDrawn", true)
+
+    // Checks if the player has a defuse card in hand
+    let playerHasDefuse = false
+
+    for(const playerCard in playerCardsInHand) {
+        if(playerCardsInHand[playerCard] === "defuse"){
+            displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your defuse card to defuse the Exploding Kitten")
+
+            playerHasDefuse = true
+            updateVariable("isPlayerTurn", false)
+
+            break
+        }
+    }
+
+    // Checks if the player has a defuse card
+    if(playerHasDefuse === false) {
+        // Tells the player that they have exploded 
+        explodedMessageBox("You've exploded!",  `Click on "Start new game" to start a new game or "Quit" to quit`)
+
+        updateVariable("isPlayerTurn", false)
+
+        // Removes the Exploding Kitten card from the deck
+        removeDrawnCardFromDeck("exploding kitten")
+    }
+}
+
 export { drawCardForPlayer }

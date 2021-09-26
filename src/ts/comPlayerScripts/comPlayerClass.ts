@@ -386,7 +386,7 @@ class comPlayerClass implements comPlayerInterface {
      * 
      * @param {string} nextComPlayer Stores the name of the next com player
     */
-    drawCardForComPlayer(skipToNextComPlayer: boolean, choseCardForNextComPlayer?: Function, choseCardForCurrentComPlayer?: Function, nextComPlayer?: string) {
+    drawCardForComPlayer(skipToNextComPlayer: boolean, drawCardMessageBoxHeader: string, choseCardForNextComPlayer?: Function, choseCardForCurrentComPlayer?: Function, nextComPlayer?: string) {
         let cardDrawn: card
 
         // Checks a see the future card was drawn, if so gets the top card
@@ -420,7 +420,7 @@ class comPlayerClass implements comPlayerInterface {
 
                 switch (skipToNextComPlayer) {
                     case true:
-                        displayMessageBox(`${this.comPlayerName} has drawn a card.`, `It's now ${nextComPlayer}'s turn`)
+                        displayMessageBox(`${drawCardMessageBoxHeader}`, `It's now ${nextComPlayer}'s turn`)
 
                         const setCom2Turn = setInterval(() => {
                             // Checks if the player has closed the #message_box
@@ -435,7 +435,7 @@ class comPlayerClass implements comPlayerInterface {
 
                         break
                     case false:
-                        displayMessageBox(`${this.comPlayerName} has drawn card`, "It's now your turn")
+                        displayMessageBox(`${drawCardMessageBoxHeader}`, "It's now your turn")
 
                         // Makes it be the players turn
                         updateVariable("isPlayerTurn", true)

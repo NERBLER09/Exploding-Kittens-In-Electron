@@ -97,4 +97,4 @@ function onLoadFunc() {
 $("body").ready(onLoadFunc)
 
 // Sets the onclick function for the draw pile
-$("#draw-pile").click(drawCardForPlayer)
+$("#draw-pile").click(() => drawCardForPlayer("Drawn card: "))

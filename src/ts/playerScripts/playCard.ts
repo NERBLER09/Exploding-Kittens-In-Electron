@@ -1,6 +1,6 @@
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
-import { displayMessageBox, displaySeeTheFutureCards } from "../messageBox.js"
+import { displayMessageBox, displaySeeTheFutureCards, showAlterTheFutureMessageBox } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
 import { updateDiscardPile } from "../updateDiscardPile.js"
@@ -163,6 +163,13 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
         case "draw from the bottom":
             drawCardForPlayer("Draw from the bottom:")    
 
+            break
+        
+        case "alter the future":
+            updateVariable("seeTheFutureCards")
+            
+            showAlterTheFutureMessageBox(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2])
+            
             break
     }
 }

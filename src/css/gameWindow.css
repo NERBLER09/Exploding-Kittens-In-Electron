@@ -131,3 +131,15 @@
     justify-content: center;
     align-items: center;
 }
+.alter-the-future-card-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.alter-the-future-card-container img {
+    height: 100%;
+}

@@ -7,6 +7,7 @@ import { updateDiscardPile } from "../updateDiscardPile.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
 import { drawCardForPlayer } from "./drawCardForPlayer.js"
 import { catCardPlayed, giveFavorCardToComPlayer, promptFavorTarget } from "./favorAndCatCard.js"
+import { promptTargetedAttack } from "./targetedAttack.js"
 
 const playCard = (playerCard) => {
     const cardPlayed = playerCard.data.param1
@@ -170,6 +171,11 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             
             showAlterTheFutureMessageBox(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2])
             
+            break
+        
+        case "targeted attack":
+            promptTargetedAttack()
+
             break
     }
 }

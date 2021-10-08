@@ -10,7 +10,7 @@ const choseCardForCom2 = () => {
     com2Player.chooseCardToPlay(playCardForCom2, drawCardForCom2)
 }
 
-const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "beard cat", "cattermellon"]
+const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "beard cat", "cattermellon", "feral cat"]
 
 // Choses a card to play and plays the card
 const playCardForCom2 = (cardToPlay) => {

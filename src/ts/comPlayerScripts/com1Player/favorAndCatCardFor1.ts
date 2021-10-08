@@ -8,6 +8,7 @@ import { com1Player, com2Player, com3Player } from "../comPlayerClass.js";
 
 // Runs when com 1 has played 2 matching cat cards
 const catCardPlayed = (catCard: catCard) => {
+    // Checks if there is two matching cat cards
     if(com1Player.checkForMatchingCatCards(catCard)) {
         choseCard()
     }

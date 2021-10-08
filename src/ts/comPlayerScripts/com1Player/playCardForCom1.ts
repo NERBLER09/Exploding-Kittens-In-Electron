@@ -17,7 +17,7 @@ const playCard = (cardToPlay: card) => {
         
     // Checks if a cat card was played
     if (cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' ||
-        cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {
+        cardToPlay == 'beard cat' || cardToPlay == 'cattermellon' || cardToPlay === "feral cat") {
 
         // Checks if there's a matching cat card
         catCardPlayed(cardToPlay)

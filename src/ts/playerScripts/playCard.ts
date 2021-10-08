@@ -57,7 +57,7 @@ const playCard = (playerCard) => {
 const checkPlayerCardPlayed = (cardPLayed:card) => {
     // Checks if the player played a cat card (can't be in the switch statement because of the multiple cards)
     if(cardPLayed == 'potato cat' || cardPLayed == 'taco cat' || cardPLayed == 'rainbow ralphing cat' || 
-    cardPLayed == 'beard cat' || cardPLayed == 'cattermellon') {
+    cardPLayed == 'beard cat' || cardPLayed == 'cattermellon' || cardPLayed === "feral cat") {
         catCardPlayed(cardPLayed)
     }
 

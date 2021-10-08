@@ -60,6 +60,34 @@ class comPlayerClass implements comPlayerInterface {
     checkForMatchingCatCards(catCardToPlay: card): boolean {
         let countOfMatchingCatCards = 0
 
+        //  Checks if a feral cat is played to make it match one of the cat cards in the com player's hand
+        if(catCardToPlay === "feral cat") {
+            for(const cardsInComPlayerHand of  this.hand) {
+                switch(cardsInComPlayerHand) {
+                    case "cattermellon":
+                        catCardToPlay = "cattermellon"
+                        break
+                    case "potato cat":
+                        catCardToPlay = "potato cat"
+                        break
+                    case "taco cat":
+                        catCardToPlay = "taco cat"
+                        break
+                    case "rainbow ralphing cat":
+                        catCardToPlay = "rainbow ralphing cat"
+                        break
+                    case "beard cat":
+                        catCardToPlay = "beard cat"
+                        break
+                    case "cattermellon":
+                        catCardToPlay = "cattermellon"
+                        break
+                }
+
+                break
+            }
+        }
+
         for (let i = 0; i > this.hand.length; i++) {
             if (this.hand[i] === catCardToPlay) {
                 countOfMatchingCatCards++

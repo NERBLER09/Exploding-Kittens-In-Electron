@@ -1,5 +1,4 @@
-import { askCardForFavor } from "../com3Player/favorAndCatCard.js"
-import { catCardPlayedForCom2 } from "../com2Player/favorAndCatCard.js"
+import { askCardForFavor, catCardPlayedForCom3 } from "../com3Player/favorAndCatCard.js"
 import { com3Player } from "../comPlayerClass.js"
 import { drawCardForCom3 } from "./drawCardForCom3.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
@@ -15,9 +14,9 @@ const playCardForCom3 = (cardToPlay) => {
 
     // Checks if a cat card was played
     if(cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' || 
-    cardToPlay == 'beard cat' || cardToPlay == 'cattermellon') {
+    cardToPlay == 'beard cat' || cardToPlay == 'cattermellon' || cardToPlay === "feral cat") {
         // Checks if there's a matching cat card
-        catCardPlayedForCom2(cardToPlay)
+        catCardPlayedForCom3(cardToPlay)
     }
 
     // Plays the card (Checks what card was played)

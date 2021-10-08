@@ -6,7 +6,7 @@ import { drawCardForCom3 } from "./drawCardForCom3.js";
 import { choseCardForCom3 } from "./playCardCom3.js";
 
 // Runs when com 3 has played 2 matching cat cards
-const catCardPlayed = (catCard: catCard) => {
+const catCardPlayedForCom3 = (catCard: catCard) => {
     if(com3Player.checkForMatchingCatCards(catCard)) {
         choseCardForCom3()
     }
@@ -277,4 +277,4 @@ const askCardForFavor = (favorCardTarget) => {
     }
 }
 
-export { catCardPlayed, askCardForFavor }
+export { catCardPlayedForCom3, askCardForFavor }

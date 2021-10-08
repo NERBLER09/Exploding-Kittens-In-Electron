@@ -2,16 +2,14 @@ import { askCardForFavor, catCardPlayedForCom3 } from "../com3Player/favorAndCat
 import { com3Player } from "../comPlayerClass.js"
 import { drawCardForCom3 } from "./drawCardForCom3.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
+import { card } from "../../models/cards.interface.js"
 
 const choseCardForCom3 = () => {
     com3Player.chooseCardToPlay(playCardForCom3, drawCardForCom3)
 }
 
 // Choses a card to play and plays the card
-const playCardForCom3 = (cardToPlay) => {
-    cardToPlay = "draw from the bottom"
-    let comAmount = localStorage.getItem("comAmount")
-
+const playCardForCom3 = (cardToPlay: card) => {
     // Checks if a cat card was played
     if(cardToPlay == 'potato cat' || cardToPlay == 'taco cat' || cardToPlay == 'rainbow ralphing cat' || 
     cardToPlay == 'beard cat' || cardToPlay == 'cattermellon' || cardToPlay === "feral cat") {
@@ -74,7 +72,11 @@ const playCardForCom3 = (cardToPlay) => {
         case "alter the future":
             com3Player.playAlterTheFutureCard(drawCardForCom3, choseCardForCom3)
     
-        // TODO: Add targeted attack card
+            break
+        case "targeted attack":
+            com3Player.playTargetedAttackCard(4)
+
+            break
     }
 }
 export { choseCardForCom3 }

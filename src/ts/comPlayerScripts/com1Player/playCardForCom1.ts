@@ -115,8 +115,20 @@ const playCard = (cardToPlay: card) => {
             break
         case "alter the future":
             com1Player.playAlterTheFutureCard(drawCardForCom1, choseCardForCom1)
+        
+            break
+        case "targeted attack":
+            if(comAmount === "1comPlayer") {
+                com1Player.playTargetedAttackCard(2)
+            }
+            else if(comAmount === "2comPlayer") {
+                com1Player.playTargetedAttackCard(3)
+            }
+            else if(comAmount === "3comPlayer") {
+                com1Player.playTargetedAttackCard(4)
+            }
 
-        // TODO: Add targeted attack card
+            break
     }
 }
 

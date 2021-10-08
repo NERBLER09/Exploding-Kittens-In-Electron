@@ -14,7 +14,7 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 
 // Choses a card to play and plays the card
 const playCardForCom2 = (cardToPlay) => {
-        let comAmount = localStorage.getItem("comAmount")
+    let comAmount = localStorage.getItem("comAmount")
 
     // Checks if a cat card was played
     if(catCard.includes(cardToPlay)) {
@@ -107,8 +107,16 @@ const playCardForCom2 = (cardToPlay) => {
         case "alter the future":
             com2Player.playAlterTheFutureCard(drawCardForCom2, choseCardForCom2)
 
-        // TODO: Add targeted attack card
+            break
+        case "targeted attack":
+            if(comAmount === "2comPlayer") {
+                com2Player.playTargetedAttackCard(3)
+            }
+            else if(comAmount === "3comPlayer") {
+                com2Player.playTargetedAttackCard(4)
+            }
 
+            break
     }
 }
 export { choseCardForCom2 }

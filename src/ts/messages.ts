@@ -1,5 +1,3 @@
-// TODO: Add card face for new cards
-
 import { card, cardAmounts } from "./models/cards.interface"
 
 // Messages that might get displayed to the player

@@ -632,6 +632,31 @@ class comPlayerClass implements comPlayerInterface {
                 return null
         }
     }
+
+    /** Alters the future */
+    playAlterTheFutureCard(drawCardFunction, playCardFunction) {
+        displayMessageBox(`${this.comPlayerName} has played an alter the future card`, `${this.comPlayerName} has altered the top 3 cards of the deck`)
+
+        updateVariable("seeTheFutureCards")
+
+        const waitUntilMessageBoxIsClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxIsClosed)
+
+                // Checks if there are any more cards to card
+                if (this.cardsToPlayList.length > 0) {
+                    // Plays the card
+                    playCardFunction()
+                }
+                else {
+                    // Draws the card
+                    drawCardFunction()
+                }
+            }
+        }, 100);
+    }
+
 }
 
 const com1Player = new comPlayerClass("Com 1")

@@ -70,7 +70,11 @@ const playCardForCom3 = (cardToPlay) => {
             com3Player.drawCardForComPlayer(false, "Com 3 has drawn from the button of the deck",null, choseCardForCom3)
     
             break
-        // TODO: Add alter the future and targeted attack cards
+        
+        case "alter the future":
+            com3Player.playAlterTheFutureCard(drawCardForCom3, choseCardForCom3)
+    
+        // TODO: Add targeted attack card
     }
 }
 export { choseCardForCom3 }

@@ -113,8 +113,10 @@ const playCard = (cardToPlay: card) => {
             }    
 
             break
+        case "alter the future":
+            com1Player.playAlterTheFutureCard(drawCardForCom1, choseCardForCom1)
 
-        // TODO: Add alter the future and targeted attack cards
+        // TODO: Add targeted attack card
     }
 }
 

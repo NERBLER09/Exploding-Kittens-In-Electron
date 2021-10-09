@@ -39,6 +39,15 @@ const catCardPlayed = (catCard:card) => {
         }
     }
 
+    // Checks if there are any feral cat cards to assign the first one to the played cat card
+    for(const card of playerCardsInHand) {
+        if(card === "feral cat") {
+            playerCardsInHand[playerCardsInHand.indexOf(card)] = catCard
+            
+            break
+        }
+    }
+
     // Loops through the players hand to see if there is a matching card
     for(const cardsInPlayerHand of playerCardsInHand) {
         if(cardsInPlayerHand === catCard) {

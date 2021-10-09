@@ -36,8 +36,6 @@ const catCardPlayed = (catCard:card) => {
                     catCard = "cattermellon"
                     break
             }
-
-            break
         }
     }
 

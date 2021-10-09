@@ -11,12 +11,12 @@ const drawCardForCom2 = () => {
 
     // There is only 1 com player
     if (comAmount === "2comPlayer") {
-        com2Player.drawCardForComPlayer(false, null, choseCardForCom2)
+        com2Player.drawCardForComPlayer(false, "Com 2 has drawn a card", null, choseCardForCom2)
     }
 
     // More then 2 com players
     else {
-        com2Player.drawCardForComPlayer(true, choseCardForCom3, choseCardForCom2, "Com 3")
+        com2Player.drawCardForComPlayer(true, "Com 2 has drawn a card", choseCardForCom3, choseCardForCom2, "Com 3")
     }
 }
 

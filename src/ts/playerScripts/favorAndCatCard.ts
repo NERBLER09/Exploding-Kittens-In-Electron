@@ -13,6 +13,41 @@ import { displayCardToPlayer } from "./displayCardToPlayer.js"
 const catCardPlayed = (catCard:card) => {
     let playerHasCatCard = false
 
+    //  Checks if a feral cat is played to make it match one of the cat cards in the players hand
+    if(catCard === "feral cat") {
+        for(const cardsInPlayerHand of  playerCardsInHand) {
+            switch(cardsInPlayerHand) {
+                case "cattermellon":
+                    catCard = "cattermellon"
+                    break
+                case "potato cat":
+                    catCard = "potato cat"
+                    break
+                case "taco cat":
+                    catCard = "taco cat"
+                    break
+                case "rainbow ralphing cat":
+                    catCard = "rainbow ralphing cat"
+                    break
+                case "beard cat":
+                    catCard = "beard cat"
+                    break
+                case "cattermellon":
+                    catCard = "cattermellon"
+                    break
+            }
+        }
+    }
+
+    // Checks if there are any feral cat cards to assign the first one to the played cat card
+    for(const card of playerCardsInHand) {
+        if(card === "feral cat") {
+            playerCardsInHand[playerCardsInHand.indexOf(card)] = catCard
+            
+            break
+        }
+    }
+
     // Loops through the players hand to see if there is a matching card
     for(const cardsInPlayerHand of playerCardsInHand) {
         if(cardsInPlayerHand === catCard) {
@@ -28,7 +63,6 @@ const catCardPlayed = (catCard:card) => {
             playerHasCatCard = true
 
             break
-     
        }
     }
 

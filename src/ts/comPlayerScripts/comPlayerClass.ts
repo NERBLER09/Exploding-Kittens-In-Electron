@@ -4,6 +4,9 @@ import { cards } from "../messages.js";
 import { card, catCard } from "../models/cards.interface";
 import { checkForNopeCardInHand, checkIfNopeCardPlayed, nopePlayedCard } from "../nopePlayedCard.js";
 import { lastPlayedCard, updateDiscardPile } from "../updateDiscardPile.js";
+import { choseCard } from "./com1Player/playCardForCom1.js";
+import { choseCardForCom2 } from "./com2Player/playCardCom2.js";
+import { choseCardForCom3 } from "./com3Player/playCardCom3.js";
 
 interface comPlayerInterface {
     hand: card[],
@@ -59,6 +62,34 @@ class comPlayerClass implements comPlayerInterface {
      */
     checkForMatchingCatCards(catCardToPlay: card): boolean {
         let countOfMatchingCatCards = 0
+
+        //  Checks if a feral cat is played to make it match one of the cat cards in the com player's hand
+        if(catCardToPlay === "feral cat") {
+            for(const cardsInComPlayerHand of  this.hand) {
+                switch(cardsInComPlayerHand) {
+                    case "cattermellon":
+                        catCardToPlay = "cattermellon"
+                        break
+                    case "potato cat":
+                        catCardToPlay = "potato cat"
+                        break
+                    case "taco cat":
+                        catCardToPlay = "taco cat"
+                        break
+                    case "rainbow ralphing cat":
+                        catCardToPlay = "rainbow ralphing cat"
+                        break
+                    case "beard cat":
+                        catCardToPlay = "beard cat"
+                        break
+                    case "cattermellon":
+                        catCardToPlay = "cattermellon"
+                        break
+                }
+
+                break
+            }
+        }
 
         for (let i = 0; i > this.hand.length; i++) {
             if (this.hand[i] === catCardToPlay) {
@@ -386,7 +417,7 @@ class comPlayerClass implements comPlayerInterface {
      * 
      * @param {string} nextComPlayer Stores the name of the next com player
     */
-    drawCardForComPlayer(skipToNextComPlayer: boolean, choseCardForNextComPlayer?: Function, choseCardForCurrentComPlayer?: Function, nextComPlayer?: string) {
+    drawCardForComPlayer(skipToNextComPlayer: boolean, drawCardMessageBoxHeader: string, choseCardForNextComPlayer?: Function, choseCardForCurrentComPlayer?: Function, nextComPlayer?: string) {
         let cardDrawn: card
 
         // Checks a see the future card was drawn, if so gets the top card
@@ -420,7 +451,7 @@ class comPlayerClass implements comPlayerInterface {
 
                 switch (skipToNextComPlayer) {
                     case true:
-                        displayMessageBox(`${this.comPlayerName} has drawn a card.`, `It's now ${nextComPlayer}'s turn`)
+                        displayMessageBox(`${drawCardMessageBoxHeader}`, `It's now ${nextComPlayer}'s turn`)
 
                         const setCom2Turn = setInterval(() => {
                             // Checks if the player has closed the #message_box
@@ -435,7 +466,7 @@ class comPlayerClass implements comPlayerInterface {
 
                         break
                     case false:
-                        displayMessageBox(`${this.comPlayerName} has drawn card`, "It's now your turn")
+                        displayMessageBox(`${drawCardMessageBoxHeader}`, "It's now your turn")
 
                         // Makes it be the players turn
                         updateVariable("isPlayerTurn", true)
@@ -602,6 +633,118 @@ class comPlayerClass implements comPlayerInterface {
                 }
             default:
                 return null
+        }
+    }
+
+    /** Alters the future */
+    playAlterTheFutureCard(drawCardFunction, playCardFunction) {
+        displayMessageBox(`${this.comPlayerName} has played an alter the future card`, `${this.comPlayerName} has altered the top 3 cards of the deck`)
+
+        updateVariable("seeTheFutureCards")
+
+        const waitUntilMessageBoxIsClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxIsClosed)
+
+                // Checks if there are any more cards to card
+                if (this.cardsToPlayList.length > 0) {
+                    // Plays the card
+                    playCardFunction()
+                }
+                else {
+                    // Draws the card
+                    drawCardFunction()
+                }
+            }
+        }, 100);
+    }
+
+    /** Attacks a random player 
+     * 
+     * @param amountOfPlayers Contains how many players there are
+    */
+    playTargetedAttackCard(amountOfPlayers: number) {
+        $("#message_box").html("")
+        $("#message_box").hide()
+        
+        updateVariable("turnsNeedToPlay")
+
+        const playerTarget = Math.floor(Math.random() * amountOfPlayers)
+        let waitUntilMessageBoxIsClosed
+
+        console.log(playerTarget)
+
+        if (playerTarget === 1 && this.comPlayerName === "Com 1") {
+            this.playTargetedAttackCard(amountOfPlayers)
+
+            return ""
+        }
+        else if (playerTarget === 2 && this.comPlayerName === "Com 2") {
+            this.playTargetedAttackCard(amountOfPlayers)
+        
+            return ""
+        }
+        else if (playerTarget === 3 && this.comPlayerName === "Com 3") {
+            this.playTargetedAttackCard(amountOfPlayers)
+        
+            return ""
+        }
+
+        switch (playerTarget) {
+            // Targets the player
+            case 0:
+                displayMessageBox(`${this.comPlayerName} has played a targeted attack card`, `${this.comPlayerName} has targeted attack you. You now have ${turnsNeedToPlay} turns`)
+                updateVariable("isPlayerTurn", true)
+
+                return ""
+
+            // Targets com 1
+            case 1:
+                displayMessageBox(`${this.comPlayerName} has played a targeted attack card`, `${this.comPlayerName} has targeted Com 1, Com 1 has ${turnsNeedToPlay} turns`)
+
+                waitUntilMessageBoxIsClosed = setInterval(() => {
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxIsClosed)
+                            
+                        choseCard()
+            
+                        return ""
+                    }
+                }, 100);
+
+                return ""
+
+            // Targets com 2
+            case 2:
+                displayMessageBox(`${this.comPlayerName} has played a targeted attack card`, `${this.comPlayerName} has targeted Com 2, Com 2 has ${turnsNeedToPlay} turns`)
+
+                waitUntilMessageBoxIsClosed = setInterval(() => {
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxIsClosed)
+                        choseCardForCom2()
+                        return ""
+                    }
+                }, 100);
+
+                return ""
+
+            // Targets com 3
+            case 3:
+                displayMessageBox(`${this.comPlayerName} has played a targeted attack card`, `${this.comPlayerName} has targeted Com 3, Com 3 has ${turnsNeedToPlay} turns`)
+
+                waitUntilMessageBoxIsClosed = setInterval(() => {
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxIsClosed)
+                        choseCardForCom3()
+                        return ""
+                    }
+                }, 100);
+
+                return ""
+
+            default:
+                break
         }
     }
 }

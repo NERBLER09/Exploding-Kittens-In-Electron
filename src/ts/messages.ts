@@ -20,7 +20,12 @@ const cardAmounts: cardAmounts = {
     'rainbow ralphing cat': 5,
     'beard cat': 5,
     'cattermellon': 5,
-    'defuse': 6
+    'defuse': 6,
+    "exploding kitten": 4,
+    "draw from the bottom": 4,
+    "alter the future": 4,
+    "feral cat": 4,
+    "targeted attack": 3
 }
 
 // Creates a list containing the cards in the player hands
@@ -29,7 +34,8 @@ let playerCardsInHand = []
 // Stores the cards in the deck
 let cards: card[] = ['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
-    'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
+    'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon',
+    'draw from the bottom', "alter the future", "feral cat", "targeted attack"]
 
 // Stores if a com player has played a favor and who played the favor
 // Used when a com player asks a card from the player to give it to the right com player

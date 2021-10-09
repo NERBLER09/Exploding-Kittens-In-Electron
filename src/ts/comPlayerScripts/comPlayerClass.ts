@@ -747,6 +747,45 @@ class comPlayerClass implements comPlayerInterface {
                 break
         }
     }
+
+    /** Skips all the turns that a com player has to play
+     * 
+     * @param {boolean} skipToNextComPlayer Stores if to pass turn to a com player or to the player
+     * 
+     * @param {string=} nextComPlayer Stores the name of the next com player
+     * 
+     * @param {Function=} choseCardForNextComPlayer Stores the choseCard function for the next com player
+     * 
+    */
+   playSuperSkipCard(skipToNextComPlayer: boolean, nextComPlayer?: string, choseCardForNextComPlayer?: Function) {
+        updateVariable("resetTurnsNeedToPlay")
+    
+        // Checks if there are more then 1 com player to pass turn to the right player
+
+        switch (skipToNextComPlayer) {
+        case true:
+            // Tells the player that 
+            displayMessageBox(`${this.comPlayerName} has super skipped there turn`, `It's now ${nextComPlayer}'s turn.`)
+
+            const waitUntilMessageBoxClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxClosed)
+                    // Makes it be com 2's turn
+                    choseCardForNextComPlayer()
+                }
+            }, 100);
+
+            break
+        case false:
+            displayMessageBox(`${this.comPlayerName} has super skipped there turn`, "It's now your turn.")
+
+            // Makes it be the players turn
+            updateVariable("isPlayerTurn", true)
+
+            break
+    }
+   }
 }
 
 const com1Player = new comPlayerClass("Com 1")

@@ -117,6 +117,18 @@ const playCardForCom2 = (cardToPlay) => {
             }
 
             break
+        
+        // Cards from the Streaking Kittens expansion pack
+        case "super skip":
+            // Checks if there are 3 com player to pass turn to the right player
+            if(localStorage.getItem("comAmount") === "3comPlayer") {
+                com2Player.playSuperSkipCard(true, "Com 3", choseCardForCom3) 
+            }
+            else {
+                com2Player.playSuperSkipCard(false)
+            }
+
+            break
     }
 }
 export { choseCardForCom2 }

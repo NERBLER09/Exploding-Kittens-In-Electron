@@ -62,6 +62,8 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
         catCardPlayed(cardPLayed)
     }
 
+    let waitUntilMessageBoxIsClosed: NodeJS.Timeout
+
     switch(cardPLayed) {
         case "skip":
             updateVariable("isPlayerTurn", false) // Makes it not be the players turn
@@ -70,9 +72,9 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             if(turnsNeedToPlay <= 1) {
                 displayMessageBox("Skipped Turn","You have skipped your turn. It's now com 1's turn")
              
-                const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+                waitUntilMessageBoxIsClosed = setInterval(() => {
                     if ($("#message_box").is(":hidden")) {
-                        clearInterval(waitUntilMessageBoxClosed)
+                        clearInterval(waitUntilMessageBoxIsClosed)
                         choseCard()
                     }
                 }, 100)
@@ -93,7 +95,7 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             // Makes com 1 have 2 turns 
             updateVariable("isPlayerTurn")
 
-            const waitUntilMessageBoxIsClosed = setInterval(() => {
+            waitUntilMessageBoxIsClosed = setInterval(() => {
                 if ($("#message_box").is(":hidden")) {
                     clearInterval(waitUntilMessageBoxIsClosed)
                 
@@ -175,6 +177,21 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
         
         case "targeted attack":
             promptTargetedAttack()
+
+            break
+
+        // Cards from the Streaking Kittens expansion pack
+        case "super skip":
+            updateVariable("resetTurnsNeedToPlay")
+
+            displayMessageBox("Super skip", "You have skipped all the turns you needed to play. It's Com 1's turn.")
+
+            waitUntilMessageBoxIsClosed = setInterval(() => {
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+                    choseCard()
+                }
+            }, 100);
 
             break
     }

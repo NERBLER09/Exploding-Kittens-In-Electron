@@ -75,10 +75,10 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
                 </button>
 
                 <label for="card1-select">First Card:</label>
-                <select name="card1-select" id="card1-select">
-                    <option value="${card1}" selected>${card1}</option>
-                    <option value="${card2}">${card2}</option>
-                    <option value="${card3}">${card3}</option>
+                <select class="alter-the-future-card-select" name="card1-select" id="card1-select">
+                    <option class="alter-the-future-card-option" value="${card1}" selected>${card1}</option>
+                    <option class="alter-the-future-card-option" value="${card2}">${card2}</option>
+                    <option class="alter-the-future-card-option" value="${card3}">${card3}</option>
                 </select>
             </div>
             <div class="alter-the-future-card-container">
@@ -87,10 +87,10 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
                 </button>
 
                 <label for="card2-select">Second Card:</label>
-                <select id="card2-select">
-                    <option value="${card1}">${card1}</option>
-                    <option value="${card2}" selected>${card2}</option>
-                    <option value="${card3}">${card3}</option>
+                <select class="alter-the-future-card-select" id="card2-select">
+                    <option class="alter-the-future-card-option" value="${card1}">${card1}</option>
+                    <option class="alter-the-future-card-option" value="${card2}" selected>${card2}</option>
+                    <option class="alter-the-future-card-option" value="${card3}">${card3}</option>
                 </select>
             </div>
             <div class="alter-the-future-card-container">    
@@ -99,10 +99,10 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
                 </button>
                 
                 <label for="card3-select">Third Card:</label>
-                <select id="card3-select">
-                    <option value="${card1}">${card1}</option>
-                    <option value="${card2}">${card2}</option>
-                    <option value="${card3}" selected>${card3}</option>
+                <select class="alter-the-future-card-select" id="card3-select">
+                    <option class="alter-the-future-card-option" value="${card1}">${card1}</option>
+                    <option class="alter-the-future-card-option" value="${card2}">${card2}</option>
+                    <option class="alter-the-future-card-option" value="${card3}" selected>${card3}</option>
                 </select>
             </div>
         </div>

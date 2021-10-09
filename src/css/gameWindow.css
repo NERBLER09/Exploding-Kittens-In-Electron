@@ -143,3 +143,21 @@
 .alter-the-future-card-container img {
     height: 100%;
 }
+.alter-the-future-card-select {
+    background: var(--background-color);
+    color: var(--font-color);
+    
+    border-width: 2px;
+    border-color: black;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: var(--border-color);
+  
+    margin: 5px;
+    padding: 5px;
+
+    cursor: pointer;
+
+    width: 100%;
+}
+.alter-the-future-card-select:focus { outline: none; }

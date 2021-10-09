@@ -111,7 +111,7 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
 
     $("#message_box").append(messageBoxElement)
     $("#close-button").click(() => {
-        handleAlterTheFutureSubmit($('#card1-select :selected').text(), $('#card2-select :selected').text(), $('#card3-select :selected').text())
+        handleAlterTheFutureSubmit($('#card1-select :selected').val().toString(), $('#card2-select :selected').val().toString(), $('#card3-select :selected').val().toString())
     })
     $("#card1-select").change(() => {
         const selectCard = $('#card1-select :selected').text()
@@ -135,7 +135,7 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
 }
 
 const handleAlterTheFutureSubmit = (selectedTopCard: string, selectedMiddleCard: string, selectedBottomCard: string) => {
-    // FIXME: Throws error if there a 2 matching cards of the same type (eg, 2 nope cards will throw an error)
+    closeMessageBox()
     
     if(selectedTopCard === selectedMiddleCard || selectedTopCard === selectedBottomCard) {
         displayMessageBox("Alter the future", "It looks like you were trying to place a card in 2 places")

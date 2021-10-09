@@ -63,8 +63,6 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
     const card2PathFormatted = card2.split(" ").join("-") 
     const card3PathFormatted = card3.split(" ").join("-") 
 
-    // TODO: Have selected card change the card face in prompt 
-    
     const messageBoxElement = `
         <h2>Alter the future. Here are the top 3 cards :</h2>
         <p>(from top to bottom)</p>
@@ -76,33 +74,33 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
 
                 <label for="card1-select">First Card:</label>
                 <select class="alter-the-future-card-select" name="card1-select" id="card1-select">
-                    <option class="alter-the-future-card-option" value="${card1}" selected>${card1}</option>
-                    <option class="alter-the-future-card-option" value="${card2}">${card2}</option>
-                    <option class="alter-the-future-card-option" value="${card3}">${card3}</option>
+                    <option class="alter-the-future-card-option" value="${card1}1" selected>${card1}</option>
+                    <option class="alter-the-future-card-option" value="${card2}2">${card2}</option>
+                    <option class="alter-the-future-card-option" value="${card3}3">${card3}</option>
                 </select>
             </div>
             <div class="alter-the-future-card-container">
                 <button id="alter-the-future-card2">
-                    <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
+                    <img class="see-the-future-card" id="card2" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
                 </button>
 
                 <label for="card2-select">Second Card:</label>
                 <select class="alter-the-future-card-select" id="card2-select">
-                    <option class="alter-the-future-card-option" value="${card1}">${card1}</option>
-                    <option class="alter-the-future-card-option" value="${card2}" selected>${card2}</option>
-                    <option class="alter-the-future-card-option" value="${card3}">${card3}</option>
+                    <option class="alter-the-future-card-option" value="${card1}1">${card1}</option>
+                    <option class="alter-the-future-card-option" value="${card2}2" selected>${card2}</option>
+                    <option class="alter-the-future-card-option" value="${card3}3">${card3}</option>
                 </select>
             </div>
             <div class="alter-the-future-card-container">    
                 <button id="alter-the-future-card3">
-                    <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
+                    <img class="see-the-future-card" id="card3" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
                 </button>
                 
                 <label for="card3-select">Third Card:</label>
                 <select class="alter-the-future-card-select" id="card3-select">
-                    <option class="alter-the-future-card-option" value="${card1}">${card1}</option>
-                    <option class="alter-the-future-card-option" value="${card2}">${card2}</option>
-                    <option class="alter-the-future-card-option" value="${card3}" selected>${card3}</option>
+                    <option class="alter-the-future-card-option" value="${card1}1">${card1}</option>
+                    <option class="alter-the-future-card-option" value="${card2}2">${card2}</option>
+                    <option class="alter-the-future-card-option" value="${card3}3" selected>${card3}</option>
                 </select>
             </div>
         </div>
@@ -115,7 +113,24 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
     $("#close-button").click(() => {
         handleAlterTheFutureSubmit($('#card1-select :selected').text(), $('#card2-select :selected').text(), $('#card3-select :selected').text())
     })
-    
+    $("#card1-select").change(() => {
+        const selectCard = $('#card1-select :selected').text()
+        const cardFormatted = selectCard.split(" ").join("-")
+        const cardPath = path.join(__dirname, `../assets/cards/${cardFormatted}.png`)
+        $("#card1").attr("src", cardPath)
+    })
+    $("#card2-select").change(() => {
+        const selectCard = $('#card2-select :selected').text()
+        const cardFormatted = selectCard.split(" ").join("-")
+        const cardPath = path.join(__dirname, `../assets/cards/${cardFormatted}.png`)
+        $("#card2").attr("src", cardPath)
+    })
+    $("#card3-select").change(() => {
+        const selectCard = $('#card3-select :selected').text()
+        const cardFormatted = selectCard.split(" ").join("-")
+        const cardPath = path.join(__dirname, `../assets/cards/${cardFormatted}.png`)
+        $("#card3").attr("src", cardPath)
+    })
     $("#message_box").show()
 }
 

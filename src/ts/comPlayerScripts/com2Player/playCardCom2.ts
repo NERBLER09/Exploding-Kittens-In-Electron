@@ -143,6 +143,10 @@ const playCardForCom2 = (cardToPlay) => {
             com2Player.playSeeTheFutureCard(drawCardForCom2, choseCardForCom2)
 
             break        
-    }
+        case "alter the future x5":
+            com2Player.playAlterTheFutureCard(drawCardForCom2, choseCardForCom2)
+        
+            break
+}
 }
 export { choseCardForCom2 }

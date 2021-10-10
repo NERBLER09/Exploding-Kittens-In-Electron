@@ -161,3 +161,12 @@
     width: 100%;
 }
 .alter-the-future-card-select:focus { outline: none; }
+.see-the-future-cards5-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.see-the-future-cards5-container button{
+    width: fit-content;
+}

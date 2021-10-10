@@ -183,10 +183,48 @@ const handleAlterTheFutureSubmit = (selectedTopCard: string, selectedMiddleCard:
         }, 100);
     }
 }
+/** Displays a message box to the player with the top 3 cards */
+const displaySeeTheFutureCards5 = (card1: string, card2: string, card3: string, card4:string, card5:string) => {
+    const card1PathFormatted = card1.split(" ").join("-") 
+    const card2PathFormatted = card2.split(" ").join("-") 
+    const card3PathFormatted = card3.split(" ").join("-") 
+    const card4PathFormatted = card4.split(" ").join("-") 
+    const card5PathFormatted = card5.split(" ").join("-") 
+    
+    const messageBoxElement = `
+        <h2>The top five cards are:</h2>
+        <p>(from top to bottom)</p>
+        <div class="see-the-future-cards5-container see-the-future-cards-container">
+            <button>
+                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card1PathFormatted}.png`)}">
+            </button>
+            <button>
+                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
+            </button>
+            <button>
+                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
+            </button>
+            <button>
+                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card4PathFormatted}.png`)}">
+            </button>
+            <button>
+                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card5PathFormatted}.png`)}">
+            </button>
+        </div>
+
+
+        <button id="close-button">Close</button>
+    `
+
+    $("#message_box").append(messageBoxElement)
+    $("#close-button").click(closeMessageBox)
+    $("#message_box").show()
+}
 
 export {
     displayMessageBox,
     displaySeeTheFutureCards,
     explodedMessageBox,
-    showAlterTheFutureMessageBox
+    showAlterTheFutureMessageBox,
+    displaySeeTheFutureCards5
 }

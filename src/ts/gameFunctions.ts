@@ -47,7 +47,7 @@ const removeDrawnCardFromDeck = (cardToRemoveFromDeck: card) => {
 }
 
 type updateVariableType = "isPlayerTurn" | "turnsNeedToPlay" | "seeTheFutureCards" | "removeFromTurnsNeedToPlay" |
-"explodingKittenCardDrawn" | "resetTurnsNeedToPlay" | "resetSeeTheFutureCards"
+"explodingKittenCardDrawn" | "resetTurnsNeedToPlay" | "resetSeeTheFutureCards" | "seeTheFutureCards5"
 
 // Updates a specified variable
 const updateVariable = (variableToUpdate: updateVariableType, status?: boolean) => {
@@ -84,6 +84,21 @@ const updateVariable = (variableToUpdate: updateVariableType, status?: boolean) 
                 seeTheFutureCards.splice(0, 1)
             }
 
+            break
+        case "seeTheFutureCards5":
+            // Adds the top 3 cards to the list
+            for(let i = 5; i > 0; i--) {
+                if(seeTheFutureCards.length === 5) {
+                    break
+                }
+                
+                seeTheFutureCards[i] = cards[Math.floor(Math.random() * cards.length)]
+            }
+
+            if(!seeTheFutureCards[0]) {
+                seeTheFutureCards.splice(0, 1)
+            }
+        
             break
         case "removeFromTurnsNeedToPlay":
             turnsNeedToPlay-=1

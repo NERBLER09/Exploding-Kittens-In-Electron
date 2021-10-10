@@ -1,6 +1,6 @@
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
-import { displayMessageBox, displaySeeTheFutureCards, showAlterTheFutureMessageBox } from "../messageBox.js"
+import { displayMessageBox, displaySeeTheFutureCards, displaySeeTheFutureCards5, showAlterTheFutureMessageBox } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
 import { updateDiscardPile } from "../updateDiscardPile.js"
@@ -219,6 +219,14 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
                     choseCard()
                 }
             }, 100);
+
+            break
+        case "see the future x5":
+            updateVariable("seeTheFutureCards5")
+            
+            displaySeeTheFutureCards5(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2], seeTheFutureCards[3], seeTheFutureCards[4])
+
+            break
     }
 }
 export {

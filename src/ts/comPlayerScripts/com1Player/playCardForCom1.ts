@@ -152,6 +152,10 @@ const playCard = (cardToPlay: card) => {
             }
 
             break
+        case "see the future x5":
+            com1Player.playSeeTheFutureCard(drawCardForCom1, choseCardForCom1)
+
+            break
     }
 }
 

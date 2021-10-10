@@ -232,8 +232,6 @@ const displayAlterTheFutureCards5 = (card1: string, card2: string, card3: string
     const card4PathFormatted = card4.split(" ").join("-") 
     const card5PathFormatted = card5.split(" ").join("-") 
 
-    // FIXME: Fix overflowing issue 
-
     const messageBoxElement = `
         <h2>Alter the future. Here are the top 3 cards :</h2>
         <p>(from top to bottom)</p>

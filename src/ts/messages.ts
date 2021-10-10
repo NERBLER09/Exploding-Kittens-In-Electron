@@ -30,7 +30,8 @@ const cardAmounts: cardAmounts = {
     "catomic bomb": 1,
     "see the future x5": 1,
     "alter the future x5": 1,
-    "swap top and bottom": 3
+    "swap top and bottom": 3,
+    "streaking kitten": 1
 }
 
 // Creates a list containing the cards in the player hands
@@ -42,7 +43,7 @@ let cards: card[] = ['nope', 'attack',
     'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon',
     'draw from the bottom', "alter the future", "feral cat", "targeted attack",
     "super skip", "catomic bomb", "see the future x5", "alter the future x5",
-    "swap top and bottom"]
+    "swap top and bottom", "streaking kitten"]
 
 // Stores if a com player has played a favor and who played the favor
 // Used when a com player asks a card from the player to give it to the right com player

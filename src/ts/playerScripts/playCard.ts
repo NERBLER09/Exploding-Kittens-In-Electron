@@ -242,6 +242,22 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             }
 
             break
+        case "streaking kitten":
+            displayMessageBox("Streaking kitten","It looks like you can't play a Streaking Kitten")
+
+            // Re-adds the card back to the player's hand
+            displayCardToPlayer(cardPLayed)
+
+            break
+
+        case "exploding kitten":
+            displayMessageBox("Exploding kitten", "It looks like you can't play an Exploding Kitten")
+
+            // Re-adds the card back to the player's hand
+            displayCardToPlayer(cardPLayed)
+
+            break
+
     }
 }
 export {

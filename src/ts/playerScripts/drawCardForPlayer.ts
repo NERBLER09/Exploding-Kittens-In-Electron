@@ -4,6 +4,7 @@ import { displayMessageBox, explodedMessageBox } from "../messageBox.js"
 import { cards, comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
+import { playCard } from "./playCard.js"
 
 // Draws a card for the player
 const drawCardForPlayer = (cardCardMessageBoxHeader: string) => {
@@ -85,6 +86,45 @@ const explodingKittenDraw = () => {
     let playerHasDefuse = false
 
     for(const playerCard in playerCardsInHand) {
+        if(playerCardsInHand[playerCard] === "streaking kitten") {
+            displayCardToPlayer("exploding kitten")
+
+            // Removes the drawn "exploding kitten" from the deck
+            removeDrawnCardFromDeck("exploding kitten")
+
+            // Displays the drawn "exploding kitten"
+            displayCardToPlayer("exploding kitten")
+
+            // Removes 1 from the turnsNeedToPlay if turnsNeedToPlay is not 0
+            if(turnsNeedToPlay > 0) {
+                updateVariable("removeFromTurnsNeedToPlay")
+            }
+
+            // Checks if the player has any more cars
+            updateVariable("isPlayerTurn", turnsNeedToPlay <= 0 ? false : true)
+
+            // Changes the current_player_turn text
+            if(isPlayerTurn === false && comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] === null && turnsNeedToPlay <= 0) {
+                displayMessageBox("Streaking Kitten", "The Exploding Kitten you've draw has been added to your hand because you had a Streaking Kitten card in your hand.")
+
+                // Resets turnsNeedToPlay to 0 to fix some bugs
+                updateVariable("resetTurnsNeedToPlay")
+
+                // Sets a time pause 
+                const setCom1Turn = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if($("#message_box").is(":hidden") ) {
+                        clearInterval(setCom1Turn)
+
+                        // Makes it be com 1's turn
+                        choseCard()
+                    }
+                }, 100);
+            }
+            else{
+                displayMessageBox("Streaking Kitten", `The Exploding Kitten you've draw has been added to your hand because you had a Streaking Kitten card in your hand. You have ${turnsNeedToPlay} turn(s) remaining.`)
+            }
+        }
         if(playerCardsInHand[playerCard] === "defuse"){
             displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your defuse card to defuse the Exploding Kitten")
 

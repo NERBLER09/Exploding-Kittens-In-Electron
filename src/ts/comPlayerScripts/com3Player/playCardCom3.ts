@@ -81,6 +81,11 @@ const playCardForCom3 = (cardToPlay: card) => {
         // Cards from the Streaking Kittens expansion pack
         case "super skip":
             com3Player.playSuperSkipCard(false)
+            break
+        case "catomic bomb":
+            com3Player.playCatomicBomb(false)
+
+            break
     }
 }
 export { choseCardForCom3 }

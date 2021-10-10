@@ -24,7 +24,7 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 
 /** Class holds reusable functions from the com players 
  * 
- * @param comPlayerName Takes the name of the current com player 
+ * @constructor comPlayerName Takes the name of the current com player 
 */
 class comPlayerClass implements comPlayerInterface {
     hand = []
@@ -785,6 +785,59 @@ class comPlayerClass implements comPlayerInterface {
 
             break
     }
+   }
+
+    /** Moves all the Exploding Kittens to the top of the deck 
+     * 
+    * 
+     * @param {boolean} skipToNextComPlayer - Stores if to pass the turn to the next com player
+     * 
+     * @param {string=} nextComPlayer - Stores the name of the next com player
+     * 
+     * @param {() => void=} choseCardForNextComPlayer - The choseCard function for the next com player
+     */
+   playCatomicBomb(skipToNextComPlayer: boolean, nextComPlayer?: string, choseCardForNextComPlayer?:() => void): void {
+        const comAmount = localStorage.getItem("comAmount")
+
+        if(comAmount === "1comPlayer") {
+            seeTheFutureCards[0] = "exploding kitten"
+        }
+        else if(comAmount === "2comPlayer") {
+            seeTheFutureCards[0] = "exploding kitten"
+            seeTheFutureCards[1] = "exploding kitten"
+        }
+        else if(comAmount === "3comPlayer") {
+            seeTheFutureCards[0] = "exploding kitten"
+            seeTheFutureCards[1] = "exploding kitten"
+            seeTheFutureCards[2] = "exploding kitten"
+        }
+
+        // Checks if there are more then 1 com player to pass turn to the right player
+
+        switch (skipToNextComPlayer) {
+            case true:
+                // Tells the player that 
+                displayMessageBox("Catomic bomb", `${this.comPlayerName} has moved all the Exploding Kitten cards to the top. It's now ${nextComPlayer}'s turn`)
+
+                const waitUntilMessageBoxClosed = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxClosed)
+                        // Makes it be com 2's turn
+                        choseCardForNextComPlayer()
+                    }
+                }, 100);
+
+                break
+            case false:
+                displayMessageBox("Catomic bomb", `${this.comPlayerName} has moved all the Exploding Kitten cards to the top. It's now your turn`)
+
+                // Makes it be the players turn
+                updateVariable("isPlayerTurn", true)
+
+                break
+        }
+
    }
 }
 

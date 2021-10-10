@@ -141,6 +141,17 @@ const playCard = (cardToPlay: card) => {
             }
 
             break
+
+        case "catomic bomb":
+            // Checks if there are more then 1 com player to pass turn to the right player
+            if (localStorage.getItem("comAmount") === "1comPlayer") {
+                com1Player.playCatomicBomb(false)
+            }
+            else {
+                com1Player.playCatomicBomb(true, "Com 2", choseCardForCom2) 
+            }
+
+            break
     }
 }
 

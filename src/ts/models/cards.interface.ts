@@ -2,7 +2,7 @@ type catCard = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" 
 
 type card = "potato cat" | "taco cat" | "rainbow ralphing cat" | "beard cat" | "cattermellon" | "nope" | "attack" | 
 "favor" | "shuffle" | "see the future" | "defuse" | "exploding kitten" | "skip" | "draw from the bottom" | "alter the future" |
-"feral cat" | "targeted attack" | "super skip"
+"feral cat" | "targeted attack" | "super skip" | "catomic bomb"
 
 type cardAmounts = {
     [key in card]: number

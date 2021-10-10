@@ -31,7 +31,6 @@ const playCard = (playerCard) => {
     if(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]){
         // Gets the index of the played card from the players hand
         const cardIndex = playerCardsInHand.indexOf(cardPlayed)
-        console.log("Test")
         
         giveFavorCardToComPlayer(cardIndex)
     }
@@ -194,6 +193,32 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             }, 100);
 
             break
+            
+        case "catomic bomb":
+            const comAmount = localStorage.getItem("comAmount")
+
+            if(comAmount === "1comPlayer") {
+                seeTheFutureCards[0] = "exploding kitten"
+            }
+            else if(comAmount === "2comPlayer") {
+                seeTheFutureCards[0] = "exploding kitten"
+                seeTheFutureCards[1] = "exploding kitten"
+            }
+            else if(comAmount === "3comPlayer") {
+                seeTheFutureCards[0] = "exploding kitten"
+                seeTheFutureCards[1] = "exploding kitten"
+                seeTheFutureCards[2] = "exploding kitten"
+            }
+
+            displayMessageBox("Catomic bomb", "You have moved all the Exploding Kitten cards to the top. It's now Com 1's turn")
+            
+            waitUntilMessageBoxIsClosed = setInterval(() => {
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+
+                    choseCard()
+                }
+            }, 100);
     }
 }
 export {

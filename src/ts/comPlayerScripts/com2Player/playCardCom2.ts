@@ -129,6 +129,17 @@ const playCardForCom2 = (cardToPlay) => {
             }
 
             break
+        case "catomic bomb":
+            // Checks if there are 3 com player to pass turn to the right player
+            if(localStorage.getItem("comAmount") === "3comPlayer") {
+                com2Player.playSkipCard(true, "Com 3", choseCardForCom3) 
+            }
+            else {
+                com2Player.playSkipCard(false)
+            }
+
+            break
+        
     }
 }
 export { choseCardForCom2 }

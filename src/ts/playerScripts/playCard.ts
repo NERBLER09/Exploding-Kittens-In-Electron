@@ -1,6 +1,6 @@
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
-import { displayMessageBox, displaySeeTheFutureCards, showAlterTheFutureMessageBox } from "../messageBox.js"
+import { displayAlterTheFutureCards5, displayMessageBox, displaySeeTheFutureCards, displaySeeTheFutureCards5, showAlterTheFutureMessageBox } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
 import { updateDiscardPile } from "../updateDiscardPile.js"
@@ -31,7 +31,6 @@ const playCard = (playerCard) => {
     if(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]){
         // Gets the index of the played card from the players hand
         const cardIndex = playerCardsInHand.indexOf(cardPlayed)
-        console.log("Test")
         
         giveFavorCardToComPlayer(cardIndex)
     }
@@ -62,6 +61,8 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
         catCardPlayed(cardPLayed)
     }
 
+    let waitUntilMessageBoxIsClosed: NodeJS.Timeout
+
     switch(cardPLayed) {
         case "skip":
             updateVariable("isPlayerTurn", false) // Makes it not be the players turn
@@ -70,9 +71,9 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             if(turnsNeedToPlay <= 1) {
                 displayMessageBox("Skipped Turn","You have skipped your turn. It's now com 1's turn")
              
-                const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
+                waitUntilMessageBoxIsClosed = setInterval(() => {
                     if ($("#message_box").is(":hidden")) {
-                        clearInterval(waitUntilMessageBoxClosed)
+                        clearInterval(waitUntilMessageBoxIsClosed)
                         choseCard()
                     }
                 }, 100)
@@ -93,7 +94,7 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             // Makes com 1 have 2 turns 
             updateVariable("isPlayerTurn")
 
-            const waitUntilMessageBoxIsClosed = setInterval(() => {
+            waitUntilMessageBoxIsClosed = setInterval(() => {
                 if ($("#message_box").is(":hidden")) {
                     clearInterval(waitUntilMessageBoxIsClosed)
                 
@@ -136,8 +137,6 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
 
                 updateVariable("resetTurnsNeedToPlay")
 
-                updateVariable("turnsNeedToPlay", false)
-
                 // Sets a time pause
                 const setCom1Turn = setInterval(() => {
                     // Checks if the player has closed the #message_box
@@ -177,6 +176,86 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             promptTargetedAttack()
 
             break
+
+        // Cards from the Streaking Kittens expansion pack
+        case "super skip":
+            updateVariable("resetTurnsNeedToPlay")
+
+            displayMessageBox("Super skip", "You have skipped all the turns you needed to play. It's Com 1's turn.")
+
+            waitUntilMessageBoxIsClosed = setInterval(() => {
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+                    choseCard()
+                }
+            }, 100);
+
+            break
+            
+        case "catomic bomb":
+            const comAmount = localStorage.getItem("comAmount")
+
+            if(comAmount === "1comPlayer") {
+                seeTheFutureCards[0] = "exploding kitten"
+            }
+            else if(comAmount === "2comPlayer") {
+                seeTheFutureCards[0] = "exploding kitten"
+                seeTheFutureCards[1] = "exploding kitten"
+            }
+            else if(comAmount === "3comPlayer") {
+                seeTheFutureCards[0] = "exploding kitten"
+                seeTheFutureCards[1] = "exploding kitten"
+                seeTheFutureCards[2] = "exploding kitten"
+            }
+
+            displayMessageBox("Catomic bomb", "You have moved all the Exploding Kitten cards to the top. It's now Com 1's turn")
+            
+            waitUntilMessageBoxIsClosed = setInterval(() => {
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxIsClosed)
+
+                    choseCard()
+                }
+            }, 100);
+
+            break
+        case "see the future x5":
+            updateVariable("seeTheFutureCards5")
+            
+            displaySeeTheFutureCards5(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2], seeTheFutureCards[3], seeTheFutureCards[4])
+
+            break
+
+        case "alter the future x5":
+            updateVariable("seeTheFutureCards5")
+            
+            displayAlterTheFutureCards5(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2], seeTheFutureCards[3], seeTheFutureCards[4])
+
+            break   
+        case "swap top and bottom":
+            displayMessageBox("Swap top and bottom", "You have swapped the top and bottom cards")
+            
+            if(seeTheFutureCards[0] !== undefined) {
+                seeTheFutureCards.splice(0,1)
+            }
+
+            break
+        case "streaking kitten":
+            displayMessageBox("Streaking kitten","It looks like you can't play a Streaking Kitten")
+
+            // Re-adds the card back to the player's hand
+            displayCardToPlayer(cardPLayed)
+
+            break
+
+        case "exploding kitten":
+            displayMessageBox("Exploding kitten", "It looks like you can't play an Exploding Kitten")
+
+            // Re-adds the card back to the player's hand
+            displayCardToPlayer(cardPLayed)
+
+            break
+
     }
 }
 export {

@@ -158,6 +158,25 @@
 
     cursor: pointer;
 
-    width: 100%;
+    width: fit-content;
 }
 .alter-the-future-card-select:focus { outline: none; }
+.see-the-future-cards5-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+.see-the-future-cards5-container button {
+    width: fit-content;
+}
+.alter-the-future-card-container {
+    width: fit-content;
+}
+.alter-thw-future-container {
+    height: 100%;
+    max-height: calc(100vh/3);
+    overflow-y: auto;
+}

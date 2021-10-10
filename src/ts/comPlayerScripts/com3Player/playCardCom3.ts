@@ -77,6 +77,27 @@ const playCardForCom3 = (cardToPlay: card) => {
             com3Player.playTargetedAttackCard(4)
 
             break
+
+        // Cards from the Streaking Kittens expansion pack
+        case "super skip":
+            com3Player.playSuperSkipCard(false)
+            break
+        case "catomic bomb":
+            com3Player.playCatomicBomb(false)
+
+            break
+        case "see the future x5":
+            com3Player.playSeeTheFutureCard(drawCardForCom3, choseCardForCom3)
+
+            break
+        case "alter the future x5":
+            com3Player.playAlterTheFutureCard(drawCardForCom3, choseCardForCom3)
+        
+            break
+        case "swap top and bottom":
+            com3Player.playSwapTopAndBottom(drawCardForCom3, choseCardForCom3)
+            
+            break
     }
 }
 export { choseCardForCom3 }

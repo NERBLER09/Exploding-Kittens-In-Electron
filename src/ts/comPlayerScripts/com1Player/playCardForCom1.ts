@@ -129,6 +129,41 @@ const playCard = (cardToPlay: card) => {
             }
 
             break
+
+        // Cards from the Streaking Kittens expansion pack
+        case "super skip":
+            // Checks if there are more then 1 com player to pass turn to the right player
+            if (localStorage.getItem("comAmount") === "1comPlayer") {
+                com1Player.playSuperSkipCard(false)
+            }
+            else {
+                com1Player.playSuperSkipCard(true, "Com 2", choseCardForCom2) 
+            }
+
+            break
+
+        case "catomic bomb":
+            // Checks if there are more then 1 com player to pass turn to the right player
+            if (localStorage.getItem("comAmount") === "1comPlayer") {
+                com1Player.playCatomicBomb(false)
+            }
+            else {
+                com1Player.playCatomicBomb(true, "Com 2", choseCardForCom2) 
+            }
+
+            break
+        case "see the future x5":
+            com1Player.playSeeTheFutureCard(drawCardForCom1, choseCardForCom1)
+
+            break
+        case "alter the future x5":
+            com1Player.playAlterTheFutureCard(drawCardForCom1, choseCardForCom1)
+        
+            break
+        case "swap top and bottom":
+            com1Player.playSwapTopAndBottom(drawCardForCom1, choseCardForCom1)
+        
+            break
     }
 }
 

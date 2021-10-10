@@ -24,7 +24,7 @@ const catCard: catCard[] = ["potato cat", "taco cat", "rainbow ralphing cat", "b
 
 /** Class holds reusable functions from the com players 
  * 
- * @param comPlayerName Takes the name of the current com player 
+ * @constructor comPlayerName Takes the name of the current com player 
 */
 class comPlayerClass implements comPlayerInterface {
     hand = []
@@ -631,6 +631,22 @@ class comPlayerClass implements comPlayerInterface {
                 else {
                     return decideCardsToPlayList
                 }
+            case "catomic bomb":
+                possibleCardsToPlay = ["shuffle", "attack", "targeted attack", "skip", "super skip"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+             
             default:
                 return null
         }
@@ -747,6 +763,129 @@ class comPlayerClass implements comPlayerInterface {
                 break
         }
     }
+
+    /** Skips all the turns that a com player has to play
+     * 
+     * @param {boolean} skipToNextComPlayer Stores if to pass turn to a com player or to the player
+     * 
+     * @param {string=} nextComPlayer Stores the name of the next com player
+     * 
+     * @param {Function=} choseCardForNextComPlayer Stores the choseCard function for the next com player
+     * 
+    */
+   playSuperSkipCard(skipToNextComPlayer: boolean, nextComPlayer?: string, choseCardForNextComPlayer?: Function) {
+        updateVariable("resetTurnsNeedToPlay")
+    
+        // Checks if there are more then 1 com player to pass turn to the right player
+
+        switch (skipToNextComPlayer) {
+        case true:
+            // Tells the player that 
+            displayMessageBox(`${this.comPlayerName} has super skipped there turn`, `It's now ${nextComPlayer}'s turn.`)
+
+            const waitUntilMessageBoxClosed = setInterval(() => {
+                // Checks if the player has closed the #message_box
+                if ($("#message_box").is(":hidden")) {
+                    clearInterval(waitUntilMessageBoxClosed)
+                    // Makes it be com 2's turn
+                    choseCardForNextComPlayer()
+                }
+            }, 100);
+
+            break
+        case false:
+            displayMessageBox(`${this.comPlayerName} has super skipped there turn`, "It's now your turn.")
+
+            // Makes it be the players turn
+            updateVariable("isPlayerTurn", true)
+
+            break
+    }
+   }
+
+    /** Moves all the Exploding Kittens to the top of the deck 
+     * 
+    * 
+     * @param {boolean} skipToNextComPlayer - Stores if to pass the turn to the next com player
+     * 
+     * @param {string=} nextComPlayer - Stores the name of the next com player
+     * 
+     * @param {() => void=} choseCardForNextComPlayer - The choseCard function for the next com player
+     */
+   playCatomicBomb(skipToNextComPlayer: boolean, nextComPlayer?: string, choseCardForNextComPlayer?:() => void): void {
+        const comAmount = localStorage.getItem("comAmount")
+
+        if(comAmount === "1comPlayer") {
+            seeTheFutureCards[0] = "exploding kitten"
+        }
+        else if(comAmount === "2comPlayer") {
+            seeTheFutureCards[0] = "exploding kitten"
+            seeTheFutureCards[1] = "exploding kitten"
+        }
+        else if(comAmount === "3comPlayer") {
+            seeTheFutureCards[0] = "exploding kitten"
+            seeTheFutureCards[1] = "exploding kitten"
+            seeTheFutureCards[2] = "exploding kitten"
+        }
+
+        // Checks if there are more then 1 com player to pass turn to the right player
+
+        switch (skipToNextComPlayer) {
+            case true:
+                // Tells the player that 
+                displayMessageBox("Catomic bomb", `${this.comPlayerName} has moved all the Exploding Kitten cards to the top. It's now ${nextComPlayer}'s turn`)
+
+                const waitUntilMessageBoxClosed = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(waitUntilMessageBoxClosed)
+                        // Makes it be com 2's turn
+                        choseCardForNextComPlayer()
+                    }
+                }, 100);
+
+                break
+            case false:
+                displayMessageBox("Catomic bomb", `${this.comPlayerName} has moved all the Exploding Kitten cards to the top. It's now your turn`)
+
+                // Makes it be the players turn
+                updateVariable("isPlayerTurn", true)
+
+                break
+        }
+
+   }
+
+   /** Swaps the top card of the deck with the bottom card of the deck */
+   playSwapTopAndBottom(drawCardFunction: () => void, playCardFunction: () => void) {
+        displayMessageBox("Swap top and bottom", "You have swapped the top and bottom cards")
+                
+        if(seeTheFutureCards[0] !== undefined) {
+            seeTheFutureCards.splice(0,1)
+        }
+
+        const waitUntilMessageBoxIsClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxIsClosed)
+
+                // Checks if there are any more cards to card
+                if (this.cardsToPlayList.length > 0) {
+                    // Plays the card
+                    playCardFunction()
+
+                    return ""
+                }
+                else {
+                    // Draws the card
+                    drawCardFunction()
+
+                    return ""
+                }
+            }
+        }, 100);
+       
+   }
 }
 
 const com1Player = new comPlayerClass("Com 1")

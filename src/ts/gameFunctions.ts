@@ -16,7 +16,7 @@ let isPlayerTurn: any
 let turnsNeedToPlay = 1
 
 // Contains how many total cards are in the deck
-let totalCardAmount = 78
+let totalCardAmount = 86
 
 // Stores the cards seen in a see the future
 let seeTheFutureCards = []

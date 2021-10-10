@@ -87,6 +87,8 @@ const explodingKittenDraw = () => {
 
     for(const playerCard in playerCardsInHand) {
         if(playerCardsInHand[playerCard] === "streaking kitten") {
+            playerHasDefuse = true
+
             displayCardToPlayer("exploding kitten")
 
             // Removes the drawn "exploding kitten" from the deck

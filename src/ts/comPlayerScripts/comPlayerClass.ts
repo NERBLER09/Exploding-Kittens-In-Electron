@@ -631,6 +631,22 @@ class comPlayerClass implements comPlayerInterface {
                 else {
                     return decideCardsToPlayList
                 }
+            case "catomic bomb":
+                possibleCardsToPlay = ["shuffle", "attack", "targeted attack", "skip", "super skip"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+             
             default:
                 return null
         }

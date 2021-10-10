@@ -4,7 +4,6 @@ import { displayMessageBox, explodedMessageBox } from "../messageBox.js"
 import { cards, comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
 import { displayCardToPlayer } from "./displayCardToPlayer.js"
-import { playCard } from "./playCard.js"
 
 // Draws a card for the player
 const drawCardForPlayer = (cardCardMessageBoxHeader: string) => {
@@ -75,7 +74,10 @@ const drawCardForPlayer = (cardCardMessageBoxHeader: string) => {
                 explodingKittenDraw()
             }
         }  
-    }           
+    }
+    else if(comPlayerPlayedFavor["favorCardPlayed"]) {
+        displayMessageBox("Can I have a favor?", `It looks like you need to gave a favor card to ${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]}`)
+    }      
 }
 
 /** Runs when the player draws an exploding kitten card*/

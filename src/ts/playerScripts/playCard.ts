@@ -137,8 +137,6 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
 
                 updateVariable("resetTurnsNeedToPlay")
 
-                updateVariable("turnsNeedToPlay", false)
-
                 // Sets a time pause
                 const setCom1Turn = setInterval(() => {
                     // Checks if the player has closed the #message_box

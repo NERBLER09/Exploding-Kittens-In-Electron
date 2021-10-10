@@ -86,10 +86,9 @@ const explodingKittenDraw = () => {
     let playerHasDefuse = false
 
     for(const playerCard in playerCardsInHand) {
-        if(playerCardsInHand[playerCard] === "streaking kitten") {
+        if(playerCardsInHand[playerCard] === "streaking kitten" && !checkForExplodingKittenInHand()) {
             playerHasDefuse = true
-
-            displayCardToPlayer("exploding kitten")
+            updateVariable("explodingKittenCardDrawn", false)
 
             // Removes the drawn "exploding kitten" from the deck
             removeDrawnCardFromDeck("exploding kitten")
@@ -126,8 +125,10 @@ const explodingKittenDraw = () => {
             else{
                 displayMessageBox("Streaking Kitten", `The Exploding Kitten you've draw has been added to your hand because you had a Streaking Kitten card in your hand. You have ${turnsNeedToPlay} turn(s) remaining.`)
             }
+
+            break
         }
-        if(playerCardsInHand[playerCard] === "defuse"){
+        if(playerCardsInHand[playerCard] === "defuse" && !playerHasDefuse){
             displayMessageBox("Exploding Kitten!","You've drawn an Exploding Kitten card, play your defuse card to defuse the Exploding Kitten")
 
             playerHasDefuse = true
@@ -147,6 +148,19 @@ const explodingKittenDraw = () => {
         // Removes the Exploding Kitten card from the deck
         removeDrawnCardFromDeck("exploding kitten")
     }
+}
+
+/** Checks if there is an Exploding Kitten in the players hand 
+ * 
+ * @returns {boolean} Returns if there is an Exploding Kitten card in the player's hand
+*/
+const checkForExplodingKittenInHand = () => {
+   for(const card of playerCardsInHand) {
+       if(card === "exploding kitten") {
+           return true
+       }
+   }
+   return false 
 }
 
 export { drawCardForPlayer }

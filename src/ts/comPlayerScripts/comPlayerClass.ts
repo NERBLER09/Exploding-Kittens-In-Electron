@@ -839,6 +839,37 @@ class comPlayerClass implements comPlayerInterface {
         }
 
    }
+
+   /** Swaps the top card of the deck with the bottom card of the deck */
+   playSwapTopAndBottom(drawCardFunction: () => void, playCardFunction: () => void) {
+        displayMessageBox("Swap top and bottom", "You have swapped the top and bottom cards")
+                
+        if(seeTheFutureCards[0] !== undefined) {
+            seeTheFutureCards.splice(0,1)
+        }
+
+        const waitUntilMessageBoxIsClosed = setInterval(() => {
+            // Checks if the player has closed the #message_box
+            if ($("#message_box").is(":hidden")) {
+                clearInterval(waitUntilMessageBoxIsClosed)
+
+                // Checks if there are any more cards to card
+                if (this.cardsToPlayList.length > 0) {
+                    // Plays the card
+                    playCardFunction()
+
+                    return ""
+                }
+                else {
+                    // Draws the card
+                    drawCardFunction()
+
+                    return ""
+                }
+            }
+        }, 100);
+       
+   }
 }
 
 const com1Player = new comPlayerClass("Com 1")

@@ -147,6 +147,10 @@ const playCardForCom2 = (cardToPlay) => {
             com2Player.playAlterTheFutureCard(drawCardForCom2, choseCardForCom2)
         
             break
-}
+        case "swap top and bottom":
+            com2Player.playSwapTopAndBottom(drawCardForCom2, choseCardForCom2)
+        
+            break
+    }
 }
 export { choseCardForCom2 }

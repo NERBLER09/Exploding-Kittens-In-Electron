@@ -233,7 +233,15 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             
             displayAlterTheFutureCards5(seeTheFutureCards[0],seeTheFutureCards[1], seeTheFutureCards[2], seeTheFutureCards[3], seeTheFutureCards[4])
 
-            break    
+            break   
+        case "swap top and bottom":
+            displayMessageBox("Swap top and bottom", "You have swapped the top and bottom cards")
+            
+            if(seeTheFutureCards[0] !== undefined) {
+                seeTheFutureCards.splice(0,1)
+            }
+
+            break
     }
 }
 export {

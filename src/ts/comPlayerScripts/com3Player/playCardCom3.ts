@@ -94,6 +94,10 @@ const playCardForCom3 = (cardToPlay: card) => {
             com3Player.playAlterTheFutureCard(drawCardForCom3, choseCardForCom3)
         
             break
+        case "swap top and bottom":
+            com3Player.playSwapTopAndBottom(drawCardForCom3, choseCardForCom3)
+            
+            break
     }
 }
 export { choseCardForCom3 }

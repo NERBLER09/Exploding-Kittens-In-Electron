@@ -9,10 +9,10 @@ const closeMessageBox = ()  => {
     $("#message_box").hide()
 }
 
-const showAboutMessageBox = () => {
+const showAboutMessageBox = (appVersion) => {
     const messageBoxElement = `
-        <h2>About</h2>
-        <p>Version: 1.2.1</p>
+        <h2>About Exploding Kittens In Electron</h2>
+        <p>Version: ${appVersion}</p>
         <p>Created by NERBLER09 on Github</p>
         <p>Licensed under the MIT Licence</p>
         <p>Go to: Other -> Open Issue to report a bug or submit a feature suggestion</p>
@@ -23,6 +23,7 @@ const showAboutMessageBox = () => {
     $("#message_box").html(messageBoxElement)
     $("#close_button").click(closeMessageBox)
 }
+
 /** Displays a prompt to update the game config */
 const updateGameConfig = () => {
     const messageBoxElement = `
@@ -73,6 +74,6 @@ ipcRenderer.on("updateGameConfig", () => {
     $("#message_box").show()
 })
 
-ipcRenderer.on("showAboutMessageBox", showAboutMessageBox)
+ipcRenderer.on("showAboutMessageBox", (event, appVersion) => showAboutMessageBox(appVersion))
 
 ipcRenderer.on("showHowToPlay", handleShowHowToPlay)

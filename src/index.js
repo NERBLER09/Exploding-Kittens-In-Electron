@@ -145,7 +145,7 @@ const menu = [
       {
           label: "About",
           click () {
-            mainWindow.webContents.send("showAboutMessageBox")
+            mainWindow.webContents.send("showAboutMessageBox", app.getVersion())
           }
       },
 

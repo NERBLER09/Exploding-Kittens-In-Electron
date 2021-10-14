@@ -3,7 +3,6 @@
 // drawing a card for a player, and
 // and the onclick function for the player cards
 
-import { isGetAccessor } from "../../node_modules/typescript/lib/typescript.js"
 import { cards, cardAmounts } from "./messages.js"
 import { card } from "./models/cards.interface.js"
 
@@ -54,16 +53,9 @@ const updateVariable = (variableToUpdate: updateVariableType, status?: boolean) 
     // Enters a switch statement
     switch(variableToUpdate) {
         case "isPlayerTurn":
-            // Sets isPlayerTurn to true
-            if(status === true) {
-                isPlayerTurn = true
-            }
-            // Sets isPlayerTurn to false
-           else {
-               isPlayerTurn = false
-           }
-           
-           break
+            isPlayerTurn = status    
+        
+            break
         
         case "turnsNeedToPlay":
             // Adds 2 to the turnsNeedToPlay

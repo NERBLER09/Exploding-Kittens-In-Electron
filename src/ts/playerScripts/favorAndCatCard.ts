@@ -1,6 +1,9 @@
 import { drawCardForCom1 } from "../comPlayerScripts/com1Player/drawCardForCom1.js"
+import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { drawCardForCom2 } from "../comPlayerScripts/com2Player/drawCardForCom2.js"
+import { choseCardForCom2 } from "../comPlayerScripts/com2Player/playCardCom2.js"
 import { drawCardForCom3 } from "../comPlayerScripts/com3Player/drawCardForCom3.js"
+import { choseCardForCom3 } from "../comPlayerScripts/com3Player/playCardCom3.js"
 import { com1Player, com2Player, com3Player } from "../comPlayerScripts/comPlayerClass.js"
 import { decideCardToGiveAsFavor } from "../comPlayerScripts/decideCardToGiveAsFavor.js"
 import { updateVariable } from "../gameFunctions.js"
@@ -275,82 +278,117 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
 
     updateVariable("isPlayerTurn", false)
 
-    // Checks what com player played the favor card
-    switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
-        case "Com 1":
-            // Adds the given card to Com 1's hand 
-            com1Player.hand.push()
+    if(playerCardsInHand[cardIndex] === "exploding kitten") {
+       const comAmount = localStorage.getItem("comAmount")
 
-            // Resets the comPlayerPlayedFavor list 
-            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
-            comPlayerPlayedFavor["favorCardPlayed"] = false
-
-            // Removes the given card from the players hand
-            playerCardsInHand.splice(cardIndex, 1)
-
-            // Removes the given played card from the player's view
-            $(".player_cards").get(cardIndex).remove()
-
-            waitUntilMessageBoxIsClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
-                    clearInterval(waitUntilMessageBoxIsClosed)
-                    
-                    // Draws the card
-                    drawCardForCom1()
+       displayMessageBox(`${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]} has exploded`, `${comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]} has exploded due to you giving them a favor`)
+    
+        switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
+            case "Com 1":
+                // There is only 1 com player
+                if (comAmount === "1comPlayer") {
+                    com1Player.drawCardForComPlayer(false, "Com 1 has drawn a card", null, choseCard)
                 }
-            }, 100);
 
-            break
-        
-        case "Com 2":
-            // Adds the given card to Com 2's hand 
-            com2Player.hand.push()
-
-            // Resets the comPlayerPlayedFavor list 
-            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
-            comPlayerPlayedFavor["favorCardPlayed"] = false
-
-            // Removes the given card from the players hand
-            playerCardsInHand.splice(cardIndex, 1)
-
-            // Removes the given played card from the player's view
-            $(".player_cards").get(cardIndex).remove()
-
-            waitUntilMessageBoxIsClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
-                    clearInterval(waitUntilMessageBoxIsClosed)
-                    // Draws the card
-                    drawCardForCom2()
+                // More then 1 com player
+                else {
+                    com1Player.drawCardForComPlayer(true, "Com 1 has drawn a card", choseCardForCom2, choseCard, "Com 2")
+                }    
+                break
+            case "Com 2":
+                if (comAmount === "2comPlayer") {
+                    com2Player.drawCardForComPlayer(false, "Com 2 has drawn a card", null, choseCardForCom2)
                 }
-            }, 100);
+
+                // More then 2 com players
+                else {
+                    com2Player.drawCardForComPlayer(true, "Com 2 has drawn a card", choseCardForCom3, choseCardForCom2, "Com 3")
+                }
+                break
+            case "Com 3":
+                com3Player.drawCardForComPlayer(false, "Com 3 has drawn a card", null, choseCardForCom3)
+
+                break
+        }
+    }
+    else {
+        // Checks what com player played the favor card
+        switch(comPlayerPlayedFavor["comPlayerWhoPlayedFavor"]) {
+            case "Com 1":
+                // Adds the given card to Com 1's hand 
+                com1Player.hand.push()
+
+                // Resets the comPlayerPlayedFavor list 
+                comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
+                comPlayerPlayedFavor["favorCardPlayed"] = false
+
+                // Removes the given card from the players hand
+                playerCardsInHand.splice(cardIndex, 1)
+
+                // Removes the given played card from the player's view
+                $(".player_cards").get(cardIndex).remove()
+
+                waitUntilMessageBoxIsClosed = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if($("#message_box").is(":hidden") ) {
+                        clearInterval(waitUntilMessageBoxIsClosed)
+                        
+                        // Draws the card
+                        drawCardForCom1()
+                    }
+                }, 100);
+
+                break
             
-            break
+            case "Com 2":
+                // Adds the given card to Com 2's hand 
+                com2Player.hand.push()
 
-        case "Com 3":
-            // Adds the given card to Com 3's hand 
-            com3Player.hand.push()
+                // Resets the comPlayerPlayedFavor list 
+                comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
+                comPlayerPlayedFavor["favorCardPlayed"] = false
 
-            // Resets the comPlayerPlayedFavor list 
-            comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
-            comPlayerPlayedFavor["favorCardPlayed"] = false
+                // Removes the given card from the players hand
+                playerCardsInHand.splice(cardIndex, 1)
 
-            // Removes the given card from the players hand
-            playerCardsInHand.splice(cardIndex, 1)
+                // Removes the given played card from the player's view
+                $(".player_cards").get(cardIndex).remove()
 
-            // Removes the given played card from the player's view
-            $(".player_cards").get(cardIndex).remove()
+                waitUntilMessageBoxIsClosed = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if($("#message_box").is(":hidden") ) {
+                        clearInterval(waitUntilMessageBoxIsClosed)
+                        // Draws the card
+                        drawCardForCom2()
+                    }
+                }, 100);
+                
+                break
 
-            waitUntilMessageBoxIsClosed = setInterval(() => {
-                // Checks if the player has closed the #message_box
-                if($("#message_box").is(":hidden") ) {
-                    clearInterval(waitUntilMessageBoxIsClosed)
-                    // Draws the card
-                    drawCardForCom3()
-                }
-            }, 100);
-            break                            
+            case "Com 3":
+                // Adds the given card to Com 3's hand 
+                com3Player.hand.push()
+
+                // Resets the comPlayerPlayedFavor list 
+                comPlayerPlayedFavor["comPlayerWhoPlayedFavor"] = null
+                comPlayerPlayedFavor["favorCardPlayed"] = false
+
+                // Removes the given card from the players hand
+                playerCardsInHand.splice(cardIndex, 1)
+
+                // Removes the given played card from the player's view
+                $(".player_cards").get(cardIndex).remove()
+
+                waitUntilMessageBoxIsClosed = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if($("#message_box").is(":hidden") ) {
+                        clearInterval(waitUntilMessageBoxIsClosed)
+                        // Draws the card
+                        drawCardForCom3()
+                    }
+                }, 100);
+                break                            
+        }   
     }
 }
 

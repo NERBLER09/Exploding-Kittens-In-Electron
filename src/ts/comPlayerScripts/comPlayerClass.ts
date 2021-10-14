@@ -432,7 +432,10 @@ class comPlayerClass implements comPlayerInterface {
             const cardIndex = Math.floor(Math.random() * cards.length)
             cardDrawn = cards[cardIndex];
         }
-
+ 
+        // Removes 1 from turnsNeedToPlay to have the current com player has 1 less turn
+        updateVariable("removeFromTurnsNeedToPlay")
+       
         // Exploding Kitten was not drawn
         if (cardDrawn !== "exploding kitten") {
             // Adds the drawn card to com's hand
@@ -478,7 +481,7 @@ class comPlayerClass implements comPlayerInterface {
             // the current com player has additional turns
 
             else {
-                displayMessageBox(`It's ${this.comPlayerName}'s turn.`, `It's now ${this.comPlayerName}'s turn again. ${this.comPlayerName} has ${turnsNeedToPlay} more turn(s) remaining.`)
+                displayMessageBox(`${drawCardMessageBoxHeader}`, `It's now ${this.comPlayerName}'s turn again. ${this.comPlayerName} has ${turnsNeedToPlay} more turn(s) remaining.`)
 
                 // Removes 1 from turnsNeedToPlay to have the current com player has 1 less turn
                 updateVariable("removeFromTurnsNeedToPlay")
@@ -505,7 +508,7 @@ class comPlayerClass implements comPlayerInterface {
             const waitUntilMessageBoxClosed: NodeJS.Timeout = setInterval(() => {
                 if ($("#message_box").is(":hidden")) {
                     clearInterval(waitUntilMessageBoxClosed)
-                    this.defuseExplodingKittenCard(cardDrawn, choseCardForNextComPlayer, nextComPlayer, skipToNextComPlayer)
+                    this.defuseExplodingKittenCard(cardDrawn, choseCardForNextComPlayer, nextComPlayer, skipToNextComPlayer, choseCardForCurrentComPlayer)
                 }
             }, 100)
 
@@ -522,7 +525,7 @@ class comPlayerClass implements comPlayerInterface {
      * 
      * @param {boolean} skipToNextComPlayer Stores if to pass turn to a com player or to the player
     */
-    defuseExplodingKittenCard(cardDrawn: card, choseCardForNextComPlayer: Function, nextComPlayer: string, skipToNextComPlayer: boolean) {
+    defuseExplodingKittenCard(cardDrawn: card, choseCardForNextComPlayer: Function, nextComPlayer: string, skipToNextComPlayer: boolean, choseCardForCurrentComPlayer: Function) {
         let com1HasDefuseCard = false
 
         // Checks if the current com player has a defuse card   
@@ -546,35 +549,56 @@ class comPlayerClass implements comPlayerInterface {
         else {
             // defuses the Exploding Kitten card
 
+            updateDiscardPile("defuse")
+                
             // Removes the defuse card from the current com player's hand 
             const cardIndex = this.hand.indexOf(cardDrawn)
 
             this.hand.splice(cardIndex, 1)
+            
+            if(turnsNeedToPlay <= 0) {
+                // Checks whenever to switch to next com player or to the player
+                switch(skipToNextComPlayer) {
+                    case true:
+                        displayMessageBox(`${this.comPlayerName} has defused the Exploding Kitten`, `It's now ${nextComPlayer}'s turn`)
 
-            // Checks whenever to switch to next com player or to the player
-            switch(skipToNextComPlayer) {
-                case true:
-                    displayMessageBox(`${this.comPlayerName} has defused the Exploding Kitten`, `It's now ${nextComPlayer}'s turn`)
+                        const setCom1Turn = setInterval(() => {
+                            // Checks if the player has closed the #message_box
+                            if($("#message_box").is(":hidden") ) {
+                                clearInterval(setCom1Turn)
+        
+                                // Makes it be the current com player's turn
+                                choseCardForNextComPlayer()
+                            }
+                        }, 100);
 
-                    const setCom1Turn = setInterval(() => {
-                        // Checks if the player has closed the #message_box
-                        if($("#message_box").is(":hidden") ) {
-                            clearInterval(setCom1Turn)
-    
-                            // Makes it be the current com player's turn
-                            choseCardForNextComPlayer()
-                        }
-                    }, 100);
+                        break
+                    
+                    case false:
+                        displayMessageBox(`${this.comPlayerName} has defused the Exploding Kitten`,"It's now your turn")
 
-                    break
-                
-                case false:
-                    displayMessageBox(`${this.comPlayerName} has defused the Exploding Kitten`,"It's now your turn")
+                        // Makes it be the players turn
+                        updateVariable("isPlayerTurn", true)
 
-                    // Makes it be the players turn
-                    updateVariable("isPlayerTurn", true)
+                        break
+                }
+            }
+            else {
+                displayMessageBox(`${this.comPlayerName} has defused the Exploding Kitten`, `${this.comPlayerName} has ${turnsNeedToPlay} more turn(s)`)
+               
+                // Removes 1 from turnsNeedToPlay to have the current com player has 1 less turn
+                updateVariable("removeFromTurnsNeedToPlay")
 
-                    break
+                const setCom2Turn = setInterval(() => {
+                    // Checks if the player has closed the #message_box
+                    if ($("#message_box").is(":hidden")) {
+                        clearInterval(setCom2Turn)
+
+                        choseCardForCurrentComPlayer()
+
+                        return ""
+                    }
+                }, 100);
             }
         }
     }
@@ -631,8 +655,10 @@ class comPlayerClass implements comPlayerInterface {
                 else {
                     return decideCardsToPlayList
                 }
-            case "catomic bomb":
-                possibleCardsToPlay = ["shuffle", "attack", "targeted attack", "skip", "super skip"]
+
+                break
+            case "see the future x5":
+                possibleCardsToPlay= ["shuffle"]
                 
                 for(const e of possibleCardsToPlay) {
                     if(this.checkForPlayableCard(e)) {
@@ -646,7 +672,83 @@ class comPlayerClass implements comPlayerInterface {
                 else {
                     return decideCardsToPlayList
                 }
-             
+
+            case "alter the future":
+                possibleCardsToPlay= ["shuffle"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+            case "alter the future x5":
+                possibleCardsToPlay= ["shuffle"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+            case "attack":
+                possibleCardsToPlay = ["super skip"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+            case "targeted attack":
+                possibleCardsToPlay = ["super skip"]
+                
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+            case "catomic bomb":
+                possibleCardsToPlay = ["skip", "attack", "shuffle", "super skip", "swap top and bottom", "draw from the bottom"]
+            
+                for(const e of possibleCardsToPlay) {
+                    if(this.checkForPlayableCard(e)) {
+                        decideCardsToPlayList.push(e)
+                    }
+                }
+
+                if(decideCardsToPlayList === []) {
+                    return null
+                }
+                else {
+                    return decideCardsToPlayList
+                }
+
             default:
                 return null
         }
@@ -883,8 +985,7 @@ class comPlayerClass implements comPlayerInterface {
                     return ""
                 }
             }
-        }, 100);
-       
+        }, 100); 
    }
 }
 

@@ -92,7 +92,7 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
             }, 1000);
             
             // Makes com 1 have 2 turns 
-            updateVariable("isPlayerTurn")
+            updateVariable("turnsNeedToPlay")
 
             waitUntilMessageBoxIsClosed = setInterval(() => {
                 if ($("#message_box").is(":hidden")) {

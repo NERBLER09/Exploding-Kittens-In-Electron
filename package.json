@@ -2,7 +2,7 @@
   "name": "exploding-kittens-in-electron",
   "title": "Exploding Kittens In Electron",
   "productName": "Exploding Kittens In Electron",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Fan port of card game, Exploding Kittens to the desktop. Created in Electron with jQuery and Typescript. Created by @NERBLER09 on GitHub",
   "main": "src/index.js",
   "repository": "https://github.com/NERBLER09/Exploding-Kittens-In-Electron",
@@ -28,7 +28,7 @@
     },
     "snap": {
       "summary": "Fan port of card game, Exploding Kittens to the desktop",
-      "confinement": "classic",
+      "confinement": "strict",
       "category": "Game"
     }
   },

@@ -18,7 +18,7 @@ const createWindow = () => {
     width: 1000,
     height: 800,
     title:"Exploding Kittens In Electron",
-    icon: path.join(__dirname, "../assets/favicon.png"), // xLaunch freaks out when running in WSl and crashes with a window icon set (??)
+    icon: "assets/favicon.png",
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false

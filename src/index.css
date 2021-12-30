@@ -19,7 +19,7 @@ p, label {
 }
 
 button {
-  background-color: var(--background-color);
+  background-color: var(--button-highlight);
   border: var(--border-color) solid;
   color: var(--font-color);
   border-radius: 20px;
@@ -55,7 +55,7 @@ button:focus { outline: none; }
 }
 
 ::-webkit-scrollbar-thumb {
-    background: lightgrey;
+    background: white;
     border-radius: 20px;
 }
 

@@ -38,30 +38,43 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 500px;
+    width: 100%;
     height: fit-content;
 }
 #discard-pile {
     padding: 10px;
-
     font-size: 18px;
+    margin: 50px;
+    /* width: 200px; */
+}
 
-    margin: 10px;
+#discard-pile img {
+    min-height: 150px;
+    height: 20vh;
+    max-height: 200px;
 
-    width: 120px;
-    height: 150px;
+    width: auto;
 }
 
 #draw-pile {
     padding: 10px;
-
-    width: 120px;
-    height: 150px;
     margin: 10px;
+    margin: 50px;
+    width: fit-content;
+}
+
+#draw-pile img {
+    min-height: 150px;
+    height: 20vh;
+    max-height: 200px;
+
+    width: auto;
 }
 
 #player_cards_container {
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
     text-align: center;
 
@@ -69,15 +82,21 @@
 
     /* overflow-y: auto; */
     overflow-y: hidden;
+
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.player_cards{
-    padding: 10px;
 
+.player_cards {
+    border: none;
+    background: none;
+
+    padding: 10px;
     margin: 10px;
 
-    width: 100%;
-
+    /* width: 100%; */
+    width: fit-content;
     height: 100%;
 
     transition: all 250ms ease-in-out;
@@ -88,10 +107,9 @@
 }
 
 .player-card-img {
-    width: 90px;
-    /* height: calc(100%- 50%); */
-
-    size: 50%;
+    min-height: 150px;
+    height: 20vh;
+    max-height: 200px;
 }
 
 #info {
@@ -104,10 +122,6 @@
 
 .see-the-future-cards-container {
     display: flex;
-}
-.see-the-future-card {
-    width: 90px;
-    height: 50%;
 }
 #discard-pile-img {
     width: 90px;
@@ -179,4 +193,12 @@
     height: 100%;
     max-height: calc(100vh/3);
     overflow-y: auto;
+}
+
+img {
+    min-height: 150px;
+    height: 20vh;
+    max-height: 200px;
+
+    width: auto;
 }

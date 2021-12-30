@@ -97,3 +97,20 @@ img {
 a {
   color: var(--font-color);
 }
+
+input[type="text"] {
+  padding: 5px;
+  background: var(--background-color);
+  color: var(--font-color);
+  border: var(--border-color) 2px solid;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+input[type="text"]::placeholder {
+  color: var(--font-color);
+}
+
+input[type="text"]:focus-visible {
+  outline: none;
+}

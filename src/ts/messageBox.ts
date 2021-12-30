@@ -8,7 +8,7 @@ const closeMessageBox = ()  => {
 }
 /** Displays a basic message box to the player */
 const displayMessageBox = (header: string, mainText: string) => {
-    const messageBoxElement = $(`<h2>${header}</h2> <p>${mainText}</p> <button id="close-button">Close</button>`)
+    const messageBoxElement = $(`<h2>${header}</h2> <p>${mainText}</p> <button id="close-button">Play on</button>`)
 
     $("#message_box").append(messageBoxElement)
     $("#close-button").click(closeMessageBox)
@@ -24,19 +24,13 @@ const displaySeeTheFutureCards = (card1: string, card2: string, card3: string) =
         <h2>The top three cards are:</h2>
         <p>(from top to bottom)</p>
         <div class="see-the-future-cards-container">
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card1PathFormatted}.png`)}">
-            </button>
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
-            </button>
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
-            </button>
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card1PathFormatted}.png`)}">
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
         </div>
 
 
-        <button id="close-button">Close</button>
+        <button id="close-button">Play on</button>
     `
 
     $("#message_box").append(messageBoxElement)
@@ -68,9 +62,7 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
         <p>(from top to bottom)</p>
         <div class="see-the-future-cards-container">
             <div class="alter-the-future-card-container">
-                <button id="alter-the-future-card1">
                     <img class="see-the-future-card" id="card1" src="${path.join(__dirname, `../assets/cards/${card1PathFormatted}.png`)}">
-                </button>
 
                 <label for="card1-select">First Card:</label>
                 <select class="alter-the-future-card-select" name="card1-select" id="card1-select">
@@ -80,9 +72,7 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
                 </select>
             </div>
             <div class="alter-the-future-card-container">
-                <button id="alter-the-future-card2">
                     <img class="see-the-future-card" id="card2" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
-                </button>
 
                 <label for="card2-select">Second Card:</label>
                 <select class="alter-the-future-card-select" id="card2-select">
@@ -92,9 +82,7 @@ const showAlterTheFutureMessageBox = (card1: string, card2: string, card3: strin
                 </select>
             </div>
             <div class="alter-the-future-card-container">    
-                <button id="alter-the-future-card3">
                     <img class="see-the-future-card" id="card3" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
-                </button>
                 
                 <label for="card3-select">Third Card:</label>
                 <select class="alter-the-future-card-select" id="card3-select">
@@ -199,25 +187,14 @@ const displaySeeTheFutureCards5 = (card1: string, card2: string, card3: string, 
         <h2>The top five cards are:</h2>
         <p>(from top to bottom)</p>
         <div class="see-the-future-cards5-container see-the-future-cards-container">
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card1PathFormatted}.png`)}">
-            </button>
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
-            </button>
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
-            </button>
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card4PathFormatted}.png`)}">
-            </button>
-            <button>
-                <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card5PathFormatted}.png`)}">
-            </button>
-        </div>
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card1PathFormatted}.png`)}">
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card4PathFormatted}.png`)}">
+            <img class="see-the-future-card" src="${path.join(__dirname, `../assets/cards/${card5PathFormatted}.png`)}">
+       </div>
 
-
-        <button id="close-button">Close</button>
+        <button id="close-button">Play on</button>
     `
 
     $("#message_box").append(messageBoxElement)
@@ -237,9 +214,7 @@ const displayAlterTheFutureCards5 = (card1: string, card2: string, card3: string
         <p>(from top to bottom)</p>
         <div class="see-the-future-cards-container see-the-future-cards5-container alter-thw-future-container">
             <div class="alter-the-future-card-container">
-                <button id="alter-the-future-card1">
                     <img class="see-the-future-card" id="card1" src="${path.join(__dirname, `../assets/cards/${card1PathFormatted}.png`)}">
-                </button>
 
                 <label for="card1-select">First Card:</label>
                 <select class="alter-the-future-card-select" name="card1-select" id="card1-select">
@@ -251,9 +226,7 @@ const displayAlterTheFutureCards5 = (card1: string, card2: string, card3: string
                 </select>
             </div>
             <div class="alter-the-future-card-container">
-                <button id="alter-the-future-card2">
                     <img class="see-the-future-card" id="card2" src="${path.join(__dirname, `../assets/cards/${card2PathFormatted}.png`)}">
-                </button>
 
                 <label for="card2-select">Second Card:</label>
                 <select class="alter-the-future-card-select" id="card2-select">
@@ -265,9 +238,7 @@ const displayAlterTheFutureCards5 = (card1: string, card2: string, card3: string
                 </select>
             </div>
             <div class="alter-the-future-card-container">    
-                <button id="alter-the-future-card3">
                     <img class="see-the-future-card" id="card3" src="${path.join(__dirname, `../assets/cards/${card3PathFormatted}.png`)}">
-                </button>
                 
                 <label for="card3-select">Third Card:</label>
                 <select class="alter-the-future-card-select" id="card3-select">
@@ -279,9 +250,7 @@ const displayAlterTheFutureCards5 = (card1: string, card2: string, card3: string
                 </select>
             </div>
             <div class="alter-the-future-card-container">    
-                <button id="alter-the-future-card4">
                     <img class="see-the-future-card" id="card4" src="${path.join(__dirname, `../assets/cards/${card4PathFormatted}.png`)}">
-                </button>
                 
                 <label for="card4-select">Fourth Card:</label>
                 <select class="alter-the-future-card-select" id="card4-select">
@@ -293,9 +262,7 @@ const displayAlterTheFutureCards5 = (card1: string, card2: string, card3: string
                 </select>
             </div>
             <div class="alter-the-future-card-container">    
-                <button id="alter-the-future-card5">
                     <img class="see-the-future-card" id="card5" src="${path.join(__dirname, `../assets/cards/${card5PathFormatted}.png`)}">
-                </button>
                 
                 <label for="card5-select">Fifth Card:</label>
                 <select class="alter-the-future-card-select" id="card5-select">

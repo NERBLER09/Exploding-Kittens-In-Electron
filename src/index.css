@@ -90,6 +90,11 @@ img {
   box-shadow: 10px 10px 10px var(--box-shadow-color);
 }
 
+#message_box button {
+  max-width: 300px;
+  margin: 5px 25%;
+}
+
 .how-to-play-iframe {
   width: 100%;
 }

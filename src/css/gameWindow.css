@@ -123,6 +123,9 @@
 .see-the-future-cards-container {
     display: flex;
 }
+.see-the-future-cards-container img {
+    margin: 10px;
+}
 #discard-pile-img {
     width: 90px;
     height: 120px;

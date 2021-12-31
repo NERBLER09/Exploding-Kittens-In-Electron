@@ -12,7 +12,7 @@ const displayCardToPlayer = (displayCard: card) => {
     let cardHyphened = displayCard?.split(" ")?.join("-")
 
     let card = $(`<button class="player_cards" value="${displayCard}">
-        <img src="${path.join(__dirname, `../assets/cards/${cardHyphened}.png`)}" class="player-card-img" >
+        <img src="${path.join(__dirname, `../assets/cards/${cardHyphened}.svg`)}" class="player-card-img" >
         </button>`)
 
     // Adds the drawn card the the list

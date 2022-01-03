@@ -1,0 +1,11 @@
+node_modules
+
+.vscode
+
+out/
+
+dist/
+
+public/build/
+
+*.snap

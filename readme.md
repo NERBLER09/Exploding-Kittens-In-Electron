@@ -5,14 +5,19 @@ Welcome to Exploding Kittens In Electron. This is a clone of [Exploding Kittens]
 ## Screenshots
 
 Light mode:
-![title-screen](https://user-images.githubusercontent.com/67165926/123548732-4700e400-d723-11eb-9f46-5a3bac9a264f.PNG)
 
+![title-screen](https://user-images.githubusercontent.com/67165926/123548732-4700e400-d723-11eb-9f46-5a3bac9a264f.PNG)
 ![game-window](https://user-images.githubusercontent.com/67165926/123548772-71eb3800-d723-11eb-80d0-6dfb225cd218.PNG)
 
 Dark mode:
+
 ![game-screen-dark](https://user-images.githubusercontent.com/67165926/130336034-a4e38885-d240-4da7-84ad-82b87a060292.png)
 ![title-screen-dark](https://user-images.githubusercontent.com/67165926/130336036-b512216c-dc46-4392-920e-741cec701595.png)
 
+## Rewriting
+The project is being rewritten in [Svelte](https://svelte.dev). To check on the progress of the rewrite check the `svelte-rewrite/` directory. With the rewrite the Windows Store build will be discontinued, Exploding Kittens In Electron will be available on Flathub and the Snap Store on Linux. For more information check out `svelte-rewrite/readme.md`.
+
+The original jQuery will remain until the rewrite is complete, which then it will move to a separate repo.
 
 ## Releases 
 

@@ -26,6 +26,7 @@
     <script src="./js/globalMessageBox.js" type="module"></script>
     <script src="./js/manageGameConfigurations.js" type="module"></script>
 </head>
+<!-- TODO: Show simple card actions that the player has eg, "You have 2 more turns remaining" -->
 <body>
     <div id="game-view">
         <p id="username"></p>
@@ -36,14 +37,14 @@
         <div id="game-cards">
             <div id="game-cards-div">
                 <div class="discard-pile-div">
-                    <button id="discard-pile">
+                    <div id="discard-pile">
                         <img alt="" id="discard-pile-img">
-                    </button>
+                    </div>
                     <p class="game-card-text">Discard Pile</p>
                 </div>
                 <div class="draw-pile-div">
                     <button id="draw-pile">
-                        <img src="../assets/cards/card-back.png" alt="" id="card-back-img">
+                        <img src="../assets/cards/card-back.svg" alt="" id="card-back-img">
                     </button>
                     <p class="game-card-text">Draw Pile</p>
                 </div>  

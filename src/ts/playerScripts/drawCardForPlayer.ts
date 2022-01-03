@@ -1,5 +1,6 @@
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { isPlayerTurn, removeDrawnCardFromDeck, seeTheFutureCards, totalCardAmount, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
+import { checkIfMessagesBoxIsShowing } from "../gameLoop.js"
 import { displayMessageBox, explodedMessageBox } from "../messageBox.js"
 import { cards, comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
@@ -52,16 +53,7 @@ const drawCardForPlayer = (cardCardMessageBoxHeader: string) => {
                     // Resets turnsNeedToPlay to 0 to fix some bugs
                     updateVariable("resetTurnsNeedToPlay")
 
-                    // Sets a time pause 
-                    const setCom1Turn = setInterval(() => {
-                        // Checks if the player has closed the #message_box
-                        if($("#message_box").is(":hidden") ) {
-                            clearInterval(setCom1Turn)
-
-                            // Makes it be com 1's turn
-                            choseCard()
-                        }
-                    }, 100);
+                    checkIfMessagesBoxIsShowing(choseCard)
                 }
                 else{
                     displayMessageBox(`${cardCardMessageBoxHeader}`, `The card you've drawn is a ${cardDrawn} card. You have ${turnsNeedToPlay} more turn(s) remaining.`)
@@ -113,16 +105,7 @@ const explodingKittenDraw = () => {
                 // Resets turnsNeedToPlay to 0 to fix some bugs
                 updateVariable("resetTurnsNeedToPlay")
 
-                // Sets a time pause 
-                const setCom1Turn = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
-                        clearInterval(setCom1Turn)
-
-                        // Makes it be com 1's turn
-                        choseCard()
-                    }
-                }, 100);
+                checkIfMessagesBoxIsShowing(choseCard)
             }
             else{
                 displayMessageBox("Streaking Kitten", `The Exploding Kitten you've draw has been added to your hand because you had a Streaking Kitten card in your hand. You have ${turnsNeedToPlay} turn(s) remaining.`)

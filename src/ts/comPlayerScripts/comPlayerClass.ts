@@ -1,4 +1,5 @@
 import { removeDrawnCardFromDeck, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js";
+import { checkIfMessagesBoxIsShowing } from "../gameLoop.js";
 import { displayMessageBox, explodedMessageBox } from "../messageBox.js";
 import { cards } from "../messages.js";
 import { card, catCard } from "../models/cards.interface";
@@ -417,7 +418,7 @@ class comPlayerClass implements comPlayerInterface {
      * 
      * @param {string} nextComPlayer Stores the name of the next com player
     */
-    drawCardForComPlayer(skipToNextComPlayer: boolean, drawCardMessageBoxHeader: string, choseCardForNextComPlayer?: Function, choseCardForCurrentComPlayer?: Function, nextComPlayer?: string) {
+    drawCardForComPlayer(skipToNextComPlayer: boolean, drawCardMessageBoxHeader: string, choseCardForNextComPlayer?: () => void, choseCardForCurrentComPlayer?: Function, nextComPlayer?: string) {
         let cardDrawn: card
 
         // Checks a see the future card was drawn, if so gets the top card
@@ -525,7 +526,7 @@ class comPlayerClass implements comPlayerInterface {
      * 
      * @param {boolean} skipToNextComPlayer Stores if to pass turn to a com player or to the player
     */
-    defuseExplodingKittenCard(cardDrawn: card, choseCardForNextComPlayer: Function, nextComPlayer: string, skipToNextComPlayer: boolean, choseCardForCurrentComPlayer: Function) {
+    defuseExplodingKittenCard(cardDrawn: card, choseCardForNextComPlayer: () =>  void, nextComPlayer: string, skipToNextComPlayer: boolean, choseCardForCurrentComPlayer: Function) {
         let com1HasDefuseCard = false
 
         // Checks if the current com player has a defuse card   
@@ -562,15 +563,7 @@ class comPlayerClass implements comPlayerInterface {
                     case true:
                         displayMessageBox(`${this.comPlayerName} has defused the Exploding Kitten`, `It's now ${nextComPlayer}'s turn`)
 
-                        const setCom1Turn = setInterval(() => {
-                            // Checks if the player has closed the #message_box
-                            if($("#message_box").is(":hidden") ) {
-                                clearInterval(setCom1Turn)
-        
-                                // Makes it be the current com player's turn
-                                choseCardForNextComPlayer()
-                            }
-                        }, 100);
+                        checkIfMessagesBoxIsShowing(choseCardForNextComPlayer)
 
                         break
                     

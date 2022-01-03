@@ -19,7 +19,7 @@ p, label {
 }
 
 button {
-  background-color: var(--background-color);
+  background-color: var(--button-highlight);
   border: var(--border-color) solid;
   color: var(--font-color);
   border-radius: 20px;
@@ -55,7 +55,7 @@ button:focus { outline: none; }
 }
 
 ::-webkit-scrollbar-thumb {
-    background: lightgrey;
+    background: white;
     border-radius: 20px;
 }
 
@@ -90,10 +90,32 @@ img {
   box-shadow: 10px 10px 10px var(--box-shadow-color);
 }
 
+#message_box button {
+  max-width: 300px;
+  margin: 5px;
+}
+
 .how-to-play-iframe {
   width: 100%;
 }
 
 a {
   color: var(--font-color);
+}
+
+input[type="text"] {
+  padding: 5px;
+  background: var(--background-color);
+  color: var(--font-color);
+  border: var(--border-color) 2px solid;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+input[type="text"]::placeholder {
+  color: var(--font-color);
+}
+
+input[type="text"]:focus-visible {
+  outline: none;
 }

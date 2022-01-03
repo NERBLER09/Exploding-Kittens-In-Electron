@@ -7,6 +7,7 @@ import { choseCardForCom3 } from "../comPlayerScripts/com3Player/playCardCom3.js
 import { com1Player, com2Player, com3Player } from "../comPlayerScripts/comPlayerClass.js"
 import { decideCardToGiveAsFavor } from "../comPlayerScripts/decideCardToGiveAsFavor.js"
 import { updateVariable } from "../gameFunctions.js"
+import { checkIfMessagesBoxIsShowing } from "../gameLoop.js"
 import { displayMessageBox } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
@@ -328,15 +329,7 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
                 // Removes the given played card from the player's view
                 $(".player_cards").get(cardIndex).remove()
 
-                waitUntilMessageBoxIsClosed = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
-                        clearInterval(waitUntilMessageBoxIsClosed)
-                        
-                        // Draws the card
-                        drawCardForCom1()
-                    }
-                }, 100);
+                checkIfMessagesBoxIsShowing(drawCardForCom1)
 
                 break
             
@@ -354,15 +347,8 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
                 // Removes the given played card from the player's view
                 $(".player_cards").get(cardIndex).remove()
 
-                waitUntilMessageBoxIsClosed = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
-                        clearInterval(waitUntilMessageBoxIsClosed)
-                        // Draws the card
-                        drawCardForCom2()
-                    }
-                }, 100);
-                
+                checkIfMessagesBoxIsShowing(drawCardForCom2)
+               
                 break
 
             case "Com 3":
@@ -379,14 +365,8 @@ const giveFavorCardToComPlayer = (cardIndex: number) => {
                 // Removes the given played card from the player's view
                 $(".player_cards").get(cardIndex).remove()
 
-                waitUntilMessageBoxIsClosed = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
-                        clearInterval(waitUntilMessageBoxIsClosed)
-                        // Draws the card
-                        drawCardForCom3()
-                    }
-                }, 100);
+                checkIfMessagesBoxIsShowing(drawCardForCom3)
+
                 break                            
         }   
     }

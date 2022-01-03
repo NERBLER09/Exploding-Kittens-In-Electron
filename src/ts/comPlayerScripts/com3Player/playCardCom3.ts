@@ -4,7 +4,7 @@ import { drawCardForCom3 } from "./drawCardForCom3.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"
 import { card } from "../../models/cards.interface.js"
 
-const choseCardForCom3 = () => {
+const choseCardForCom3 = (): void => {
     com3Player.chooseCardToPlay(playCardForCom3, drawCardForCom3)
 }
 

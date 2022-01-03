@@ -1,19 +1,21 @@
 @media (prefers-color-scheme:dark) {
     :root {
-        --background-color: #333;
+        --background-color: #263238;
         --font-color: white;
         --border-color: white;
         --box-shadow-color: white;
-        --scrollbar-background: #333;
+        --scrollbar-background: #282c34;
+        --button-highlight: #3f545f;
     }    
 }
   
 @media (prefers-color-scheme: light) {
     :root {
-        --background-color: white;
+        --background-color: lightgrey;
         --font-color: black;
         --border-color: black;
         --box-shadow-color: grey;
-        --scrollbar-background: white;
+        --scrollbar-background: lightgrey;
+        --button-highlight: white;
     } 
 }

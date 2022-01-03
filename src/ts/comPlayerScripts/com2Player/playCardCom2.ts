@@ -6,7 +6,7 @@ import { com2Player } from "../comPlayerClass.js"
 import { drawCardForCom2 } from "./drawCardForCom2.js"
 import { askCardForFavorForCom2 } from "./favorAndCatCard.js"
 
-const choseCardForCom2 = () => {
+const choseCardForCom2 = (): void => {
     com2Player.chooseCardToPlay(playCardForCom2, drawCardForCom2)
 }
 

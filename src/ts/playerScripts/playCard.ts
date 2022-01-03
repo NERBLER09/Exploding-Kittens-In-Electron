@@ -1,5 +1,6 @@
 import { choseCard } from "../comPlayerScripts/com1Player/playCardForCom1.js"
 import { explodingKittenCardDrawn, isPlayerTurn, seeTheFutureCards, turnsNeedToPlay, updateVariable } from "../gameFunctions.js"
+import { checkIfMessagesBoxIsShowing } from "../gameLoop.js"
 import { displayAlterTheFutureCards5, displayMessageBox, displaySeeTheFutureCards, displaySeeTheFutureCards5, showAlterTheFutureMessageBox } from "../messageBox.js"
 import { comPlayerPlayedFavor, playerCardsInHand } from "../messages.js"
 import { card } from "../models/cards.interface.js"
@@ -137,16 +138,7 @@ const checkPlayerCardPlayed = (cardPLayed:card) => {
 
                 updateVariable("resetTurnsNeedToPlay")
 
-                // Sets a time pause
-                const setCom1Turn = setInterval(() => {
-                    // Checks if the player has closed the #message_box
-                    if($("#message_box").is(":hidden") ) {
-                        clearInterval(setCom1Turn)
-
-                        // Makes it be com 1's turn
-                        choseCard()    
-                    }
-                }, 100);
+                checkIfMessagesBoxIsShowing(choseCard)
 
                 break
             }

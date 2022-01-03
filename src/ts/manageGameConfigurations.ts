@@ -19,12 +19,10 @@ const checkIfGameDataIsSaved = (): boolean => {
 const askToSaveGameConfigs = () => {
     const messageBoxElement = `
         <h2>Would you like to save your game configuration</h2>
-        <p>This will save the username you inputted and how many computer players you want to have,
-            so you don't have to input your selection the next time you play.
-        </p>
+        <p>By saving your game configuration you will not have to enter a username and the amount of computer players you want to play with. </p>
         <p>If you want to change your game configuration go to: Game -> Update Game Config</p>
-        <button id="save-config">Save Your Game Configuration</button>
-        <button id="ignore-save-config">Don't Save Your Game Configuration</button>
+        <button id="save-config">Save Game Configuration</button>
+        <button id="ignore-save-config">Don't Save Game Configuration</button>
     `
     $("#message_box").append(messageBoxElement)
     $("#save-config").click(handleSaveGameConfig)

@@ -1,5 +1,5 @@
 <script>
-import TitleScreen from "./pages/TitleScreen.svelte";
-
+    import GameWindow from "./pages/GameWindow.svelte"
 </script>
-<TitleScreen/>
+
+<GameWindow/>

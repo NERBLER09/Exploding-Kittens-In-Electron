@@ -1,4 +1,7 @@
 <script lang="ts">
+import { comPlayer, username } from "../data/GameData";
+
+
     let inputtedUsername = ""
     let selectedComPlayerAmount = ""
 
@@ -42,6 +45,9 @@
     const handlePlay = () => {
         localStorage.setItem("username", inputtedUsername)
         localStorage.setItem("comPlayerAmount", selectedComPlayerAmount)
+
+        username.set(inputtedUsername)
+        comPlayer.set(selectedComPlayerAmount)
     }
 
     $: checkToDisablePlayButton(selectedComPlayerAmount)

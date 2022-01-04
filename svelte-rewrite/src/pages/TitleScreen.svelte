@@ -1,5 +1,5 @@
 <script lang="ts">
-import { comPlayer, username } from "../data/GameData";
+import { comPlayer, showGameScreen, username } from "../data/GameData";
 
 
     let inputtedUsername = ""
@@ -48,6 +48,8 @@ import { comPlayer, username } from "../data/GameData";
 
         username.set(inputtedUsername)
         comPlayer.set(selectedComPlayerAmount)
+
+        showGameScreen.set(true)
     }
 
     $: checkToDisablePlayButton(selectedComPlayerAmount)
@@ -63,7 +65,7 @@ import { comPlayer, username } from "../data/GameData";
         <h1>Welcome To Exploding Kittens</h1>
         <img src="images/icons/logo.svg" alt="">
     </header>
-    <form on:submit|preventDefault="{handlePlay}">
+    <div>
         <div class="username-input-container">
             <label for="username-input">Enter A Username:</label>
             <br> 
@@ -77,7 +79,7 @@ import { comPlayer, username } from "../data/GameData";
             <button class="com-player-selection {is3ComSelected ? "selected" : ""}" on:click="{() => selectComPlayerAmount("3-com-player")}">3 Computer Players</button>
         </div>
         <button on:click="{handlePlay}" disabled="{playButtonDisabled}">Play!</button>
-    </form>
+    </div>
 </div>
 
 <style>

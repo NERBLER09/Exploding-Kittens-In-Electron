@@ -1,6 +1,7 @@
 import { get } from "svelte/store"
 import { cards } from "../../data/GameData"
 import { isPlayerTurn, playerHand } from "../../data/PlayerData"
+import { com1Player } from "../com-player-scripts/ComPlayerClass"
 
 /**
  * Draws a card for the player

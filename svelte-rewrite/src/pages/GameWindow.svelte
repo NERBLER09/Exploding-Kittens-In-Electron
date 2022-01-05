@@ -22,7 +22,7 @@ onMount(() => {
         </div>
         <div class="player-cards-container">
             {#each $playerHand as card}
-                <button on:click="{() => playCard(card)}">{card}</button>
+                <button on:click="{() => playCard(card)}" disabled="{!$isPlayerTurn}">{card}</button>
             {/each}
         </div>
     </div>

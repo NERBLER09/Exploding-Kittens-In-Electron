@@ -49,6 +49,7 @@ import { comPlayer, showGameScreen, username } from "../data/GameData";
         username.set(inputtedUsername)
         comPlayer.set(selectedComPlayerAmount)
 
+        sessionStorage.setItem("showGameWindow", JSON.stringify(true))
         showGameScreen.set(true)
     }
 

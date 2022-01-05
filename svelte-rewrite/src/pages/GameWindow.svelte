@@ -1,14 +1,29 @@
 <script>
+import { onMount } from "svelte";
+
 import { username } from "../data/GameData";
+import { playerHand, isPlayerTurn } from "../data/PlayerData";
+import { drawCard } from "../ts/player-scripts/DrawCard";
+
+onMount(() => {
+    // Deals the initial 7 cards to the player
+    for(let i = 0; i < 7; i++) {
+        drawCard(false)
+    }
+})
 </script>
 
 <div class="game-window">
-    <div class="player-cards-container">
+    <div>
         <div class="game-headers">
             <p class="player-header">{$username}'s Hand:</p>
             <p class="game-status">Game Status</p>
         </div>
-        <div class="player-cards-container"></div>
+        <div class="player-cards-container">
+            {#each $playerHand as card}
+                <button>{card}</button>
+            {/each}
+        </div>
     </div>
     
     <div class="game-cards">
@@ -16,7 +31,7 @@ import { username } from "../data/GameData";
             <p>Discard Pile</p>
         </div>
         <div class="draw-pile-container">
-            <button>Draw Pile</button>
+            <button on:click="{() => drawCard()}" disabled="{!$isPlayerTurn}">Draw Pile</button>
         </div>
     </div>
 </div>
@@ -24,13 +39,9 @@ import { username } from "../data/GameData";
 <style>
     .game-cards {
         position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     .game-cards div {
         margin: 10px;
@@ -40,5 +51,11 @@ import { username } from "../data/GameData";
     }
     .game-headers .game-status {
         margin-left: auto;
+    }
+    .player-cards-container {
+        display: flex;
+    }
+    .player-cards-container button {
+        margin: 5px;
     }
 </style>

@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
 import { onMount } from "svelte";
 
 import { username } from "../data/GameData";
 import { playerHand, isPlayerTurn } from "../data/PlayerData";
 import { drawCard } from "../ts/player-scripts/DrawCard";
+import { playCard } from "../ts/player-scripts/PlayCard";
 
 onMount(() => {
     // Deals the initial 7 cards to the player
@@ -21,7 +22,7 @@ onMount(() => {
         </div>
         <div class="player-cards-container">
             {#each $playerHand as card}
-                <button>{card}</button>
+                <button on:click="{() => playCard(card)}">{card}</button>
             {/each}
         </div>
     </div>

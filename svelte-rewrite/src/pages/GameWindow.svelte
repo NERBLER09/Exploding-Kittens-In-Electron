@@ -1,12 +1,18 @@
 <script lang="ts">
 import { onMount } from "svelte";
+import GameStatus from "../components/GameStatus.svelte";
+import MessageBox from "../components/MessageBoxes/MessageBox.svelte";
 
 import { username } from "../data/GameData";
 import { playerHand, isPlayerTurn } from "../data/PlayerData";
+import { bodyText, headerText, setDefaultMessageBoxProps, showMessageBox } from "../ts/global/MessageBox";
 import { drawCard } from "../ts/player-scripts/DrawCard";
 import { playCard } from "../ts/player-scripts/PlayCard";
 
 onMount(() => {
+    showMessageBox.set(true)
+    setDefaultMessageBoxProps("It's your turn.", "It's your turn to start.")
+
     // Deals the initial 7 cards to the player
     for(let i = 0; i < 7; i++) {
         drawCard(false)
@@ -18,7 +24,9 @@ onMount(() => {
     <div>
         <div class="game-headers">
             <p class="player-header">{$username}'s Hand:</p>
-            <p class="game-status">Game Status</p>
+            <p class="game-status">
+                <GameStatus/>
+            </p>
         </div>
         <div class="player-cards-container">
             {#each $playerHand as card}
@@ -35,6 +43,7 @@ onMount(() => {
             <button on:click="{() => drawCard()}" disabled="{!$isPlayerTurn}">Draw Pile</button>
         </div>
     </div>
+    <MessageBox/>
 </div>
 
 <style>

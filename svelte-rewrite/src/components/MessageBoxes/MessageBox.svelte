@@ -1,0 +1,35 @@
+<script lang="ts">
+import { get } from "svelte/store";
+
+import { bodyText, closeButtonCustomFunction, closeButtonText, headerText, showMessageBox } from "../../ts/global/MessageBox";
+
+const closeMessageBox = () => {
+    showMessageBox.set(false)
+
+    get(closeButtonCustomFunction)()
+}
+</script>
+
+{#if $showMessageBox}
+    <div class="message-box">
+        <div class="default-message-box">
+            <h2>{$headerText}</h2>
+            <p>{$bodyText}</p>
+        </div>
+        <button on:click="{closeMessageBox}">{$closeButtonText}</button>
+    </div>
+{/if}
+
+<style>
+    .message-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        background: #fff;
+        border: #000 5px dashed;
+
+        padding: 20px;
+    }
+</style>

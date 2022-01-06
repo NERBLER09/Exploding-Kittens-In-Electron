@@ -1,6 +1,7 @@
 import { get } from "svelte/store"
 import { cards } from "../../data/GameData"
 import { isPlayerTurn, playerHand } from "../../data/PlayerData"
+import { com1Player } from "../com-player-scripts/ComPlayerClass"
 import { setDefaultMessageBoxProps, showMessageBox } from "../global/MessageBox"
 
 /**
@@ -14,9 +15,13 @@ const drawCard = (passTurn: boolean = true) => {
     if(passTurn) {
         isPlayerTurn.set(false)
         // TODO: Implement function to pass turn to Com 1
-        setDefaultMessageBoxProps("Drawn Card", `The card you have drawn is a ${card}. It's now Com 1's turn`)
-       showMessageBox.set(true)
+        setDefaultMessageBoxProps("Drawn Card", `The card you have drawn is a ${card}. It's now Com 1's turn`, "Play on", passTurnToComPlayer)
+        showMessageBox.set(true)
     }
+}
+
+const passTurnToComPlayer = () => {
+    com1Player.playCard()
 }
 
 export {

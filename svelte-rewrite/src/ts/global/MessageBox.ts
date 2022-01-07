@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 
 const showMessageBox = writable(false)
+const showSeeTheFutureMessageBox = writable(false)
 
 const headerText = writable("Message Box Header")
 const bodyText = writable("Message Body Text")
@@ -17,11 +18,19 @@ const setDefaultMessageBoxProps = (header: string, body: string, buttonText: str
     showMessageBox.set(true)
 }
 
+showMessageBox.subscribe(value => {
+    if(!value) {
+        // TODO: Add any more custom message boxes
+        showSeeTheFutureMessageBox.set(false)
+    }
+})
+
 export {
     showMessageBox,
     headerText,
     bodyText,
     closeButtonText,
     closeButtonCustomFunction,
-    setDefaultMessageBoxProps
+    setDefaultMessageBoxProps,
+    showSeeTheFutureMessageBox
 }

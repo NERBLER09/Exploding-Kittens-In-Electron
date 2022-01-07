@@ -1,5 +1,9 @@
 import { get } from "svelte/store";
-import { playerHand } from "../../data/PlayerData";
+import { remainingTurns, seeTheFutureCards } from "../../data/GameData";
+import { isPlayerTurn, playerHand } from "../../data/PlayerData";
+import { setSeeTheFutureCards } from "../global/CardFunction";
+import { passTurn } from "../global/Global";
+import { setDefaultMessageBoxProps, showMessageBox, showSeeTheFutureMessageBox } from "../global/MessageBox";
 
 /**
  * Plays a card for the player
@@ -13,19 +17,32 @@ const playCard = (card) => {
     
     switch (card) {
         case "attack":
-            console.log("Playing an attack card")
+            let turns = get(remainingTurns)
+            turns = turns + 2
+            remainingTurns.set(turns)
+            
+            setDefaultMessageBoxProps("Attack!", `You have attacked Com 1. Com 1 has ${turns}, it's now Com 1's turns.`, "Attack", passTurn)
+            showMessageBox.set(true)
+
             break;
         case "skip":
-            console.log("Playing a skip card")
+            setDefaultMessageBoxProps("Skip.", "You have skipped your turn", "Skip your turn", passTurn)
+            showMessageBox.set(true)
+
             break
         case "favor":
             console.log("Playing a favor card")
             break
         case "shuffle":
-            console.log("Playing a shuffle card")
+            setDefaultMessageBoxProps("Shuffle", "You have shuffled the deck", "Shuffle")
+            showMessageBox.set(true)
+
             break
         case "see the future":
-            console.log("Playing a see the future card")
+            setSeeTheFutureCards()
+            showSeeTheFutureMessageBox.set(true)
+            showMessageBox.set(true)
+            setDefaultMessageBoxProps("See The Future", `Here are the top ${get(seeTheFutureCards).length} cards`, "Hide the cards")
             break
     
         default:

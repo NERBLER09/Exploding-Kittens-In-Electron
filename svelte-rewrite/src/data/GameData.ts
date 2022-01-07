@@ -1,4 +1,4 @@
-import { writable } from "svelte/store"
+import { Writable, writable } from "svelte/store"
 
 const showGameScreen = writable(JSON.parse(sessionStorage.getItem("showGameWindow")))
 
@@ -9,6 +9,8 @@ const cards = writable(['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
     'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon'])
 
+const seeTheFutureCards: Writable<string[]> = writable([])
+
 const remainingTurns = writable(0)
 
 export {
@@ -16,5 +18,6 @@ export {
     comPlayer,
     showGameScreen,
     cards,
-    remainingTurns
+    remainingTurns,
+    seeTheFutureCards
 }

@@ -1,7 +1,8 @@
 <script lang="ts">
 import { get } from "svelte/store";
 
-import { bodyText, closeButtonCustomFunction, closeButtonText, headerText, showMessageBox } from "../../ts/global/MessageBox";
+import { bodyText, closeButtonCustomFunction, closeButtonText, headerText, showMessageBox, showSeeTheFutureMessageBox } from "../../ts/global/MessageBox";
+import SeeTheFutureMessageBox from "./SeeTheFutureMessageBox.svelte";
 
 const closeMessageBox = () => {
     showMessageBox.set(false)
@@ -16,6 +17,9 @@ const closeMessageBox = () => {
             <h2>{$headerText}</h2>
             <p>{$bodyText}</p>
         </div>
+        {#if $showSeeTheFutureMessageBox }
+            <SeeTheFutureMessageBox/>
+        {/if}
         <button on:click="{closeMessageBox}">{$closeButtonText}</button>
     </div>
 {/if}

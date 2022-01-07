@@ -20,6 +20,7 @@ const drawCard = (passTurn: boolean = true) => {
 
     if(passTurn && get(remainingTurns) < 2) {
         isPlayerTurn.set(false)
+        remainingTurns.set(0)
 
         setDefaultMessageBoxProps("Drawn Card", `The card you have drawn is a ${card}. It's now Com 1's turn`, "Play on", passTurnToComPlayer)
         showMessageBox.set(true)

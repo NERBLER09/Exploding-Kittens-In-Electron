@@ -9,7 +9,6 @@ const passTurn = (passTurnToNextPlayer: boolean =  true) => {
 const removeFromSeeTheFutureCards = () => {
     const cards = get(seeTheFutureCards)
     cards.splice(0, 1)
-    console.log(cards)
     seeTheFutureCards.set(cards)
 }
 

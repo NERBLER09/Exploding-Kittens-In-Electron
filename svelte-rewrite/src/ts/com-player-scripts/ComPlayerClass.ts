@@ -1,6 +1,7 @@
 import { get } from "svelte/store"
 import { cards, remainingTurns, seeTheFutureCards } from "../../data/GameData"
 import { isPlayerTurn } from "../../data/PlayerData"
+import { setSeeTheFutureCards } from "../global/CardFunction"
 import { removeFromSeeTheFutureCards } from "../global/Global"
 import { setDefaultMessageBoxProps, showMessageBox } from "../global/MessageBox"
 
@@ -24,6 +25,7 @@ class comPlayerClass {
         if(passTurn && get(remainingTurns) < 2) {
             setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has drawn a card it's now your turn`, "Play on", this.passTurnToNextPlayer)
             showMessageBox.set(true)
+            remainingTurns.set(0)
         }
         else if(passTurn && get(remainingTurns) > 0) {
             let turns = get(remainingTurns)
@@ -43,31 +45,45 @@ class comPlayerClass {
         com1Player.playCard()
     }
 
+    runDrawCard() {
+        com1Player.drawCard()
+    }
+
     playCard() {
         const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
         this.cards.splice(this.cards.indexOf(card), 1)
 
         switch (card) {
             case "attack":
-                console.log("Playing an attack card")
-                break;
+                this.playAttackCard()
+                return
             case "skip":
-                console.log("Playing a skip card")
-                break
+                setDefaultMessageBoxProps(`${this.comPlayerName} has skipped their turn`, "It is now your turn.")
+                this.passTurnToNextPlayer()
+                return
             case "favor":
-                console.log("Playing a favor card")
+                this.drawCard()
                 break
             case "shuffle":
-                console.log("Playing a shuffle card")
+                setDefaultMessageBoxProps(`${this.comPlayerName} has shuffled the deck`, `${this.comPlayerName} has shuffled the deck`, "Play on", this.runDrawCard)     
+                showMessageBox.set(true)
                 break
             case "see the future":
-                console.log("Playing a see the future card")
+                setSeeTheFutureCards()
+                setDefaultMessageBoxProps(`${this.comPlayerName} has played a see the future`, `${this.comPlayerName} has played a see the future`, "Play on", this.runDrawCard)
+                showMessageBox.set(true)
                 break
             default:
                 break;
         }
-        
-        this.drawCard()
+    }
+
+    private playAttackCard() {
+        let turns = get(remainingTurns)
+        turns = turns + 2
+        remainingTurns.set(turns)
+
+        setDefaultMessageBoxProps(`${this.comPlayerName} has attacked you!`, `You have ${get(remainingTurns)} turns you have to play`, "Play on", this.passTurnToNextPlayer)
     }
 }
 

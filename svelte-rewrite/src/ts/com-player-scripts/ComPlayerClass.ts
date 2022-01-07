@@ -1,6 +1,7 @@
 import { get } from "svelte/store"
-import { cards, remainingTurns } from "../../data/GameData"
+import { cards, remainingTurns, seeTheFutureCards } from "../../data/GameData"
 import { isPlayerTurn } from "../../data/PlayerData"
+import { removeFromSeeTheFutureCards } from "../global/Global"
 import { setDefaultMessageBoxProps, showMessageBox } from "../global/MessageBox"
 
 class comPlayerClass {
@@ -12,8 +13,13 @@ class comPlayerClass {
     }
 
     drawCard(passTurn: boolean = true) {
-        const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
+        let card = get(cards)[Math.floor(Math.random() * get(cards).length)]
         this.cards.push(card)
+        
+        if(get(seeTheFutureCards).length > 0) {
+            card = get(seeTheFutureCards)[0]
+            removeFromSeeTheFutureCards()
+        }
 
         if(passTurn && get(remainingTurns) < 2) {
             setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has drawn a card it's now your turn`, "Play on", this.passTurnToNextPlayer)

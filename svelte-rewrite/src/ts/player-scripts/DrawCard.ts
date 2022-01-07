@@ -1,14 +1,20 @@
 import { get } from "svelte/store"
-import { cards, remainingTurns } from "../../data/GameData"
+import { cards, remainingTurns, seeTheFutureCards } from "../../data/GameData"
 import { isPlayerTurn, playerHand } from "../../data/PlayerData"
 import { com1Player } from "../com-player-scripts/ComPlayerClass"
+import { removeFromSeeTheFutureCards } from "../global/Global"
 import { setDefaultMessageBoxProps, showMessageBox } from "../global/MessageBox"
 
 /**
  * Draws a card for the player
  */
 const drawCard = (passTurn: boolean = true) => {
-    const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
+    let card = get(cards)[Math.floor(Math.random() * get(cards).length)]
+
+    if(get(seeTheFutureCards).length > 0) {
+        card = get(seeTheFutureCards)[0]
+        removeFromSeeTheFutureCards()
+    }
 
     playerHand.update(value => [card, ...value])
 

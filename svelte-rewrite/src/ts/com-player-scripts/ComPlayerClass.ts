@@ -1,5 +1,5 @@
 import { get } from "svelte/store"
-import { cards } from "../../data/GameData"
+import { cards, remainingTurns } from "../../data/GameData"
 import { isPlayerTurn } from "../../data/PlayerData"
 import { setDefaultMessageBoxProps, showMessageBox } from "../global/MessageBox"
 
@@ -15,9 +15,17 @@ class comPlayerClass {
         const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
         this.cards.push(card)
 
-        if(passTurn) {
+        if(passTurn && get(remainingTurns) < 2) {
             setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has drawn a card it's now your turn`, "Play on", this.passTurnToNextPlayer)
             showMessageBox.set(true)
+        }
+        else if(passTurn && get(remainingTurns) > 0) {
+            let turns = get(remainingTurns)
+            turns--
+            remainingTurns.set(turns)
+
+            showMessageBox.set(true)
+            setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has ${get(remainingTurns)} ${get(remainingTurns) > 1 ? "turns" : "turn"} remaining.`, "Play on", this.haveAnotherTurn)
         }
     }
 
@@ -25,10 +33,14 @@ class comPlayerClass {
         isPlayerTurn.set(true)
     }
 
+    haveAnotherTurn() {
+        com1Player.playCard()
+    }
+
     playCard() {
         const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
         this.cards.splice(this.cards.indexOf(card), 1)
-        
+
         switch (card) {
             case "attack":
                 console.log("Playing an attack card")

@@ -5,6 +5,7 @@ import MessageBox from "../components/MessageBoxes/MessageBox.svelte";
 
 import { username } from "../data/GameData";
 import { playerHand, isPlayerTurn } from "../data/PlayerData";
+import { com1Player } from "../ts/com-player-scripts/ComPlayerClass";
 import { bodyText, headerText, setDefaultMessageBoxProps, showMessageBox } from "../ts/global/MessageBox";
 import { drawCard } from "../ts/player-scripts/DrawCard";
 import { playCard } from "../ts/player-scripts/PlayCard";
@@ -16,6 +17,7 @@ onMount(() => {
     // Deals the initial 7 cards to the player
     for(let i = 0; i < 7; i++) {
         drawCard(false)
+        com1Player.drawCard(false)
     }
 })
 </script>

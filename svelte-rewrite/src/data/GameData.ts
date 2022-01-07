@@ -9,9 +9,12 @@ const cards = writable(['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
     'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon'])
 
+const remainingTurns = writable(0)
+
 export {
     username,
     comPlayer,
     showGameScreen,
-    cards
+    cards,
+    remainingTurns
 }

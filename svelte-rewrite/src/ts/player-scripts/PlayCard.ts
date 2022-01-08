@@ -1,9 +1,10 @@
 import { get } from "svelte/store";
-import { remainingTurns, seeTheFutureCards } from "../../data/GameData";
-import { isPlayerTurn, playerHand } from "../../data/PlayerData";
+import { remainingTurns, seeTheFutureCards, stealOrAskForCard } from "../../data/GameData";
+import { playerHand } from "../../data/PlayerData";
 import { setSeeTheFutureCards } from "../global/CardFunction";
 import { passTurn } from "../global/Global";
 import { setDefaultMessageBoxProps, showMessageBox, showSeeTheFutureMessageBox } from "../global/MessageBox";
+import { checkForMatchingCatCards, promptPlayer } from "./HandleFavorAndSteal";
 
 /**
  * Plays a card for the player
@@ -14,6 +15,19 @@ const playCard = (card) => {
     const playerHandList = get(playerHand)
     playerHandList.splice(playerHandList.indexOf(card), 1)
     playerHand.set(playerHandList)
+
+    if(card === "potato cat" || card === "taco cat" || card === "rainbow ralphing cat" || card === "beard cat" || card === "cattermellon") {
+        if(checkForMatchingCatCards(card)) {
+            stealOrAskForCard.set("steal")
+            promptPlayer(get(stealOrAskForCard))
+        }
+        else {
+            const playerHandList = get(playerHand)
+            playerHandList.push(card)
+            playerHand.set(playerHandList)
+
+        }
+    }
     
     switch (card) {
         case "attack":
@@ -31,7 +45,9 @@ const playCard = (card) => {
 
             break
         case "favor":
-            console.log("Playing a favor card")
+            stealOrAskForCard.set("favor")
+            promptPlayer(get(stealOrAskForCard))
+
             break
         case "shuffle":
             setDefaultMessageBoxProps("Shuffle", "You have shuffled the deck", "Shuffle")
@@ -43,8 +59,8 @@ const playCard = (card) => {
             showSeeTheFutureMessageBox.set(true)
             showMessageBox.set(true)
             setDefaultMessageBoxProps("See The Future", `Here are the top ${get(seeTheFutureCards).length} cards`, "Hide the cards")
+
             break
-    
         default:
             break;
     }

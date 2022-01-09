@@ -1,6 +1,6 @@
 import { get } from "svelte/store"
 import { comPlayer } from "../../data/GameData"
-import { playerHand } from "../../data/PlayerData"
+import { favorTarget, needGiveFavorCard, playerHand } from "../../data/PlayerData"
 import { com1Player } from "../com-player-scripts/ComPlayerClass"
 import { setDefaultMessageBoxProps } from "../global/MessageBox"
 
@@ -61,7 +61,22 @@ const checkForMatchingCatCards = (query: string): boolean => {
     }
 }
 
+const giveCardToComPlayer = (card) => {
+    const target = get(favorTarget)
+    needGiveFavorCard.set(false)
+    
+    switch(target) {
+        case "Com 1":
+            setDefaultMessageBoxProps(`Here is the card ${target}`, `You have given your ${card} to ${target}`, "Play on", com1Player.drawCard)
+ 
+            com1Player.cards.push(card)
+
+            break
+    }
+}
+
 export {
     promptPlayer,
-    checkForMatchingCatCards
+    checkForMatchingCatCards,
+    giveCardToComPlayer
 }

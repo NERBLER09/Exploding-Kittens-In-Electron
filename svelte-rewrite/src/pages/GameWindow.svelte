@@ -4,10 +4,11 @@ import GameStatus from "../components/GameStatus.svelte";
 import MessageBox from "../components/MessageBoxes/MessageBox.svelte";
 
 import { username } from "../data/GameData";
-import { playerHand, isPlayerTurn } from "../data/PlayerData";
+import { playerHand, isPlayerTurn, needGiveFavorCard } from "../data/PlayerData";
 import { com1Player } from "../ts/com-player-scripts/ComPlayerClass";
 import { bodyText, headerText, setDefaultMessageBoxProps, showMessageBox } from "../ts/global/MessageBox";
 import { drawCard } from "../ts/player-scripts/DrawCard";
+import { giveCardToComPlayer } from "../ts/player-scripts/HandleFavorAndSteal";
 import { playCard } from "../ts/player-scripts/PlayCard";
 
 onMount(() => {
@@ -32,8 +33,12 @@ onMount(() => {
         </div>
         <div class="player-cards-container">
             {#each $playerHand as card}
-                <button on:click="{() => playCard(card)}" disabled="{!$isPlayerTurn}">{card}</button>
-            {/each}
+                {#if $needGiveFavorCard}
+                    <button on:click="{() => giveCardToComPlayer(card)}">{card}</button>
+                {:else}
+                    <button on:click="{() => playCard(card)}" disabled="{!$isPlayerTurn}">{card}</button>
+                {/if}
+           {/each}
         </div>
     </div>
     

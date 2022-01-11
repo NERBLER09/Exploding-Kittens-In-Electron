@@ -5,7 +5,7 @@ import MessageBox from "../components/MessageBoxes/MessageBox.svelte";
 
 import { username } from "../data/GameData";
 import { playerHand, isPlayerTurn, needGiveFavorCard } from "../data/PlayerData";
-import { com1Player } from "../ts/com-player-scripts/ComPlayerClass";
+import { com1Player, com2Player } from "../ts/com-player-scripts/ComPlayerClass";
 import { bodyText, headerText, setDefaultMessageBoxProps, showMessageBox } from "../ts/global/MessageBox";
 import { drawCard } from "../ts/player-scripts/DrawCard";
 import { giveCardToComPlayer } from "../ts/player-scripts/HandleFavorAndSteal";
@@ -19,6 +19,7 @@ onMount(() => {
     for(let i = 0; i < 7; i++) {
         drawCard(false)
         com1Player.drawCard(false)
+        com2Player.drawCard(false)
     }
 })
 </script>

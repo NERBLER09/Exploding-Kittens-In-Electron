@@ -1,5 +1,9 @@
+// TODO: Add in a third com player
+// TODO: Allow a com player to play multiple cards
+// TODO: Allow a com player to play on the last played card
+
 import { get } from "svelte/store"
-import { cards, remainingTurns, seeTheFutureCards } from "../../data/GameData"
+import { cards, comPlayer, remainingTurns, seeTheFutureCards } from "../../data/GameData"
 import { favorTarget, isPlayerTurn, needGiveFavorCard, playerHand } from "../../data/PlayerData"
 import { setSeeTheFutureCards } from "../global/CardFunction"
 import { removeFromSeeTheFutureCards } from "../global/Global"
@@ -15,7 +19,7 @@ class comPlayerClass {
         this.comPlayerName = comPlayerName
     }
 
-    drawCard(passTurn: boolean = true) {
+    public drawCard(passTurn: boolean = true) {
         let card = get(cards)[Math.floor(Math.random() * get(cards).length)]
         this.cards.push(card)
         
@@ -25,7 +29,13 @@ class comPlayerClass {
         }
 
         if(passTurn && get(remainingTurns) < 2) {
-            setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has drawn a card it's now your turn`, "Play on", this.passTurnToNextPlayer)
+            const {passTurnToPlayer, nextComPlayer} = this.checkIfPassTurnToPlayer(this.comPlayerName) 
+            if(passTurnToPlayer) {
+                setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has drawn a card it's now your turn`, "Play on", () => {this.passTurnToNextPlayer(this.comPlayerName)})
+            }
+            else {
+                setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has drawn a card it's ${nextComPlayer}'s turn now`, "Play on", () => {this.passTurnToNextPlayer(this.comPlayerName)})
+            }
             showMessageBox.set(true)
             remainingTurns.set(0)
         }
@@ -39,32 +49,59 @@ class comPlayerClass {
         }
     }
 
-    private passTurnToNextPlayer() {
-        isPlayerTurn.set(true)
-    }
+    private passTurnToNextPlayer(currentComPlayer: ComPlayerNameType) {
+        const comAmount = get(comPlayer)
 
-    private haveAnotherTurn(comName: string) {
-        switch(comName) {
-            case "Com 1":
-                com1Player.playCard()
+        switch(comAmount) {
+            case "1-com-player":
+                // Allows the player to have a turn
+                isPlayerTurn.set(true)
+
+                break
+            case "2-com-player":
+                console.log(currentComPlayer)
+                if(currentComPlayer === "Com 1" && get(remainingTurns) === 0) {
+                    // Allows Com 2 to have a turn
+                    com2Player.playCard()
+                }
+                else {
+                    // Allows the player to have a turn
+                    isPlayerTurn.set(true)
+                }
 
                 break
         }
     }
 
-    private runDrawCard(comName: string) {
+    private haveAnotherTurn(comName: ComPlayerNameType) {
+        switch(comName) {
+            case "Com 1":
+                com1Player.playCard()
+                break
+            case "Com 2":
+                com2Player.playCard()
+                break
+        }
+    }
+
+    private runDrawCard(comName: ComPlayerNameType) {
         switch(comName) {
             case "Com 1":
                 com1Player.drawCard()
 
                 break
+            case "Com 2":
+                com2Player.drawCard()
+                break
         }
         
     }
 
-    playCard() {
+    public playCard() {
         const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
         this.cards.splice(this.cards.indexOf(card), 1)
+
+        console.log(card)
 
         if(card === "potato cat" || card === "taco cat" || card === "rainbow ralphing cat" || card === "beard cat" || card === "cattermellon") {
             if(this.checkForMatchingCatCards(card)) {
@@ -73,7 +110,6 @@ class comPlayerClass {
             }
             else {
                 this.cards.push(card)
-
             }
         }
  
@@ -83,7 +119,7 @@ class comPlayerClass {
                 return
             case "skip":
                 setDefaultMessageBoxProps(`${this.comPlayerName} has skipped their turn`, "It is now your turn.")
-                this.passTurnToNextPlayer()
+                this.passTurnToNextPlayer(this.comPlayerName)
                 return
             case "favor":
                 let {target, targetName} = this.choseTarget(this.comPlayerName, this.comPlayerName)
@@ -99,7 +135,28 @@ class comPlayerClass {
                 showMessageBox.set(true)
                 break
             default:
+                this.runDrawCard(this.comPlayerName)
                 break;
+        }
+    }
+
+    /**
+     * Checks if the next player is the player and not a computer player
+     * @param currentComPlayer Takes the current com player name
+     */
+    private checkIfPassTurnToPlayer(currentComPlayer: ComPlayerNameType): {passTurnToPlayer: boolean, nextComPlayer?: ComPlayerNameType}  {
+        const comAmount = get(comPlayer)
+
+        switch(comAmount) {
+            case "1-com-player":
+                return {passTurnToPlayer: true} 
+            case "2-com-player":
+                if(currentComPlayer === "Com 1" && get(remainingTurns) === 0) {
+                    return {passTurnToPlayer: false, nextComPlayer: "Com 2"}
+                }
+                else {
+                    return {passTurnToPlayer: true}
+                }
         }
     }
 
@@ -108,7 +165,7 @@ class comPlayerClass {
         turns = turns + 2
         remainingTurns.set(turns)
 
-        setDefaultMessageBoxProps(`${this.comPlayerName} has attacked you!`, `You have ${get(remainingTurns)} turns you have to play`, "Play on", this.passTurnToNextPlayer)
+        setDefaultMessageBoxProps(`${this.comPlayerName} has attacked you!`, `You have ${get(remainingTurns)} turns you have to play`, "Play on", () => {this.passTurnToNextPlayer(this.comPlayerName)})
     }
 
     /**
@@ -212,7 +269,9 @@ class comPlayerClass {
 }
 
 const com1Player = new comPlayerClass("Com 1")
+const com2Player = new comPlayerClass("Com 2")
 
 export {
-    com1Player
+    com1Player,
+    com2Player
 }

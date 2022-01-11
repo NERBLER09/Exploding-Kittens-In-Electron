@@ -1,13 +1,18 @@
 import { get } from "svelte/store"
 import { comPlayer } from "../../data/GameData"
 import { favorTarget, needGiveFavorCard, playerHand } from "../../data/PlayerData"
-import { com1Player } from "../com-player-scripts/ComPlayerClass"
+import { com1Player, com2Player } from "../com-player-scripts/ComPlayerClass"
 import { setDefaultMessageBoxProps } from "../global/MessageBox"
 
 const promptPlayer = (type: "steal" | "favor") => {
     const comAmount  = get(comPlayer)
     switch(comAmount) {
         case "1-com-player":
+            getCard(type, comAmount)
+
+            break
+        case "2-com-player":
+            // TODO: Add prompt to chose target
             getCard(type, comAmount)
 
             break
@@ -24,6 +29,11 @@ const getCard = (type: "steal" | "favor", target: string) => {
         case "1-com-player":
             comPlayerName = "Com 1"
             card = com1Player.cards[Math.floor(Math.random() * com1Player.cards.length)]
+
+            break
+         case "2-com-player":
+            comPlayerName = "Com 1"
+            card = com2Player.cards[Math.floor(Math.random() * com1Player.cards.length)]
 
             break
     }
@@ -67,9 +77,15 @@ const giveCardToComPlayer = (card) => {
     
     switch(target) {
         case "Com 1":
-            setDefaultMessageBoxProps(`Here is the card ${target}`, `You have given your ${card} to ${target}`, "Play on", com1Player.drawCard)
+            setDefaultMessageBoxProps(`Here is the card ${target}`, `You have given your ${card} to ${target}`, "Play on", () => {com1Player.drawCard()})
  
             com1Player.cards.push(card)
+
+            break
+        case "Com 2":
+            setDefaultMessageBoxProps(`Here is the card ${target}`, `You have given your ${card} to ${target}`, "Play on", () => {com2Player.drawCard()})
+ 
+            com2Player.cards.push(card)
 
             break
     }

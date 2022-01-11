@@ -1,3 +1,6 @@
+// TODO: Be able to nope a card played by a com player
+// TODO: Be able to draw and defuse an exploding kitten card
+
 import { get } from "svelte/store";
 import { remainingTurns, seeTheFutureCards, stealOrAskForCard } from "../../data/GameData";
 import { playerHand } from "../../data/PlayerData";

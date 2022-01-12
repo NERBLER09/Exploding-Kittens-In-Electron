@@ -5,7 +5,7 @@ import { favorTarget, isPlayerTurn, needGiveFavorCard } from "../data/PlayerData
 
 {#if $isPlayerTurn && $remainingTurns === 0}
     <p>It Is Your Turn</p> 
-{:else if !$isPlayerTurn && $remainingTurns === 0}
+{:else if !$isPlayerTurn && $remainingTurns === 0 && !$needGiveFavorCard}
     <p>It Is Not Your Turn</p>
 {/if}
 

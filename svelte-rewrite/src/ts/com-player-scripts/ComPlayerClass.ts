@@ -59,7 +59,6 @@ class comPlayerClass {
 
                 break
             case "2-com-player":
-                console.log(currentComPlayer)
                 if(currentComPlayer === "Com 1" && get(remainingTurns) === 0) {
                     // Allows Com 2 to have a turn
                     com2Player.playCard()
@@ -70,6 +69,21 @@ class comPlayerClass {
                 }
 
                 break
+            case "3-com-player":
+                if(currentComPlayer === "Com 1" && get(remainingTurns) === 0) {
+                    // Allows Com 2 to have a turn
+                    com2Player.playCard()
+                }
+                if(currentComPlayer === "Com 2" && get(remainingTurns) === 0) {
+                    // Allows Com 3 to have a turn
+                    com3Player.playCard()
+                }
+                else {
+                    // Allows the player to have a turn
+                    isPlayerTurn.set(true)
+                }
+
+ 
         }
     }
 
@@ -81,6 +95,8 @@ class comPlayerClass {
             case "Com 2":
                 com2Player.playCard()
                 break
+            case "Com 3":
+                com3Player.playCard()
         }
     }
 
@@ -88,10 +104,12 @@ class comPlayerClass {
         switch(comName) {
             case "Com 1":
                 com1Player.drawCard()
-
                 break
             case "Com 2":
                 com2Player.drawCard()
+                break
+            case "Com 3":
+                com3Player.drawCard()
                 break
         }
         
@@ -153,6 +171,16 @@ class comPlayerClass {
             case "2-com-player":
                 if(currentComPlayer === "Com 1" && get(remainingTurns) === 0) {
                     return {passTurnToPlayer: false, nextComPlayer: "Com 2"}
+                }
+                else {
+                    return {passTurnToPlayer: true}
+                }
+            case "3-com-player":
+                if(currentComPlayer === "Com 1" && get(remainingTurns) === 0) {
+                    return {passTurnToPlayer: false, nextComPlayer: "Com 2"}
+                }
+                if(currentComPlayer === "Com 2" && get(remainingTurns) === 0) {
+                    return {passTurnToPlayer: false, nextComPlayer: "Com 3"}
                 }
                 else {
                     return {passTurnToPlayer: true}
@@ -270,8 +298,10 @@ class comPlayerClass {
 
 const com1Player = new comPlayerClass("Com 1")
 const com2Player = new comPlayerClass("Com 2")
+const com3Player = new comPlayerClass("Com 3")
 
 export {
     com1Player,
-    com2Player
+    com2Player,
+    com3Player
 }

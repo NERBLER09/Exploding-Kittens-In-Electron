@@ -1,7 +1,7 @@
 import { get } from "svelte/store"
 import { comPlayer } from "../../data/GameData"
 import { favorTarget, needGiveFavorCard, playerHand } from "../../data/PlayerData"
-import { com1Player, com2Player } from "../com-player-scripts/ComPlayerClass"
+import { com1Player, com2Player, com3Player } from "../com-player-scripts/ComPlayerClass"
 import { setDefaultMessageBoxProps } from "../global/MessageBox"
 
 const promptPlayer = (type: "steal" | "favor") => {
@@ -32,8 +32,13 @@ const getCard = (type: "steal" | "favor", target: string) => {
 
             break
          case "2-com-player":
-            comPlayerName = "Com 1"
-            card = com2Player.cards[Math.floor(Math.random() * com1Player.cards.length)]
+            comPlayerName = "Com 2"
+            card = com2Player.cards[Math.floor(Math.random() * com2Player.cards.length)]
+
+            break
+         case "3-com-player":
+            comPlayerName = "Com 3"
+            card = com3Player.cards[Math.floor(Math.random() * com3Player.cards.length)]
 
             break
     }

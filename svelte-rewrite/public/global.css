@@ -1,63 +1,98 @@
-html, body {
-	position: relative;
-	width: 100%;
-	height: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400&family=Noto+Sans&display=swap'); 
+
+@media (prefers-color-scheme:dark) {
+    :root {
+        --background-color: #263238;
+        --font-color: white;
+        --border-color: white;
+        --box-shadow-color: white;
+        --scrollbar-background: #282c34;
+        --button-highlight: #3f545f;
+    }    
+}
+  
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-color: white;
+        --font-color: black;
+        --border-color: black;
+        --box-shadow-color: grey;
+        --scrollbar-background: lightgrey;
+        --button-highlight: white;
+    } 
 }
 
 body {
-	color: #333;
-	margin: 0;
-	padding: 8px;
-	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background-color: var(--background-color);
+  color: var(--font-color);
 }
 
-a {
-	color: rgb(0,100,200);
-	text-decoration: none;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Heebo', sans-serif;
 }
 
-a:hover {
-	text-decoration: underline;
-}
-
-a:visited {
-	color: rgb(0,80,160);
-}
-
-label {
-	display: block;
-}
-
-input, button, select, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	-webkit-padding: 0.4em 0;
-	padding: 0.4em;
-	margin: 0 0 0.5em 0;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 2px;
-}
-
-input:disabled {
-	color: #ccc;
+p, label {
+  font-family: 'Noto Sans', sans-serif;
 }
 
 button {
-	color: #333;
-	background-color: #f4f4f4;
-	outline: none;
+  background-color: var(--button-highlight);
+  border: var(--border-color) solid;
+  color: var(--font-color);
+  border-radius: 20px;
+
+  padding: 10px;
+
+  text-align: center;
+
+  font-family: "Noto Sans", sans-serif;
 }
 
-button:disabled {
-	color: #999;
+button:not(:disabled) {
+	cursor: pointer;
 }
 
-button:not(:disabled):active {
-	background-color: #ddd;
+button:focus { outline: none; }
+
+::-webkit-scrollbar {
+    width: 6px;
 }
 
-button:focus {
-	border-color: #666;
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a9a9a9; 
+}
+
+img {
+  pointer-events: none;
+}
+
+input[type="text"] {
+  padding: 5px;
+  background: var(--background-color);
+  color: var(--font-color);
+  border: var(--border-color) 2px solid;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+input[type="text"]::placeholder {
+  color: var(--font-color);
+}
+
+input[type="text"]:focus-visible {
+  outline: none;
 }

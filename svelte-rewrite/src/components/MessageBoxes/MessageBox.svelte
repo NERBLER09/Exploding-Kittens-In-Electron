@@ -31,8 +31,8 @@ const closeMessageBox = () => {
         left: 50%;
         transform: translate(-50%, -50%);
 
-        background: #fff;
-        border: #000 5px dashed;
+        background: var(--background-color);
+        border: var(--border-color) 5px dashed;
 
         padding: 20px;
     }

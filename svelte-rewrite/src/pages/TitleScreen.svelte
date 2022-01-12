@@ -115,14 +115,14 @@ import { comPlayer, showGameScreen, username } from "../data/GameData";
         padding: 10px;
     }
 
-    input[type="text"] {
+    /* input[type="text"] {
         padding: 5px;
         border-radius: 20px;
         min-width: 200px;
         width: 20vw;
         max-width: 500px;
     }
-
+ */
     button:not(:disabled) {
         cursor: pointer;
     }

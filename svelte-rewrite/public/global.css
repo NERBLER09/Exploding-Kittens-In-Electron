@@ -8,6 +8,7 @@
         --box-shadow-color: white;
         --scrollbar-background: #282c34;
         --button-highlight: #3f545f;
+        --disabled-bg-color: hsl(200, 19%, 78%);
     }    
 }
   
@@ -19,14 +20,11 @@
         --box-shadow-color: grey;
         --scrollbar-background: lightgrey;
         --button-highlight: white;
+        --disabled-bg-color: lightgrey;
     } 
 }
 
 body {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
   user-select: none;
   background-color: var(--background-color);
   color: var(--font-color);
@@ -34,10 +32,12 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Heebo', sans-serif;
+  font-size: 3vh;
 }
 
 p, label {
   font-family: 'Noto Sans', sans-serif;
+  font-size: 2vh;
 }
 
 button {
@@ -51,6 +51,14 @@ button {
   text-align: center;
 
   font-family: "Noto Sans", sans-serif;
+  font-size: 2vh;
+
+  height: 10vh;
+  width: 15vw;
+  min-width: 100px;
+  min-height: 25px;
+  max-width: 300px;
+  max-height: 150px;
 }
 
 button:not(:disabled) {
@@ -58,6 +66,10 @@ button:not(:disabled) {
 }
 
 button:focus { outline: none; }
+
+button:disabled {
+  background-color: var(--disabled-bg-color);
+}
 
 ::-webkit-scrollbar {
     width: 6px;
@@ -86,7 +98,7 @@ input[type="text"] {
   color: var(--font-color);
   border: var(--border-color) 2px solid;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 2vh;
 }
 
 input[type="text"]::placeholder {

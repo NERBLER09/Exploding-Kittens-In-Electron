@@ -106,24 +106,18 @@ import { comPlayer, showGameScreen, username } from "../data/GameData";
         border-radius: 100px;
         background-color: #168086;
         color: white;
-        padding: 5px;
-        transition: padding 200ms;
+        transition: scale 200ms;
         transition-timing-function: ease-in;
     }
     .com-player-selection.selected {
         background-color: #0aa1c3;
-        padding: 10px;
+        scale: 1.1;
     }
 
-    /* input[type="text"] {
-        padding: 5px;
-        border-radius: 20px;
-        min-width: 200px;
-        width: 20vw;
-        max-width: 500px;
-    }
- */
     button:not(:disabled) {
         cursor: pointer;
+    }
+    button {
+        margin: 20px;
     }
 </style>    

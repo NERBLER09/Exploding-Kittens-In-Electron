@@ -20,7 +20,9 @@ const closeMessageBox = () => {
         {#if $showSeeTheFutureMessageBox }
             <SeeTheFutureMessageBox/>
         {/if}
-        <button on:click="{closeMessageBox}">{$closeButtonText}</button>
+        <div class="close-button-container">
+            <button on:click="{closeMessageBox}">{$closeButtonText}</button>
+        </div>
     </div>
 {/if}
 
@@ -32,8 +34,23 @@ const closeMessageBox = () => {
         transform: translate(-50%, -50%);
 
         background: var(--background-color);
-        border: var(--border-color) 5px dashed;
+        border: var(--border-color) 1vh dashed;
 
         padding: 20px;
+    }
+
+    .close-button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-button-container button {
+        width: 100%;
+        max-width: none !important;
+    }
+
+    button {
+        margin: 10px;
     }
 </style>

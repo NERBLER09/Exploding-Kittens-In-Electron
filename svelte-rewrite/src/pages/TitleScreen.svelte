@@ -106,12 +106,12 @@ import { comPlayer, showGameScreen, username } from "../data/GameData";
         border-radius: 100px;
         background-color: #168086;
         color: white;
-        transition: scale 200ms;
+        transition: transform 200ms;
         transition-timing-function: ease-in;
     }
     .com-player-selection.selected {
         background-color: #0aa1c3;
-        scale: 1.1;
+        transform: scale(1.1);
     }
 
     button:not(:disabled) {

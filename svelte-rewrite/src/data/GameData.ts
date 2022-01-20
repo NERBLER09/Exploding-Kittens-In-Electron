@@ -8,6 +8,7 @@ const comPlayer = writable(localStorage.getItem("comPlayerAmount") || "1-com-pla
 const cards = writable(['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
     'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon'])
+const previousPlayedCard = writable("")
 
 const seeTheFutureCards: Writable<string[]> = writable([])
 
@@ -22,5 +23,6 @@ export {
     cards,
     remainingTurns,
     seeTheFutureCards,
-    stealOrAskForCard
+    stealOrAskForCard,
+    previousPlayedCard
 }

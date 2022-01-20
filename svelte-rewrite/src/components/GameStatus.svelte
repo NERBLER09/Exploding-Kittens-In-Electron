@@ -16,3 +16,9 @@ import { favorTarget, isPlayerTurn, needGiveFavorCard } from "../data/PlayerData
 {#if $needGiveFavorCard}
     <p>You need to give a card to {$favorTarget}</p> 
 {/if}
+
+<style>
+    p {
+        margin: 0;
+    }
+</style>

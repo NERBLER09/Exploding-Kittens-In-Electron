@@ -2,7 +2,7 @@
 // TODO: Be able to draw and defuse an exploding kitten card
 
 import { get } from "svelte/store";
-import { remainingTurns, seeTheFutureCards, stealOrAskForCard } from "../../data/GameData";
+import { previousPlayedCard, remainingTurns, seeTheFutureCards, stealOrAskForCard } from "../../data/GameData";
 import { playerHand } from "../../data/PlayerData";
 import { setSeeTheFutureCards } from "../global/CardFunction";
 import { passTurn } from "../global/Global";
@@ -18,6 +18,8 @@ const playCard = (card) => {
     const playerHandList = get(playerHand)
     playerHandList.splice(playerHandList.indexOf(card), 1)
     playerHand.set(playerHandList)
+
+    previousPlayedCard.set(card)
 
     if(card === "potato cat" || card === "taco cat" || card === "rainbow ralphing cat" || card === "beard cat" || card === "cattermellon") {
         if(checkForMatchingCatCards(card)) {

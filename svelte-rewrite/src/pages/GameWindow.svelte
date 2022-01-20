@@ -3,11 +3,8 @@
     import GameStatus from "../components/GameStatus.svelte";
     import MessageBox from "../components/MessageBoxes/MessageBox.svelte";
 
-    import { cards, username } from "../data/GameData";
-    import {
-        playerHand,
-        isPlayerTurn,
-    } from "../data/PlayerData";
+    import { previousPlayedCard, username } from "../data/GameData";
+    import { playerHand, isPlayerTurn } from "../data/PlayerData";
     import {
         com1Player,
         com2Player,
@@ -57,11 +54,12 @@
                         />
                     </div>
                 {:else}
-                    <div class="player-card {$isPlayerTurn ? "" : "disabled"}" on:click={() => giveCardToComPlayer(card)}>
+                    <div
+                        class="player-card {$isPlayerTurn ? '' : 'disabled'}"
+                        on:click={() => giveCardToComPlayer(card)}
+                    >
                         <!-- svelte-ignore a11y-missing-attribute -->
-                        <img
-                            src="images/cards/{card}.svg"
-                        />
+                        <img src="images/cards/{card}.svg" />
                     </div>
                 {/if}
             {/each}
@@ -70,12 +68,21 @@
 
     <div class="game-cards">
         <div class="discard-pile-container">
-            <p>Discard Pile</p>
+            <img
+                src="images/cards/{$previousPlayedCard}.svg"
+                alt=""
+                class="draw-pile-img"
+            />
         </div>
-        <div class="draw-pile-container">
-            <button on:click={() => drawCard()} disabled={!$isPlayerTurn}
+        <div class="draw-pile-container" on:click={() => drawCard()}>
+            <!-- <button on:click={() => drawCard()} disabled={!$isPlayerTurn}
                 >Draw Pile</button
-            >
+            > -->
+            <img
+                src="images/cards/card back.svg"
+                alt=""
+                class="draw-pile-img {$isPlayerTurn ? '' : 'disabled'}"
+            />
         </div>
     </div>
     <MessageBox />
@@ -97,6 +104,9 @@
     .game-headers .game-status {
         margin-left: auto;
     }
+    .player-header {
+        height: fit-content;
+    }
 
     .player-cards-container {
         display: flex;
@@ -113,11 +123,27 @@
     .player-card:hover:not(.disabled) {
         transform: scale(1.1);
     }
-    .player-card.disabled {
+    *.disabled {
         filter: grayscale(1);
     }
     .player-card img {
         height: 20vh;
         min-height: 200px;
+    }
+    .draw-pile-container {
+        transition: transform 200ms;
+        transition-timing-function: ease-in;
+
+        cursor: pointer;
+    }
+    .draw-pile-img {
+        height: 20vh;
+        min-height: 200px;
+    }
+    .draw-pile-container:hover {
+        transform: scale(1.1);
+    }
+    .game-cards {
+        display: flex;
     }
 </style>

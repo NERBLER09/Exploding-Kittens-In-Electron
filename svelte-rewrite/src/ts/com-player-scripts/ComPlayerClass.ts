@@ -1,9 +1,8 @@
-// TODO: Add in a third com player
 // TODO: Allow a com player to play multiple cards
 // TODO: Allow a com player to play on the last played card
 
 import { get } from "svelte/store"
-import { cards, comPlayer, remainingTurns, seeTheFutureCards } from "../../data/GameData"
+import { cards, comPlayer, previousPlayedCard, remainingTurns, seeTheFutureCards } from "../../data/GameData"
 import { favorTarget, isPlayerTurn, needGiveFavorCard, playerHand } from "../../data/PlayerData"
 import { setSeeTheFutureCards } from "../global/CardFunction"
 import { removeFromSeeTheFutureCards } from "../global/Global"
@@ -119,7 +118,7 @@ class comPlayerClass {
         const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
         this.cards.splice(this.cards.indexOf(card), 1)
 
-        console.log(card)
+        previousPlayedCard.set(card)        
 
         if(card === "potato cat" || card === "taco cat" || card === "rainbow ralphing cat" || card === "beard cat" || card === "cattermellon") {
             if(this.checkForMatchingCatCards(card)) {

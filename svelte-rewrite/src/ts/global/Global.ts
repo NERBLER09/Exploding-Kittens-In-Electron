@@ -1,5 +1,5 @@
 import { get } from "svelte/store"
-import { seeTheFutureCards } from "../../data/GameData"
+import { cardAmounts, cards, seeTheFutureCards, totalCards } from "../../data/GameData"
 import { com1Player } from "../com-player-scripts/ComPlayerClass"
 
 const passTurn = (passTurnToNextPlayer: boolean =  true) => {
@@ -12,7 +12,23 @@ const removeFromSeeTheFutureCards = () => {
     seeTheFutureCards.set(cards)
 }
 
+const removeDrawnCard = (card) => {
+    cardAmounts[card] -= 1
+
+    if(cardAmounts[card] === 0) {
+        cards.splice(cards.indexOf(card), 1)
+    }
+
+    totalCards.set(0)
+    for(const item of cards) {
+        let amountOfCards = get(totalCards)
+        amountOfCards += cardAmounts[item]
+        totalCards.set(amountOfCards)
+    }
+}
+
 export {
     passTurn,
-    removeFromSeeTheFutureCards
+    removeFromSeeTheFutureCards,
+    removeDrawnCard
 }

@@ -1,9 +1,11 @@
 <script lang="ts">
+
     import { onMount } from "svelte";
+import { get } from "svelte/store";
     import GameStatus from "../components/GameStatus.svelte";
     import MessageBox from "../components/MessageBoxes/MessageBox.svelte";
 
-    import { previousPlayedCard, username } from "../data/GameData";
+    import { comPlayer, previousPlayedCard, totalCards, username } from "../data/GameData";
     import { playerHand, isPlayerTurn } from "../data/PlayerData";
     import {
         com1Player,
@@ -28,9 +30,21 @@
         // Deals the initial 7 cards to the player
         for (let i = 0; i < 7; i++) {
             drawCard(false);
-            com1Player.drawCard(false);
-            com2Player.drawCard(false);
-            com3Player.drawCard(false);
+
+            switch(get(comPlayer)) {
+                case "1-com-player":
+                    com1Player.drawCard(false);
+                    break
+                case "2-com-player":
+                    com1Player.drawCard(false);
+                    com2Player.drawCard(false);
+                    break
+                case "3-com-player":
+                    com1Player.drawCard(false);
+                    com2Player.drawCard(false);
+                    com3Player.drawCard(false);
+                    break
+            }
         }
     });
 </script>
@@ -67,22 +81,24 @@
     </div>
 
     <div class="game-cards">
-        <div class="discard-pile-container">
-            <img
-                src="images/cards/{$previousPlayedCard}.svg"
-                alt=""
-                class="draw-pile-img"
-            />
+        <div class="piles-container">
+            <div class="discard-pile-container">
+                <img
+                    src="images/cards/{$previousPlayedCard}.svg"
+                    alt=""
+                    class="draw-pile-img"
+                />
+            </div>
+            <div class="draw-pile-container" on:click={() => drawCard()}>
+                <img
+                    src="images/cards/card back.svg"
+                    alt=""
+                    class="draw-pile-img {$isPlayerTurn ? '' : 'disabled'}"
+                />
+            </div>
         </div>
-        <div class="draw-pile-container" on:click={() => drawCard()}>
-            <!-- <button on:click={() => drawCard()} disabled={!$isPlayerTurn}
-                >Draw Pile</button
-            > -->
-            <img
-                src="images/cards/card back.svg"
-                alt=""
-                class="draw-pile-img {$isPlayerTurn ? '' : 'disabled'}"
-            />
+        <div class="remaining-cards">
+            <p>Remaining cards in the deck: {$totalCards}</p>
         </div>
     </div>
     <MessageBox />
@@ -143,7 +159,13 @@
     .draw-pile-container:hover {
         transform: scale(1.1);
     }
-    .game-cards {
+    .piles-container {
         display: flex;
+        justify-content: center;
+    }
+    .remaining-cards {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>

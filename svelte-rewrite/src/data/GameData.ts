@@ -5,9 +5,27 @@ const showGameScreen = writable(JSON.parse(sessionStorage.getItem("showGameWindo
 const username =  writable(localStorage.getItem("username")) 
 const comPlayer = writable(localStorage.getItem("comPlayerAmount") || "1-com-player")
 
-const cards = writable(['nope', 'attack',
+const cards = ['nope', 'attack',
     'skip', 'favor', 'shuffle', 'see the future', 'potato cat',
-    'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon'])
+    'taco cat', 'rainbow ralphing cat', 'beard cat', 'cattermellon']
+
+// Keeps track of how many of each cards are in the deck
+const cardAmounts = {
+    'nope': 5,
+    'attack': 4,
+    'skip': 4,
+    'favor': 4,
+    'shuffle': 4,
+    'see the future': 5,
+    'potato cat': 5,
+    'taco cat': 5,
+    'rainbow ralphing cat': 5,
+    'beard cat': 5,
+    'cattermellon': 5,
+}
+
+const totalCards = writable(0)
+
 const previousPlayedCard = writable("")
 
 const seeTheFutureCards: Writable<string[]> = writable([])
@@ -24,5 +42,7 @@ export {
     remainingTurns,
     seeTheFutureCards,
     stealOrAskForCard,
-    previousPlayedCard
+    previousPlayedCard,
+    cardAmounts,
+    totalCards
 }

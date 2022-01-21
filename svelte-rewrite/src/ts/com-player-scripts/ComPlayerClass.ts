@@ -5,7 +5,7 @@ import { get } from "svelte/store"
 import { cards, comPlayer, previousPlayedCard, remainingTurns, seeTheFutureCards } from "../../data/GameData"
 import { favorTarget, isPlayerTurn, needGiveFavorCard, playerHand } from "../../data/PlayerData"
 import { setSeeTheFutureCards } from "../global/CardFunction"
-import { removeFromSeeTheFutureCards } from "../global/Global"
+import { removeDrawnCard, removeFromSeeTheFutureCards } from "../global/Global"
 import { setDefaultMessageBoxProps, showMessageBox } from "../global/MessageBox"
 
 type ComPlayerNameType = "Com 1" | "Com 2" | "Com 3"
@@ -19,8 +19,10 @@ class comPlayerClass {
     }
 
     public drawCard(passTurn: boolean = true) {
-        let card = get(cards)[Math.floor(Math.random() * get(cards).length)]
+        let card = cards[Math.floor(Math.random() * cards.length)]
         this.cards.push(card)
+
+        removeDrawnCard(card)
         
         if(get(seeTheFutureCards).length > 0) {
             card = get(seeTheFutureCards)[0]
@@ -115,7 +117,7 @@ class comPlayerClass {
     }
 
     public playCard() {
-        const card = get(cards)[Math.floor(Math.random() * get(cards).length)]
+        const card = cards[Math.floor(Math.random() * cards.length)]
         this.cards.splice(this.cards.indexOf(card), 1)
 
         previousPlayedCard.set(card)        

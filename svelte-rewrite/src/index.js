@@ -1,10 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-require('electron-reload')(__dirname, {
-  electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),
-  awaitWriteFinish: true,
-});
+const isDev = require("electron-is-dev")
 
+if(isDev) {
+  require('electron-reload')(__dirname, {
+    electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),
+    awaitWriteFinish: true,
+  });
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -22,8 +25,14 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, '../public/index.html'));
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if(isDev) {
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
+  }
+
+  if(!isDev) {
+    mainWindow.menuBarVisible = false
+  }
 };
 
 // This method will be called when Electron has finished

@@ -58,6 +58,10 @@ import { addExplodingKittensToDeck, dealDefuseCards, recalculateRemainingCards }
     });
 </script>
 
+<svelte:head>
+    <title>Exploding Kittens (Fan Game) - Game Screen</title>
+</svelte:head>
+
 <div class="game-window">
     <div>
         <div class="game-headers">

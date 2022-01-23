@@ -58,7 +58,7 @@ import { comPlayer, showGameScreen, username } from "../data/GameData";
 </script>
 
 <svelte:head>
-    <title>Exploding Kittens In Electron - Title Screen</title>
+    <title>Exploding Kittens (Fan Game) - Title Screen</title>
 </svelte:head>
 
 <div class="title-screen">

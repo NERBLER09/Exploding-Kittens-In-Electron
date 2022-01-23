@@ -31,6 +31,8 @@ const playCard = (card) => {
             playerHand.set(playerHandList)
 
         }
+
+        return
     }
     
     switch (card) {

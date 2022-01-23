@@ -12,6 +12,7 @@ import { get } from "svelte/store";
         com2Player,
         com3Player,
     } from "../ts/com-player-scripts/ComPlayerClass";
+import { addExplodingKittensToDeck, dealDefuseCards, recalculateRemainingCards } from "../ts/GameOnLoad";
     import {
         setDefaultMessageBoxProps,
         showMessageBox,
@@ -46,6 +47,14 @@ import { get } from "svelte/store";
                     break
             }
         }
+
+        // Deals the defuse cards
+        dealDefuseCards()
+
+        // Adds the Exploding Kitten cards back to the deck
+        addExplodingKittensToDeck()
+
+        recalculateRemainingCards()
     });
 </script>
 

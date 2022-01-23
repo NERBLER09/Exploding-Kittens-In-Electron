@@ -1,5 +1,4 @@
 // TODO: Be able to nope a card played by a com player
-// TODO: Be able to draw and defuse an exploding kitten card
 
 import { get } from "svelte/store";
 import { previousPlayedCard, remainingTurns, seeTheFutureCards, stealOrAskForCard } from "../../data/GameData";
@@ -67,6 +66,8 @@ const playCard = (card) => {
 
             break
         default:
+            playerHand.update(value => [...value, card])
+            setDefaultMessageBoxProps(`Can't play a ${card} card right now.`, "Sorry, but you can't play that card right now.")
             break;
     }
 }

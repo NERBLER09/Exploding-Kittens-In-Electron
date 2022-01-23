@@ -27,8 +27,31 @@ const removeDrawnCard = (card) => {
     }
 }
 
+/**
+ * Checks if there is a defuse card in the pass hand
+ * @param hand Takes the hand of the player
+ * @returns Returns if there is a defuse card in the passed hand
+ */
+const hasDefuseCard = (hand: string[]): boolean => {
+    for(const card of hand) {
+        if(card === "defuse") {
+            return true 
+        }
+    }
+    return false
+}
+
+/** 
+ * Starts a new game by refreshing the window
+ */
+const startNewGame =  () => {
+    location.reload()
+}
+
 export {
     passTurn,
     removeFromSeeTheFutureCards,
-    removeDrawnCard
+    removeDrawnCard,
+    hasDefuseCard,
+    startNewGame
 }

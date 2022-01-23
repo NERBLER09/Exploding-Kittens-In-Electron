@@ -1,3 +1,5 @@
+// TODO Add cards from expansion packs
+
 import { Writable, writable } from "svelte/store"
 
 const showGameScreen = writable(JSON.parse(sessionStorage.getItem("showGameWindow")))
@@ -22,6 +24,8 @@ const cardAmounts = {
     'rainbow ralphing cat': 5,
     'beard cat': 5,
     'cattermellon': 5,
+    "exploding kitten": 0,
+    "defuse": 0
 }
 
 const totalCards = writable(0)

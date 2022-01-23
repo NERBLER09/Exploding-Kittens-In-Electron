@@ -5,7 +5,7 @@ import { get } from "svelte/store"
 import { cards, comPlayer, previousPlayedCard, remainingTurns, seeTheFutureCards } from "../../data/GameData"
 import { favorTarget, isPlayerTurn, needGiveFavorCard, playerHand } from "../../data/PlayerData"
 import { setSeeTheFutureCards } from "../global/CardFunction"
-import { removeDrawnCard, removeFromSeeTheFutureCards } from "../global/Global"
+import { hasDefuseCard, removeDrawnCard, removeFromSeeTheFutureCards, startNewGame } from "../global/Global"
 import { setDefaultMessageBoxProps, showMessageBox } from "../global/MessageBox"
 
 type ComPlayerNameType = "Com 1" | "Com 2" | "Com 3"
@@ -20,17 +20,28 @@ class comPlayerClass {
 
     public drawCard(passTurn: boolean = true) {
         let card = cards[Math.floor(Math.random() * cards.length)]
-        this.cards.push(card)
-
-        removeDrawnCard(card)
-        
+      
         if(get(seeTheFutureCards).length > 0) {
             card = get(seeTheFutureCards)[0]
             removeFromSeeTheFutureCards()
         }
 
+        if(card === "exploding kitten") {
+            const hasDefuse = hasDefuseCard(this.cards)
+            if(hasDefuse) {
+                const cardIndex = this.cards.indexOf("defuse")
+                this.cards.splice(cardIndex, 1)    
+            }
+            this.handleDrawingAnExplodingKitten(this.comPlayerName, hasDefuse)
+            
+            return
+        }
+
+        removeDrawnCard(card)
+        this.cards.push(card)
+ 
         if(passTurn && get(remainingTurns) < 2) {
-            const {passTurnToPlayer, nextComPlayer} = this.checkIfPassTurnToPlayer(this.comPlayerName) 
+            const {passTurnToPlayer, nextComPlayer} = this.getNextPlayer(this.comPlayerName) 
             if(passTurnToPlayer) {
                 setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has drawn a card it's now your turn`, "Play on", () => {this.passTurnToNextPlayer(this.comPlayerName)})
             }
@@ -47,6 +58,16 @@ class comPlayerClass {
 
             showMessageBox.set(true)
             setDefaultMessageBoxProps(`${this.comPlayerName} has drawn a card.`, `${this.comPlayerName} has ${get(remainingTurns)} ${get(remainingTurns) > 1 ? "turns" : "turn"} remaining.`, "Play on", () => {this.haveAnotherTurn(this.comPlayerName)})
+        }
+    }
+
+    private handleDrawingAnExplodingKitten(currentComPlayer: ComPlayerNameType, hasDefuse: boolean) {
+        if(hasDefuse) {
+            const { nextComPlayer, passTurnToPlayer } = this.getNextPlayer(currentComPlayer)
+            setDefaultMessageBoxProps(`${currentComPlayer} has drawn an exploding kitten card`, `${currentComPlayer} has defused the exploding kitten, its now ${passTurnToPlayer ? "your" : nextComPlayer + "'s"} turn`, "Play on", () => {this.passTurnToNextPlayer(currentComPlayer)})
+        }
+        else {
+            setDefaultMessageBoxProps(`${currentComPlayer} has drawn an exploding kitten`, `${currentComPlayer} has exploded you win!`, "Start A New Game", () => {startNewGame()})
         }
     }
 
@@ -154,16 +175,17 @@ class comPlayerClass {
                 showMessageBox.set(true)
                 break
             default:
+                this.cards.push(card)
                 this.runDrawCard(this.comPlayerName)
                 break;
         }
     }
 
     /**
-     * Checks if the next player is the player and not a computer player
+     * Returns if the next player is a com player and if so what is the next com player
      * @param currentComPlayer Takes the current com player name
      */
-    private checkIfPassTurnToPlayer(currentComPlayer: ComPlayerNameType): {passTurnToPlayer: boolean, nextComPlayer?: ComPlayerNameType}  {
+    private getNextPlayer(currentComPlayer: ComPlayerNameType): {passTurnToPlayer: boolean, nextComPlayer?: ComPlayerNameType}  {
         const comAmount = get(comPlayer)
 
         switch(comAmount) {

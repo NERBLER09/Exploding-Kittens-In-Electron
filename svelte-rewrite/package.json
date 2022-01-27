@@ -1,7 +1,7 @@
 {
   "name": "exploding-kittens-fan-game",
   "productName": "Exploding Kittens (Fan Game)",
-  "version": "0.8",
+  "version": "0.8.0",
   "description": "A crappy fan port of Exploding Kittens to the desktop. Made to be playable offline.",
   "main": "src/index.js",
   "scripts": {
@@ -13,9 +13,19 @@
     "svelte-build": "rollup -c",
     "svelte-dev": "rollup -c -w",
     "svelte-start": "sirv public --no-clear",
-    "svelte-check": "svelte-check --tsconfig ./tsconfig.json"
+    "svelte-check": "svelte-check --tsconfig ./tsconfig.json",
+    "dist": "electron-builder"
   },
-  "keywords": ["exploding kittens", "exploding kittens free", "exploding kittens fan game"],
+  "build": {
+    "linux": {
+      "desktop": "flatpak/org.Nerbler09.exploding-kittens-fan.desktop"
+    }
+  },
+  "keywords": [
+    "exploding kittens",
+    "exploding kittens free",
+    "exploding kittens fan game"
+  ],
   "author": {
     "name": "Noah Beaudin",
     "email": "noah.beauidn1@gmail.com"

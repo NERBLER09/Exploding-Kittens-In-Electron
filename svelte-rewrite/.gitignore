@@ -5,5 +5,8 @@ node_modules
 out/
 dist/
 public/build/
+build/
+.flatpak-builder
 
 *.snap
+release-linux.sh

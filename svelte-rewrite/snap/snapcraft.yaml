@@ -1,0 +1,37 @@
+name: exploding-kittens-fan-game
+version: '0.8'
+summary: Exploding Kittens Fan Game 
+description: |
+  A crappy fan port of Exploding Kittens to the desktop. Made to be playable offline
+base: core18
+confinement: strict
+grade: stable
+
+apps:
+  exploding-kittens-fan-game:
+    command: exploding-kittens-fan-game/exploding-kittens-fan-game --no-sandbox
+    extensions: [gnome-3-34]
+    plugs:
+    - browser-support
+    - network
+    - network-bind
+    environment:
+      # Correct the TMPDIR path for Chromium Framework/Electron to ensure
+      # libappindicator has readable resources.
+      TMPDIR: $XDG_RUNTIME_DIR
+
+parts:
+  exploding-kittens-fan-game:
+    plugin: nil
+    source: .
+    override-build: |
+        sudo npm install electron electron-packager
+        npx electron-packager . exploding-kittens-fan-game --overwrite --platform=linux --output=release-build --prune=true
+        cp -rv ./exploding-kittens-fan-game-linux-* $SNAPCRAFT_PART_INSTALL/exploding-kittens-fan-game
+    build-snaps:
+    - node/14/stable
+    build-packages:
+    - unzip
+    stage-packages:
+    - libnss3
+    - libnspr4

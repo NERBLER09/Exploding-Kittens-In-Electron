@@ -1,19 +1,18 @@
-# Exploding Kittens Fan Game - Svelte Rewrite
-Exploding Kittens Fan Game is now Exploding Kittens Fan Game
+# Exploding Dogs!
+Exploding Dogs is a fan port of the card game Exploding Kittens to the desktop. 
 
-This is where the the Exploding Kittens Fan Game Svelte rewrite is happening.
-
-With the rewrite the Windows Store build will be discontinued, Exploding Kittens Fan Game will be available on the Snap Store on Linux.
-
-The original jQuery will remain until the rewrite is complete, which then it will move to a separate repo.
-
-The reason of the rewrite is to make the jQuery code base more manageable, as well and to convert the code base to something I have more experience with.
+Exploding Dogs is created in Electron JS with Svelte.
 
 ## Packaging
 You can download the app from the Snap Store via `snap install exploding-kittens-fan-game`
 
 If you want to compile a Flatpak build you can clone the repo and run `./release/release-flatpak.sh`, requires flatpak-builder amd flatpak installed on your system.
 Once the script is ran successfully the app will be automatically installed on your system and can be launched with `flatpak run org.Nerbler09.exploding-kittens-fan-game`
+
+## Contributing
+Bug reports are welcomed.
+
+Before making a code contribution check the issues for issues labeled with `contribute`
 
 ## License
 

@@ -1,28 +1,24 @@
 # Exploding Kittens In Electron 
 
+NOTE: This is the legacy version of this project. The more up to date version can be found on the `main` branch. Exploding Kittens In Electron will not be worked on any further.
+
 Welcome to Exploding Kittens In Electron. This is a clone of [Exploding Kittens](https://www.explodingkittens.com) card game created in [Electron](https://www.electronjs.org). This runs completely on its own with out Node or Electron needed to be installed.
 
 ## Screenshots
+Dark Mode:
 
-Light mode:
+![title-screen-dark](https://user-images.githubusercontent.com/67165926/152158776-8bde2663-a153-4212-a39e-3d456a92d673.png)
+![game-screen-dark](https://user-images.githubusercontent.com/67165926/152158764-ab3740e6-d8a5-473c-a0d1-ad5d42c7696b.png)
 
-![title-screen](https://user-images.githubusercontent.com/67165926/123548732-4700e400-d723-11eb-9f46-5a3bac9a264f.PNG)
-![game-window](https://user-images.githubusercontent.com/67165926/123548772-71eb3800-d723-11eb-80d0-6dfb225cd218.PNG)
+Light Mode:
 
-Dark mode:
-
-![game-screen-dark](https://user-images.githubusercontent.com/67165926/130336034-a4e38885-d240-4da7-84ad-82b87a060292.png)
-![title-screen-dark](https://user-images.githubusercontent.com/67165926/130336036-b512216c-dc46-4392-920e-741cec701595.png)
-
-## Rewriting
-The project is being rewritten in [Svelte](https://svelte.dev). To check on the progress of the rewrite check the `svelte-rewrite/` directory. With the rewrite the Windows Store build will be discontinued, Exploding Kittens In Electron will be available on Flathub and the Snap Store on Linux. For more information check out `svelte-rewrite/readme.md`.
-
-The original jQuery will remain until the rewrite is complete, which then it will move to a separate repo.
+![title-screen-light](https://user-images.githubusercontent.com/67165926/152158779-99947d13-b762-4993-bea9-e63185d0ad90.png)
+![game-screen-light](https://user-images.githubusercontent.com/67165926/152158773-1ce36d73-e8bc-4489-9fcb-fad4d01e5899.png)
 
 ## Releases 
 
-Snapcraft package for Linux distros (requires snap to be installed up): `snap install exploding-kittens-in-electron --classic`
-Windows store app for Windows 10 + 11: [Web Link](https://www.microsoft.com/store/apps/9NMBVTL9L5LX) 
+A Snap package is available from the Snap Store which can be installed by running: `snap install exploding-kittens-in-electron`, or by searching `Exploding Kittens In Electron` in your GUI software manager
+A Microsoft Store version can be found [here](https://www.microsoft.com/store/apps/9NMBVTL9L5LX).
 
 ## Running 
 To run this Electron app you'll need [Node](https://nodejs.org) and [Electron](https://electronjs.org)
@@ -30,30 +26,10 @@ To run this Electron app you'll need [Node](https://nodejs.org) and [Electron](h
 Once you have cloned the repo simply run these commands: 
 
 ```
-$ npm i # Installs the dependencies 
-
-$ electron .
-
-# Or
+$ npm install
 
 $ npm start
 ```
-
-## Packaging
-
-Now when you're ready to package the app, so all your friends can see, run:
-
-```
-$ npm run package-win # This will package the app for Windows x64
-
-# and/or
-
-$ npm run package-linux # This will package the app for Linux x64
-```
-
-This is create the packaged app in a folder under `dist/`
-
-The app is packaged using [Electron Builder](https://www.npmjs.com/package/electron-builder)
 
 ## License
 

@@ -1,39 +1,38 @@
-const { app, BrowserWindow, shell, dialog, Menu, ipcMain, ipcRenderer } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
+const isDev = require("electron-is-dev")
 
-try {
-  require('electron-reloader')(module)
-} catch (_) {}
+if(isDev) {
+  require('electron-reload')(__dirname, {
+    electron: path.join(__dirname, '../node_modules', '.bin', 'electron'),
+    awaitWriteFinish: true,
+  });
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
 
-let mainWindow, gameWindow
-
 const createWindow = () => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    title:"Exploding Kittens In Electron",
-    icon: "assets/favicon.png",
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    }
+  const mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    icon: "public/favicon.png"
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'titleScreen.html'));
+  mainWindow.loadFile(path.join(__dirname, '../public/index.html'));
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if(isDev) {
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
+  }
 
-  // Sets the app menu
-  const menuTemplate = Menu.buildFromTemplate(menu);
-  Menu.setApplicationMenu(menuTemplate);
+  if(!isDev) {
+    mainWindow.menuBarVisible = false
+  }
 };
 
 // This method will be called when Electron has finished
@@ -60,125 +59,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-
-// Menu for the window
-const menu = [
-  {
-    label: "Game",
-    submenu: [
-      {
-        label: "New Game (From Title Screen)",
-        click: () => {
-          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("isGameDataSaved")`)
-          mainWindow.loadFile(path.join(__dirname, 'titleScreen.html'))
-        }
-      },
-      {
-        label: "New Game (From Game Window)",
-        click: () => {
-          mainWindow.webContents.executeJavaScript(`location.reload()`)
-        }
-      },
-      {type:"separator"},
-      {
-        label: "Update Game Config",
-        click () {
-          mainWindow.webContents.send("updateGameConfig")
-        }
-      },
-      {
-        label: "Clear Game Config",
-        click () {
-          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("isGameDataSaved")`)
-          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("username")`)
-          mainWindow.webContents.executeJavaScript(`localStorage.removeItem("comAmount")`)
-        }
-      },
-      {type:"separator"},
-      {
-        label: "Quit",
-        role: "quit",
-        accelerator: 'Ctrl+Q'
-      }
-    ]
-  },
-  {
-    label: "Window",
-    submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
-      { type: 'separator' },
-      { role: 'cut' },
-      { role: 'copy' },
-      { role: 'paste' },
-      { type: 'separator' },
-      { role: 'reload' },
-      { type: 'separator' },
-      { role: 'resetZoom' },
-      { role: 'zoomIn' },
-      { role: 'zoomOut' },
-      { type: 'separator' },
-      { role: 'togglefullscreen' }
-    ]
-  },
-  {
-    label:"Help",
-    submenu: [
-      {
-        label: "Exploding Kittens (View the original Exploding Kittens)",
-        click() {
-          shell.openExternal("https://www.explodingkittens.com")
-        }
-      },
-      {
-        label: "How To Play (Official)",
-
-        click() {
-          shell.openExternal("https://www.explodingkittens.com/pages/rules-kittens")
-        }
-      },
-      {
-        label: "How To Play (For Exploding Kittens In Electron)",
-        click() { mainWindow.webContents.send("showHowToPlay") }
-      },
-      { type: 'separator' },
-      {
-          label: "About",
-          click () {
-            mainWindow.webContents.send("showAboutMessageBox", app.getVersion())
-          }
-      },
-
-    ]
-  },
-  {
-    label: "Other",
-    submenu: [
-      {type:"separator"},
-      {
-        label: "Github",
-
-        click() {
-          shell.openExternal("https://www.github.com/nerbler09/exploding-kittens-in-electron")
-        }
-      },
-      { type: "separator" },
-      {
-        label: "Open Issue",
-        click() {
-          shell.openExternal("https://github.com/NERBLER09/Exploding-Kittens-In-Electron/issues/new")
-        } 
-      },
-      { type: "separator" },
-      {
-        label: "Toggle Dev Tools",
-        role: "toggleDevTools"
-      },
-    ]
-  },
-]
-
-ipcMain.on("createGameWindow", () => {
-  // Loads the game window
-  mainWindow.loadFile(path.join(__dirname, 'gameWindow.html'));
-})

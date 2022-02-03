@@ -1,35 +1,18 @@
-# Exploding Kittens In Electron 
+# Exploding Dogs!
+Exploding Dogs is a fan port of the card game Exploding Kittens to the desktop. 
 
-NOTE: This is the legacy version of this project. The more up to date version can be found on the `main` branch. Exploding Kittens In Electron will not be worked on any further.
+Exploding Dogs is created in Electron JS with Svelte.
 
-Welcome to Exploding Kittens In Electron. This is a clone of [Exploding Kittens](https://www.explodingkittens.com) card game created in [Electron](https://www.electronjs.org). This runs completely on its own with out Node or Electron needed to be installed.
+## Packaging
+You can download the app from the Snap Store via `snap install exploding-kittens-fan-game`
 
-## Screenshots
-Dark Mode:
+If you want to compile a Flatpak build you can clone the repo and run `./release/release-flatpak.sh`, requires flatpak-builder amd flatpak installed on your system.
+Once the script is ran successfully the app will be automatically installed on your system and can be launched with `flatpak run org.Nerbler09.exploding-kittens-fan-game`
 
-![title-screen-dark](https://user-images.githubusercontent.com/67165926/152158776-8bde2663-a153-4212-a39e-3d456a92d673.png)
-![game-screen-dark](https://user-images.githubusercontent.com/67165926/152158764-ab3740e6-d8a5-473c-a0d1-ad5d42c7696b.png)
+## Contributing
+Bug reports are welcomed.
 
-Light Mode:
-
-![title-screen-light](https://user-images.githubusercontent.com/67165926/152158779-99947d13-b762-4993-bea9-e63185d0ad90.png)
-![game-screen-light](https://user-images.githubusercontent.com/67165926/152158773-1ce36d73-e8bc-4489-9fcb-fad4d01e5899.png)
-
-## Releases 
-
-A Snap package is available from the Snap Store which can be installed by running: `snap install exploding-kittens-in-electron`, or by searching `Exploding Kittens In Electron` in your GUI software manager
-A Microsoft Store version can be found [here](https://www.microsoft.com/store/apps/9NMBVTL9L5LX).
-
-## Running 
-To run this Electron app you'll need [Node](https://nodejs.org) and [Electron](https://electronjs.org)
-
-Once you have cloned the repo simply run these commands: 
-
-```
-$ npm install
-
-$ npm start
-```
+Before making a code contribution check the issues for issues labeled with `contribute`
 
 ## License
 

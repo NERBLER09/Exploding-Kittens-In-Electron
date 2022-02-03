@@ -1,13 +1,6 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "module": "es2015",
-        "watch": true,
-        "lib": ["DOM", "ES2017"],
-        "rootDir": "src/ts",
-        "outDir": "src/js"
-    },
-    "exclude": [
-        "svelte-rewrite/"
-    ]
+  "extends": "@tsconfig/svelte/tsconfig.json",
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
 }

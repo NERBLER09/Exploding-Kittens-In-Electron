@@ -1,0 +1,98 @@
+{
+  "name": "exploding-kittens-in-electron",
+  "title": "Exploding Kittens In Electron",
+  "productName": "Exploding Kittens In Electron",
+  "version": "1.3.0",
+  "description": "Fan port of card game, Exploding Kittens to the desktop. Created in Electron with jQuery and Typescript. Created by @NERBLER09 on GitHub",
+  "main": "src/index.js",
+  "repository": "https://github.com/NERBLER09/Exploding-Kittens-In-Electron",
+  "build": {
+    "win": {
+      "icon": "assets/Exploding-Kitten-Logo.ico",
+      "target": [
+        "appx"
+      ]
+    },
+    "appx": {
+      "applicationId": "ExplodimgKittensFanGame",
+      "identityName": "11103Nerbler09.ExplodimgKittensFanGame",
+      "publisher": "CN=8FCAC29E-A771-4806-AD92-B16FDCD3656F",
+      "publisherDisplayName": "Nerbler09",
+      "backgroundColor": "#a0beeb"
+    },
+    "linux": {
+      "icon": "assets/favicon.png",
+      "target": [
+        "snap"
+      ]
+    },
+    "snap": {
+      "summary": "Fan port of card game, Exploding Kittens to the desktop",
+      "confinement": "strict",
+      "category": "Game"
+    }
+  },
+  "scripts": {
+    "start": "electron-forge start",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\"",
+    "package-win": "electron-builder --win",
+    "package-linux": "electron-builder --linux"
+  },
+  "keywords": [
+    "Exploding Kittens",
+    "card game",
+    "game",
+    "Exploding Kittens Free"
+  ],
+  "author": {
+    "name": "Noah Beaudin",
+    "email": "noah.beaudin1@gmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "exploding_kittens_in_electron"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "jquery": "^3.6.0",
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.59",
+    "@electron-forge/maker-deb": "^6.0.0-beta.59",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.59",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.59",
+    "@electron-forge/maker-zip": "^6.0.0-beta.59",
+    "@types/jquery": "^3.5.6",
+    "electron": "^13.1.7",
+    "electron-builder": "^22.11.7",
+    "electron-packager": "^15.3.0",
+    "electron-reloader": "^1.2.1"
+  }
+}

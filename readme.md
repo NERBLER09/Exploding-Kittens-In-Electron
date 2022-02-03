@@ -1,59 +1,18 @@
-# Exploding Kittens In Electron 
+# Exploding Dogs!
+Exploding Dogs is a fan port of the card game Exploding Kittens to the desktop. 
 
-Welcome to Exploding Kittens In Electron. This is a clone of [Exploding Kittens](https://www.explodingkittens.com) card game created in [Electron](https://www.electronjs.org). This runs completely on its own with out Node or Electron needed to be installed.
-
-## Screenshots
-
-Light mode:
-
-![title-screen](https://user-images.githubusercontent.com/67165926/123548732-4700e400-d723-11eb-9f46-5a3bac9a264f.PNG)
-![game-window](https://user-images.githubusercontent.com/67165926/123548772-71eb3800-d723-11eb-80d0-6dfb225cd218.PNG)
-
-Dark mode:
-
-![game-screen-dark](https://user-images.githubusercontent.com/67165926/130336034-a4e38885-d240-4da7-84ad-82b87a060292.png)
-![title-screen-dark](https://user-images.githubusercontent.com/67165926/130336036-b512216c-dc46-4392-920e-741cec701595.png)
-
-## Rewriting
-The project is being rewritten in [Svelte](https://svelte.dev). To check on the progress of the rewrite check the `svelte-rewrite/` directory. With the rewrite the Windows Store build will be discontinued, Exploding Kittens In Electron will be available on Flathub and the Snap Store on Linux. For more information check out `svelte-rewrite/readme.md`.
-
-The original jQuery will remain until the rewrite is complete, which then it will move to a separate repo.
-
-## Releases 
-
-Snapcraft package for Linux distros (requires snap to be installed up): `snap install exploding-kittens-in-electron --classic`
-Windows store app for Windows 10 + 11: [Web Link](https://www.microsoft.com/store/apps/9NMBVTL9L5LX) 
-
-## Running 
-To run this Electron app you'll need [Node](https://nodejs.org) and [Electron](https://electronjs.org)
-
-Once you have cloned the repo simply run these commands: 
-
-```
-$ npm i # Installs the dependencies 
-
-$ electron .
-
-# Or
-
-$ npm start
-```
+Exploding Dogs is created in Electron JS with Svelte.
 
 ## Packaging
+You can download the app from the Snap Store via `snap install exploding-kittens-fan-game`
 
-Now when you're ready to package the app, so all your friends can see, run:
+If you want to compile a Flatpak build you can clone the repo and run `./release/release-flatpak.sh`, requires flatpak-builder amd flatpak installed on your system.
+Once the script is ran successfully the app will be automatically installed on your system and can be launched with `flatpak run org.Nerbler09.exploding-kittens-fan-game`
 
-```
-$ npm run package-win # This will package the app for Windows x64
+## Contributing
+Bug reports are welcomed.
 
-# and/or
-
-$ npm run package-linux # This will package the app for Linux x64
-```
-
-This is create the packaged app in a folder under `dist/`
-
-The app is packaged using [Electron Builder](https://www.npmjs.com/package/electron-builder)
+Before making a code contribution check the issues for issues labeled with `contribute`
 
 ## License
 

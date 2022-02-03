@@ -1,4 +1,4 @@
-import { askCardForFavor, catCardPlayedForCom3 } from "../com3Player/favorAndCatCard.js"
+import { askCardForFavor, catCardPlayedForCom3 } from "./favorAndCatCard.js"
 import { com3Player } from "../comPlayerClass.js"
 import { drawCardForCom3 } from "./drawCardForCom3.js"
 import { updateDiscardPile } from "../../updateDiscardPile.js"

@@ -2,11 +2,12 @@ node_modules
 
 .vscode
 
+src/js/*
+
 out/
+
 dist/
-public/build/
-build/
-.flatpak-builder
+
+windows-store/
 
 *.snap
-release-linux.sh
